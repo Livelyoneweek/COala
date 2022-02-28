@@ -20,7 +20,6 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-
     // post 생성
     public Long postCreate(PostRequestDto postRequestDto, User user) {
 
@@ -57,8 +56,6 @@ public class PostService {
         if (post.getUser().getUid() == uid) {
 
             //댓글 및 대댓글 추가 시 포스트 밑에 있는 댓글 , 대댓글 부터 삭제 해야 함
-
-
 
             postRepository.deleteById(pid);
             System.out.println("포스트 삭제 완료 pid : " + pid);

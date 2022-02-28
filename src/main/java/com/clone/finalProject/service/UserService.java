@@ -37,7 +37,7 @@ public class UserService {
             throw new IllegalArgumentException("중복된 닉네임입니다.");
         }
 
-        UserValidator.validateUserRegister(username,password,passwordCheck);
+        //UserValidator.validateUserRegister(username,password,passwordCheck);
 
         // 패스워드
         String enPassword = passwordEncoder.encode(requestDto.getPassword());
