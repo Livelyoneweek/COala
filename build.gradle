@@ -50,6 +50,13 @@ dependencies {
     ///////////////////////////////////////////////////////////////////////
 
 
+    //S3
+    implementation group: 'org.apache.tika', name: 'tika-core', version: '1.24.1'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
+
+
+
+
 
 
 }
