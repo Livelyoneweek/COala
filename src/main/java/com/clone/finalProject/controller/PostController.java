@@ -19,10 +19,13 @@ public class PostController {
     private final PostService postService;
 
     // post 생성
-    @PostMapping("/islogin/post/write/")
+    @PostMapping("/islogin/post/write")
     public Long postCreate(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
+        System.out.println("img : " + postRequestDto.getPostImg());
         User user = userDeta.getUser();
         Long pid = postService.postCreate(postRequestDto,user);
+        
+
         return pid;
     }
 

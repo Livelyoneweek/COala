@@ -12,20 +12,26 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-public class
-UserController {
+public class UserController {
 
     private final UserService userService;
+
 
     //회원가입
     @PostMapping("/user/signup")
     public SignupResponseDto registerUser(@RequestBody SignupRequestDto requestDto) {
+
+        System.out.println("username :" + requestDto.getUsername());
+        System.out.println("nickname :" + requestDto.getNickname());
+        System.out.println("password :" + requestDto.getPassword());
+        System.out.println("passwordCheck :" + requestDto.getPasswordCheck());
+
         userService.registerUser(requestDto);
         return new SignupResponseDto(true);
     }
 
     //로그인 유지 확인
-    @PostMapping("/user/islogin")
+    @PostMapping("/islogin/user")
     public IsloginResponseDto islogin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
         System.out.println("username : " + user.getUsername());

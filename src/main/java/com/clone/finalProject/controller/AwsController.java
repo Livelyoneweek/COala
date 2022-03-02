@@ -19,11 +19,15 @@ public class AwsController {
 
     @PostMapping("/images/upload")
     public HashMap<String,String> upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
+        System.out.println("이미지 전송 중");
 
         String imgUrl = "";
         String fileName = "";
         HashMap<String,String> imgInfo = s3Uploader.upload(multipartFile, "static");
         imgUrl = imgInfo.get("img");
+
+        System.out.println("이미지 url : " + imgUrl );
+
         fileName = imgInfo.get("fileName");
 
         HashMap<String,String> imageUrl = new HashMap<>();
