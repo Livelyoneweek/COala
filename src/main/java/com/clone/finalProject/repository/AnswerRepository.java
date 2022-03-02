@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
     Optional<Answer> findByAnswerId(Long answerId);
     List<Answer> findAllByOrderByCreatedAtDesc();
-    void deleteallByPost_pid(Long pid);
+    void deleteAllByPost_pid(Long pid);
 
 }

@@ -76,7 +76,7 @@ public class AnswerService {
         if (answer.getPost().getUser().getUid() == uid) {
             //댓글 및 대댓글 추가 시 포스트 밑에 있는 댓글 , 대댓글 부터 삭제 해야 함
 
-            commentRepository.deleteallByAnswer_answerId(answerId);
+            commentRepository.deleteAllByAnswer_answerId(answerId);
             System.out.println("답변 삭제 전 댓글 삭제");
 
             answerRepository.deleteById(answerId);
