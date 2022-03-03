@@ -14,5 +14,6 @@ public class ChatMessage {
     private String senderName;
     private String message;
     private String status;
+    private Long postId;
     private LocalDateTime createdAt;
 }

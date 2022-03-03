@@ -29,13 +29,24 @@ public class PostController {
         return pid;
     }
 
-    // post 조회
-    @GetMapping("/post/get")
+    // post 조회 (답변채택)
+    @GetMapping("/post/get/check")
     public List<PostResponseDto> postGet() {
         List<PostResponseDto> postResponseDtos = postService.postGet();
 
         return postResponseDtos;
     }
+
+    // post 조회 (답변대기)
+    @GetMapping("/post/get/nocheck")
+    public List<PostResponseDto> postGet2() {
+        List<PostResponseDto> postResponseDtos = postService.postGet2();
+
+        return postResponseDtos;
+    }
+
+
+
 
     // post 삭제
     @DeleteMapping("/islogin/post/delete/pid")

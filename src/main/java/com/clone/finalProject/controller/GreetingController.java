@@ -35,7 +35,7 @@ public class GreetingController {
         if (token != null) {
             String tokenInfo = token.substring(7);
             String username = jwtDecoder.decodeUsername(tokenInfo);
-            System.out.println("tokenInfo : " +tokenInfo);
+            System.out.println("username : " + username);
         }
 
         chatMessage.setCreatedAt(LocalDateTime.now());

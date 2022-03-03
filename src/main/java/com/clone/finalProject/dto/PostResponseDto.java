@@ -15,6 +15,7 @@ public class PostResponseDto {
     private String postComment;
     private String postImg;
     private Long postLikeCount;
+    private String status;
 
 
     public PostResponseDto (Post post, Long uid, Long postLikeCount) {
@@ -22,6 +23,7 @@ public class PostResponseDto {
         this.postTitle = post.getPostTitle();
         this.postComment= post.getPostComment();
         this.postImg= post.getPostImg();
+        this.status= post.getStatus();
         this.uid= uid;
         this.postLikeCount = postLikeCount;
 

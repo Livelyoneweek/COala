@@ -38,9 +38,9 @@ public class PostService {
     }
 
 
-    //post 조회
+    // post 조회 (답변채택)
     public List<PostResponseDto> postGet() {
-        List<Post>postList = postRepository.findAllByOrderByCreatedAtDesc();
+        List<Post>postList = postRepository.findAllByStatusContainingOrderByCreatedAtDesc("check");
 
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
         for (Post post : postList) {
@@ -56,6 +56,28 @@ public class PostService {
         }
         return postResponseDtos;
     }
+
+
+    // post 조회 (답변대기)
+    public List<PostResponseDto> postGet2() {
+        List<Post>postList = postRepository.findAllByStatusContainsOrderByCreatedAtDesc("noCheck");
+
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+            Long uid = post.getUser().getUid();
+
+            List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
+            Long postLikeCount = Long.valueOf(postLikes.size());
+
+            PostResponseDto postResponseDto = new PostResponseDto(post, uid,postLikeCount);
+
+            postResponseDtos.add(postResponseDto);
+
+        }
+        return postResponseDtos;
+    }
+    
+    
 
     //post 삭제
     @Transactional

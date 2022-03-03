@@ -25,6 +25,9 @@ public class Post extends Timestamped{
     @Column
     private String postImg;
 
+    @Column
+    private String status;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
@@ -34,11 +37,16 @@ public class Post extends Timestamped{
         this.postComment = postRequestDto.getPostComment();
         this.postImg = postRequestDto.getPostImg();
         this.user = user;
+        this.status = "noCheck";
     }
 
     public void update(PostRequestDto postRequestDto) {
         this.postTitle = postRequestDto.getPostTitle();
         this.postComment= postRequestDto.getPostComment();
+    }
+
+    public void checkUpdate(String str) {
+        this.status = str;
     }
 
 }

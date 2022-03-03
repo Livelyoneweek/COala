@@ -37,17 +37,17 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
         }
 
         System.out.println("auth:" + headerAccessor.getNativeHeader("Authorization"));
-
-        System.out.println(headerAccessor.getHeader("nativeHeaders").getClass());
-        if (StompCommand.CONNECT.equals(headerAccessor.getCommand())) {
-            String jwtToken = headerAccessor.getFirstNativeHeader("Authorization").substring(7);
-
-            System.out.println("juwtToken : " + jwtToken);
-
-            jwtDecoder.isValidToken(jwtToken);
-
-            System.out.println("msg: " + "토큰인증완료?");
-        }
+////        System.out.println(headerAccessor.getHeader("nativeHeaders").getClass());
+//        if (StompCommand.CONNECT.equals(headerAccessor.getCommand())) {
+//            String jwtToken = headerAccessor.getFirstNativeHeader("Authorization").substring(7);
+//
+////            System.out.println("juwtToken : " + jwtToken);
+//
+//            jwtDecoder.isValidToken(jwtToken);
+//
+//            System.out.println("msg: " + "토큰인증완료?");
+//            System.out.println("=================================================================================");
+//        }
 
 
         //throw new MessagingException("no permission! ");
