@@ -57,5 +57,13 @@ public class PostController {
         return pid;
     }
 
+    //post 게시글 상세 조회
+    @GetMapping("/post/detailget")
+    public PostResponseDto detailPostGet(@RequestBody Long pid) {
+        PostResponseDto postResponseDto = postService.detailPostGet(pid);
+
+        return postResponseDto;
+    }
+
 
 }

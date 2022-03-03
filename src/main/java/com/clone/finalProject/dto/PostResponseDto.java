@@ -14,14 +14,16 @@ public class PostResponseDto {
     private String postTitle;
     private String postComment;
     private String postImg;
+    private Long postLikeCount;
 
 
-    public PostResponseDto (Post post, Long uid) {
+    public PostResponseDto (Post post, Long uid, Long postLikeCount) {
         this.pid= post.getPid();
         this.postTitle = post.getPostTitle();
         this.postComment= post.getPostComment();
         this.postImg= post.getPostImg();
         this.uid= uid;
+        this.postLikeCount = postLikeCount;
 
     }
 

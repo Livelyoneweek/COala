@@ -1,11 +1,13 @@
 package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.Post;
+import com.clone.finalProject.domain.PostLike;
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.PostRequestDto;
 import com.clone.finalProject.dto.PostResponseDto;
 import com.clone.finalProject.repository.AnswerRepository;
 import com.clone.finalProject.repository.CommentRepository;
+import com.clone.finalProject.repository.PostLikeRepository;
 import com.clone.finalProject.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -23,6 +25,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final AnswerRepository answerRepository;
     private final CommentRepository commentRepository;
+    private final PostLikeRepository postLikeRepository;
 
 
     // post 생성
@@ -43,7 +46,10 @@ public class PostService {
         for (Post post : postList) {
             Long uid = post.getUser().getUid();
 
-            PostResponseDto postResponseDto = new PostResponseDto(post, uid);
+            List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
+            Long postLikeCount = Long.valueOf(postLikes.size());
+
+            PostResponseDto postResponseDto = new PostResponseDto(post, uid,postLikeCount);
 
             postResponseDtos.add(postResponseDto);
 
@@ -84,5 +90,21 @@ public class PostService {
             post.update(postRequestDto);
             System.out.println("포스트 수정 완료 pid :"  + pid);
         }
+    }
+
+    //post 상세 조회
+    public PostResponseDto detailPostGet(Long pid) {
+
+        Post post = postRepository.findByPid(pid).orElseThrow(
+                ()-> new NullPointerException("post가 존재하지 않습니다.")
+        );
+        Long uid = post.getUser().getUid();
+
+        List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(pid);
+        Long postLikeCount = Long.valueOf(postLikes.size());
+
+        PostResponseDto postResponseDto = new PostResponseDto(post, uid,postLikeCount);
+
+        return postResponseDto;
     }
 }
