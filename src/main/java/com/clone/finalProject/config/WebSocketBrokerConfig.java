@@ -1,5 +1,6 @@
 package com.clone.finalProject.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.messaging.simp.config.ChannelRegistration;
@@ -11,8 +12,11 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 //메시지 브로커 설정하겠다
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSocketMessageBroker
 public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
+
+    private final FilterChannelInterceptor filterChannelInterceptor;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -30,7 +34,7 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(new FilterChannelInterceptor());
+        registration.interceptors(filterChannelInterceptor);
     }
 
 

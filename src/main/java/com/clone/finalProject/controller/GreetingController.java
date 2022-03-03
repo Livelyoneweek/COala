@@ -5,6 +5,7 @@ import com.clone.finalProject.domain.Greeting;
 import com.clone.finalProject.domain.HelloMessage;
 import com.clone.finalProject.dto.MessageDto;
 import com.clone.finalProject.dto.ChatMessage;
+
 import com.clone.finalProject.security.jwt.JwtDecoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.Header;
@@ -20,19 +21,22 @@ import java.time.LocalDateTime;
 public class GreetingController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private final JwtDecoder jwtDecoder;
 
     @MessageMapping("/message")
     @SendTo("/topic/greetings")
-    public ChatMessage greeting(ChatMessage chatMessage) throws Exception {
+    public ChatMessage greeting(ChatMessage chatMessage,@Header("Authorization") String token) throws Exception {
+
+
         System.out.println("message : " + chatMessage.getMessage());
         System.out.println("SenderName : " + chatMessage.getSenderName());
 
-//        /* 토큰 정보 추출 */
-//        String tokenInfo = token.substring(7);
-//        System.out.println("tokenInfo : " +tokenInfo);
-//        String username = JwtDecoder.decodeUsername(tokenInfo);
-
-
+        /* 토큰 정보 추출 */
+        if (token != null) {
+            String tokenInfo = token.substring(7);
+            String username = jwtDecoder.decodeUsername(tokenInfo);
+            System.out.println("tokenInfo : " +tokenInfo);
+        }
 
         chatMessage.setCreatedAt(LocalDateTime.now());
         Thread.sleep(500); // simulated delay

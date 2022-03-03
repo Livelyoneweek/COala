@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface AnswerLikeRepository extends JpaRepository<AnswerLike,Long> {
 
-    Optional<AnswerLike> findbyUidAndPid(Long uid, Long pid);
+    Optional<AnswerLike> findByUidAndPid(Long uid, Long pid);
     void deleteByAnswerId(Long answerId);
 
 }

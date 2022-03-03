@@ -24,8 +24,8 @@ public class AnswerLikeService {
 
         HashMap<String, String> result = new HashMap<>();
 
-        if (answerLikeRepository.findbyUidAndPid(uid,pid).isPresent()) {
-            AnswerLike answerLike = answerLikeRepository.findbyUidAndPid(uid,pid).orElseThrow(
+        if (answerLikeRepository.findByUidAndPid(uid,pid).isPresent()) {
+            AnswerLike answerLike = answerLikeRepository.findByUidAndPid(uid,pid).orElseThrow(
                     ()-> new NullPointerException("answerLike가 존재하지 않습니다.")
             );
 
