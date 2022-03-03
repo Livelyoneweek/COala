@@ -2,13 +2,19 @@ package com.clone.finalProject.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+
+@Setter
 @Getter
 @NoArgsConstructor
-public class SignupRequestDto {
+public class MessageDto {
+
     private String username;
     private String nickname;
-    private String career;
-    private String password;
-    private String passwordCheck;
+    private String content;
+    private LocalDateTime createdAt;
+
 }
+

@@ -49,20 +49,18 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     ///////////////////////////////////////////////////////////////////////
 
-
     //S3
     implementation group: 'org.apache.tika', name: 'tika-core', version: '1.24.1'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
 
 
-
-
+    // Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+    testImplementation 'it.ozimov:embedded-redis:0.7.2'
 
 
 }
-
-
-
 
 tasks.named('test') {
     useJUnitPlatform()

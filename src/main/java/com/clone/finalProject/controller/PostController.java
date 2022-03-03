@@ -6,7 +6,6 @@ import com.clone.finalProject.dto.PostResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.convert.PeriodUnit;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,20 +18,34 @@ public class PostController {
     private final PostService postService;
 
     // post 생성
-    @PostMapping("/islogin/post/write/")
+    @PostMapping("/islogin/post/write")
     public Long postCreate(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
+        System.out.println("img : " + postRequestDto.getPostImg());
         User user = userDeta.getUser();
         Long pid = postService.postCreate(postRequestDto,user);
+        
+
         return pid;
     }
 
-    // post 조회
-    @GetMapping("/post/get")
+    // post 조회 (답변채택)
+    @GetMapping("/post/get/check")
     public List<PostResponseDto> postGet() {
         List<PostResponseDto> postResponseDtos = postService.postGet();
 
         return postResponseDtos;
     }
+
+    // post 조회 (답변대기)
+    @GetMapping("/post/get/nocheck")
+    public List<PostResponseDto> postGet2() {
+        List<PostResponseDto> postResponseDtos = postService.postGet2();
+
+        return postResponseDtos;
+    }
+
+
+
 
     // post 삭제
     @DeleteMapping("/islogin/post/delete/pid")
@@ -53,6 +66,24 @@ public class PostController {
 
         return pid;
     }
+
+    //post 게시글 상세 조회
+    @GetMapping("/post/detailget")
+    public PostResponseDto detailPostGet(@RequestBody Long pid) {
+        PostResponseDto postResponseDto = postService.detailPostGet(pid);
+
+        return postResponseDto;
+    }
+
+
+    // 태그로 게시글 검색
+    @GetMapping("/islogin/post/search")
+    public List<PostResponseDto> postTitleGet(PostResponseDto postResponseDto) {
+        List<PostResponseDto> postResponseDtoList = postService.postTitleGet(postResponseDto);
+
+        return postResponseDtoList;
+    }
+
 
 
 }

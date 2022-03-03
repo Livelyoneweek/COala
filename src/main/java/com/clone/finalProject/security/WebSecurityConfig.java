@@ -72,7 +72,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.headers().frameOptions().disable();
+            http.headers().frameOptions().disable();
+
+
 
         /* 1.
          * UsernamePasswordAuthenticationFilter 이전에 FormLoginFilter, JwtFilter 를 등록합니다.
@@ -84,10 +86,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
-                // 회원 관리 처리 API 전부를 login 없이 허용
-                // 그 외 어떤 요청이든 '인증'
-                .anyRequest()
-                .permitAll()
+
+                // 그 외 어떤 요청이든 ''
+                .anyRequest().permitAll()
                 .and()
                 // [로그아웃 기능]
                 .logout()
@@ -119,13 +120,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         List<String> skipPathList = new ArrayList<>();
 
         // 회원 관리 API 허용
-        skipPathList.add("GET,/user/**");
         skipPathList.add("POST,/user/**");
-        skipPathList.add("POST,/images/upload");
+        skipPathList.add("GET,/user/**");
         skipPathList.add("GET,/post/**");
+        skipPathList.add("POST,/images/upload");
         skipPathList.add("GET,/answer/**");
         skipPathList.add("DELETE,/image/delete");
         skipPathList.add("GET,/comment/**");
+
+        skipPathList.add("GET,/test/**");
+        skipPathList.add("POST,/test/**");
+
+        skipPathList.add("GET,/ws/**");
+        skipPathList.add("POST,/ws/**");
+        skipPathList.add("GET,/app/**");
+        skipPathList.add("POST,/app/**");
+
+        skipPathList.add("PUT,/islogin/**");
+
+//        skipPathList.add("GET,/app.js");
+//        skipPathList.add("GET,/");
+//        skipPathList.add("GET,/webjars/sockjs-client/sockjs.min.js");
+//        skipPathList.add("GET,/webjars/stomp-websocket/stomp.min.js");
+//        skipPathList.add("GET,/webjars/jquery/jquery.min.js");
+//        skipPathList.add("GET,/webjars/bootstrap/css/bootstrap.min.css");
+//        skipPathList.add("GET,/main.css");
+
+//        skipPathList.add("GET,/**");
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
                 skipPathList,

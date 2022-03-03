@@ -2,11 +2,13 @@ package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.SignupRequestDto;
+import com.clone.finalProject.dto.UserInfoRequestDto;
 import com.clone.finalProject.repository.UserRepository;
-import com.clone.finalProject.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 
 @RequiredArgsConstructor
@@ -37,11 +39,11 @@ public class UserService {
             throw new IllegalArgumentException("중복된 닉네임입니다.");
         }
 
-        UserValidator.validateUserRegister(username,password,passwordCheck);
+        //UserValidator.validateUserRegister(username,password,passwordCheck);
 
         // 패스워드
         String enPassword = passwordEncoder.encode(requestDto.getPassword());
-        User user = new User(requestDto,enPassword);
+        User user = new User(requestDto, enPassword);
         userRepository.save(user); // DB 저장
         System.out.println("회원가입 완료");
 
@@ -57,4 +59,25 @@ public class UserService {
         return userRepository.existsByNickname(nickname);
     }
 
+
+    //회원 정보 수정
+    @Transactional
+    public void updateUserInfo(Long uid, UserInfoRequestDto userInfoRequestDto) {
+
+        User user = userRepository.findByUid(uid).orElseThrow(
+                () -> new NullPointerException("유저가 존재하지 않습니다.")
+        );
+        user.userInfoUpdate(userInfoRequestDto);
+    }
+
+    //회원 비밀번호 수정
+    @Transactional
+    public void updatePassword(Long uid, UserInfoRequestDto userInfoRequestDto) {
+
+        User user = userRepository.findByUid(uid).orElseThrow(
+                () -> new NullPointerException("유저가 존재하지 않습니다.")
+        );
+        String enPassword = passwordEncoder.encode(userInfoRequestDto.getPassword());
+        user.userPasswordUpdate(enPassword);
+    }
 }
