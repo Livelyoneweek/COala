@@ -128,17 +128,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("DELETE,/image/delete");
         skipPathList.add("GET,/comment/**");
 
-        skipPathList.add("GET,/gs-guide-websocket/**");
+        skipPathList.add("GET,/test/**");
+        skipPathList.add("POST,/test/**");
+
+        skipPathList.add("GET,/ws/**");
+        skipPathList.add("POST,/ws/**");
         skipPathList.add("GET,/app/**");
-        skipPathList.add("GET,/topic/**");
-        skipPathList.add("GET,/queue/**");
-        skipPathList.add("GET,/app.js");
-        skipPathList.add("GET,/");
-        skipPathList.add("GET,/webjars/sockjs-client/sockjs.min.js");
-        skipPathList.add("GET,/webjars/stomp-websocket/stomp.min.js");
-        skipPathList.add("GET,/webjars/jquery/jquery.min.js");
-        skipPathList.add("GET,/webjars/bootstrap/css/bootstrap.min.css");
-        skipPathList.add("GET,/main.css");
+        skipPathList.add("POST,/app/**");
+
+//        skipPathList.add("GET,/app.js");
+//        skipPathList.add("GET,/");
+//        skipPathList.add("GET,/webjars/sockjs-client/sockjs.min.js");
+//        skipPathList.add("GET,/webjars/stomp-websocket/stomp.min.js");
+//        skipPathList.add("GET,/webjars/jquery/jquery.min.js");
+//        skipPathList.add("GET,/webjars/bootstrap/css/bootstrap.min.css");
+//        skipPathList.add("GET,/main.css");
 
 //        skipPathList.add("GET,/**");
 

@@ -24,6 +24,21 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column
+    private String career;
+
+    @Column
+    private String userImage;
+
+    @Column
+    private Long point;
+
+    @Column
+    private Long weekPoint;
+
+    @Column
+    private Long monthPoint;
+
 
     public User(SignupRequestDto signupRequestDto, String encodePassword ) {
         this.username = signupRequestDto.getUsername();

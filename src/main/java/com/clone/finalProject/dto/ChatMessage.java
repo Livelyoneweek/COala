@@ -1,4 +1,4 @@
-package com.clone.finalProject.domain;
+package com.clone.finalProject.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,19 +6,13 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-public class HelloMessage {
+public class ChatMessage {
 
-    private String name;
+    private String senderName;
     private String message;
+    private String status;
     private LocalDateTime createdAt;
-
-    public HelloMessage(String name) {
-        this.name = name;
-    }
-
-
-
 }
