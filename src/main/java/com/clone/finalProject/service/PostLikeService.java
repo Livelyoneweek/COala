@@ -21,7 +21,7 @@ public class PostLikeService {
     private final PostRepository postRepository;
 
 
-    // 답변 채택 시 있으면 삭제 없으면 생성
+    //관심글(찜) 할 때 있으면 삭제 없으면 생성
     public HashMap<String, String> postLike(AnswerLikeResponseDto answerLikeResponseDto) {
 
         Long uid =answerLikeResponseDto.getUid();

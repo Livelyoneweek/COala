@@ -10,4 +10,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Optional<Post> findByPid(Long pid);
     List<Post> findAllByOrderByCreatedAtDesc();
+    List<Post> findByPostTitleContaining(String keyword);
+
 }

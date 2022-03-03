@@ -8,6 +8,7 @@ import com.clone.finalProject.dto.AnswerResponseDto;
 import com.clone.finalProject.dto.CommnetResponseDto;
 import com.clone.finalProject.dto.PostRequestDto;
 import com.clone.finalProject.dto.PostResponseDto;
+import com.clone.finalProject.repository.AnswerLikeRepository;
 import com.clone.finalProject.repository.AnswerRepository;
 import com.clone.finalProject.repository.CommentRepository;
 import com.clone.finalProject.repository.PostRepository;
@@ -25,6 +26,7 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final AnswerLikeRepository answerLikeRepository;
 
     // answer 생성
     public Long answerCreate(AnswerResponseDto answerResponseDto, User user) {
@@ -50,6 +52,11 @@ public class AnswerService {
             Long pid = answer.getPost().getPid();
             Long answerId = answer.getAnswerId();
 
+            boolean answerLike = false;
+            if(answerLikeRepository.findById(answerId).isPresent()){
+                answerLike =true;
+            }
+
             //답변에 댓글 리스트 담는중
             ArrayList<CommnetResponseDto> commnetResponseDtos = new ArrayList<>();
             List<Comment>commentList = commentRepository.findAllByAnswer_answerIdOrderByCreatedAtAsc(answerId);
@@ -58,7 +65,7 @@ public class AnswerService {
                 commnetResponseDtos.add(commnetResponseDto);
             }
 
-            AnswerResponseDto answerResponseDto = new AnswerResponseDto(answer, uid, commnetResponseDtos);
+            AnswerResponseDto answerResponseDto = new AnswerResponseDto(answer, uid,answerLike, commnetResponseDtos);
             answerResponseDtos.add(answerResponseDto);
 
         }

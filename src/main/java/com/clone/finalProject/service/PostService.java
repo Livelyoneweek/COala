@@ -107,4 +107,25 @@ public class PostService {
 
         return postResponseDto;
     }
+
+    //게시글 타이틀 검색하여 조회
+    public List<PostResponseDto> postTitleGet(PostResponseDto postResponseDto) {
+        String postTitle = postResponseDto.getPostTitle();
+        List<Post> postList = postRepository.findByPostTitleContaining(postTitle);
+
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+            Long uid = post.getUser().getUid();
+
+            List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
+            Long postLikeCount = Long.valueOf(postLikes.size());
+
+            PostResponseDto postResponseDto2 = new PostResponseDto(post, uid,postLikeCount);
+
+            postResponseDtos.add(postResponseDto2);
+
+        }
+        return postResponseDtos;
+
+    }
 }

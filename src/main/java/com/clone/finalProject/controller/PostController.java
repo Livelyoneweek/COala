@@ -66,4 +66,14 @@ public class PostController {
     }
 
 
+    // 태그로 게시글 검색
+    @GetMapping("/islogin/post/search")
+    public List<PostResponseDto> postTitleGet(PostResponseDto postResponseDto) {
+        List<PostResponseDto> postResponseDtoList = postService.postTitleGet(postResponseDto);
+
+        return postResponseDtoList;
+    }
+
+
+
 }
