@@ -1,6 +1,7 @@
 package com.clone.finalProject.domain;
 
 import com.clone.finalProject.dto.SignupRequestDto;
+import com.clone.finalProject.dto.UserInfoRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,9 +41,22 @@ public class User {
     private Long monthPoint;
 
 
+    // 회원가입
     public User(SignupRequestDto signupRequestDto, String encodePassword ) {
         this.username = signupRequestDto.getUsername();
         this.nickname = signupRequestDto.getNickname();
+        this.career = signupRequestDto.getCareer();
+        this.password = encodePassword;
+    }
+    // 유저 정보 수정
+    public void userInfoUpdate(UserInfoRequestDto userInfoRequestDto){
+        this.nickname = userInfoRequestDto.getNickname();
+        this.career = userInfoRequestDto.getCareer();
+        this.userImage = userInfoRequestDto.getUserImage();
+    }
+
+    // 유저 패스워드 수정
+    public void userPasswordUpdate(String encodePassword){
         this.password = encodePassword;
     }
 }

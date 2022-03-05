@@ -6,7 +6,6 @@ import com.clone.finalProject.dto.PostResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.convert.PeriodUnit;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

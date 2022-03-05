@@ -3,9 +3,8 @@ package com.clone.finalProject.controller;
 
 import com.clone.finalProject.domain.Greeting;
 import com.clone.finalProject.domain.HelloMessage;
-import com.clone.finalProject.dto.MessageDto;
 import com.clone.finalProject.dto.ChatMessage;
-
+import com.clone.finalProject.dto.MessageDto;
 import com.clone.finalProject.security.jwt.JwtDecoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.Header;

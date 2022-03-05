@@ -1,14 +1,13 @@
 package com.clone.finalProject.dto;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-public class SignupRequestDto {
-    private String username;
+public class UserInfoRequestDto {
     private String nickname;
     private String career;
+    private String userImage;
     private String password;
-    private String passwordCheck;
+    private String newPassword;
+    private String newPasswordCheck;
 }
