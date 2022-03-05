@@ -9,11 +9,13 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @NoArgsConstructor
-public class ChatMessage {
+public class ChatMessageDto {
 
     private String senderName;
     private String message;
     private String status;
-    private Long postId;
+    private String area;
+    private Long pid;
     private LocalDateTime createdAt;
+    private String opposingUserName;
 }
