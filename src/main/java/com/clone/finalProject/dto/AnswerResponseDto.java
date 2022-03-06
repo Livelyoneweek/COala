@@ -1,6 +1,8 @@
 package com.clone.finalProject.dto;
 
 import com.clone.finalProject.domain.Answer;
+import com.clone.finalProject.domain.Post;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

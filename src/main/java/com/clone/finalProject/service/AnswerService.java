@@ -6,6 +6,10 @@ import com.clone.finalProject.domain.Post;
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.AnswerResponseDto;
 import com.clone.finalProject.dto.CommnetResponseDto;
+
+import com.clone.finalProject.dto.PostRequestDto;
+import com.clone.finalProject.dto.PostResponseDto;
+
 import com.clone.finalProject.repository.AnswerLikeRepository;
 import com.clone.finalProject.repository.AnswerRepository;
 import com.clone.finalProject.repository.CommentRepository;
