@@ -1,6 +1,7 @@
 package com.clone.finalProject.repository;
 
 
+
 import com.clone.finalProject.domain.PostLike;
 import org.springframework.data.jpa.repository.JpaRepository;
 
