@@ -21,11 +21,22 @@ public class ChatRoom extends Timestamped{
     private Long pid;
 
     @Column
-    private Long userCount;
+    private Long uid;
 
     public ChatRoom (String area) {
         this.area=area;
     }
+
+    public ChatRoom (String area, Long pid) {
+        this.area=area;
+        this.pid =pid;
+    }
+
+    public ChatRoom (Long uid, String area) {
+        this.area=area;
+        this.uid =uid;
+    }
+
 
 
 

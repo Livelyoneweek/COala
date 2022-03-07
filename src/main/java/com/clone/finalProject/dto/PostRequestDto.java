@@ -16,4 +16,5 @@ public class PostRequestDto {
     private String postImg;
     private List<String> tags;
 
+
 }

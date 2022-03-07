@@ -3,25 +3,20 @@ package com.clone.finalProject.service;
 import com.clone.finalProject.domain.Post;
 import com.clone.finalProject.domain.PostLike;
 import com.clone.finalProject.domain.PostTags;
-import com.clone.finalProject.domain.Tags;
 import com.clone.finalProject.dto.PostResponseDto;
-import com.clone.finalProject.dto.TagsResponseDto;
 import com.clone.finalProject.repository.PostLikeRepository;
 import com.clone.finalProject.repository.PostRepository;
 import com.clone.finalProject.repository.PostTagsRepository;
-import com.clone.finalProject.repository.TagsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class TagsService {
-    private final TagsRepository tagsRepository;
     private final PostTagsRepository postTagsRepository;
     private final PostRepository postRepository;
     private final PostLikeRepository postLikeRepository;

@@ -14,7 +14,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByStatusContainsOrderByCreatedAtDesc(String noCheck);
 
 
-
     List<Post> findByPostTitleContaining(String keyword);
 
 }

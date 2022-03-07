@@ -59,4 +59,11 @@ public class User {
     public void userPasswordUpdate(String encodePassword){
         this.password = encodePassword;
     }
+
+    // 유저 점수 업데이트
+    public void userPointUpdate (Long point, Long weekPoint, Long monthPoint) {
+        this.point = point;
+        this.weekPoint = weekPoint;
+        this.monthPoint = monthPoint;
+    }
 }

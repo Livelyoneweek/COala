@@ -23,7 +23,6 @@ public class PostController {
         System.out.println("img : " + postRequestDto.getPostImg());
         User user = userDeta.getUser();
         Long pid = postService.postCreate(postRequestDto,user);
-        
 
         return pid;
     }
@@ -44,11 +43,8 @@ public class PostController {
         return postResponseDtos;
     }
 
-
-
-
     // post 삭제
-    @DeleteMapping("/islogin/post/delete/pid")
+    @DeleteMapping("/islogin/post/delete/{pid}")
     public Long postDelete(@PathVariable Long pid, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         Long uid = userDeta.getUid();
 
@@ -58,8 +54,9 @@ public class PostController {
 
 
     // post 수정
-    @PutMapping("/islogin/post/revice/pid")
+    @PutMapping("/islogin/post/revice/{pid}")
     public Long postEdit(@PathVariable Long pid, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
+
         Long uid = userDeta.getUid();
 
         postService.postEdit(pid, postRequestDto, uid);
@@ -68,22 +65,19 @@ public class PostController {
     }
 
     //post 게시글 상세 조회
-    @GetMapping("/post/detailget")
-    public PostResponseDto detailPostGet(@RequestBody Long pid) {
+    @GetMapping("/post/detailget/{pid}")
+    public PostResponseDto detailPostGet(@PathVariable Long pid) {
         PostResponseDto postResponseDto = postService.detailPostGet(pid);
 
         return postResponseDto;
     }
 
-
     // 태그로 게시글 검색
     @GetMapping("/islogin/post/search")
-    public List<PostResponseDto> postTitleGet(PostResponseDto postResponseDto) {
-        List<PostResponseDto> postResponseDtoList = postService.postTitleGet(postResponseDto);
+    public List<PostResponseDto> postTitleGet(@RequestBody PostResponseDto postResponseDto2) {
+        List<PostResponseDto> postResponseDtoList = postService.postTitleGet(postResponseDto2);
 
         return postResponseDtoList;
     }
-
-
 
 }
