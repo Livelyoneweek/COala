@@ -18,4 +18,6 @@ public class ChatMessageDto {
     private Long pid;
     private LocalDateTime createdAt;
     private String opposingUserName;
+
+    private long userCount;
 }

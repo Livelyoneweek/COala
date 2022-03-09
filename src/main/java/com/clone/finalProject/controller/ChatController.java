@@ -60,6 +60,7 @@ public class ChatController {
         System.out.println("message : " + chatMessageDto.getMessage());
         System.out.println("SenderName : " + chatMessageDto.getSenderName());
         System.out.println("status : " + chatMessageDto.getStatus());
+        System.out.println("여기서 끊기는거지?");
 
         if(chatMessageDto.getStatus().equals("JOIN")) {
             chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 입장하셨습니다");
