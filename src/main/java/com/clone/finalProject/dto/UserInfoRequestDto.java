@@ -7,6 +7,7 @@ public class UserInfoRequestDto {
     private String nickname;
     private String career;
     private String userImage;
+    private String blogUrl;
     private String password;
     private String newPassword;
     private String newPasswordCheck;

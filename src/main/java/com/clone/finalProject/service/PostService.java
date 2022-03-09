@@ -135,8 +135,8 @@ public class PostService {
     }
 
     //게시글 타이틀 검색하여 조회
-    public List<PostResponseDto> postTitleGet(PostResponseDto postResponseDto2) {
-        String postTitle = postResponseDto2.getPostTitle();
+    public List<PostResponseDto> postTitleGet(String postTitle) {
+
         List<Post> postList = postRepository.findByPostTitleContaining(postTitle);
 
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
@@ -154,7 +154,7 @@ public class PostService {
 
     // 게시글 조회용 메소드
     private PostResponseDto postGetMethod(Post post) {
-        Long uid = post.getUser().getUid();
+        User user = post.getUser();
 
         List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
         Long postLikeCount = Long.valueOf(postLikes.size());
@@ -167,7 +167,7 @@ public class PostService {
             tags.add(tag);
         }
 
-        PostResponseDto postResponseDto = new PostResponseDto(post, uid,postLikeCount,tags);
+        PostResponseDto postResponseDto = new PostResponseDto(post, user,postLikeCount,tags);
         return postResponseDto;
     }
 

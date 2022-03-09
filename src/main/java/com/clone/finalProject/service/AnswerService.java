@@ -10,10 +10,7 @@ import com.clone.finalProject.dto.CommnetResponseDto;
 import com.clone.finalProject.dto.PostRequestDto;
 import com.clone.finalProject.dto.PostResponseDto;
 
-import com.clone.finalProject.repository.AnswerLikeRepository;
-import com.clone.finalProject.repository.AnswerRepository;
-import com.clone.finalProject.repository.CommentRepository;
-import com.clone.finalProject.repository.PostRepository;
+import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +26,7 @@ public class AnswerService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final AnswerLikeRepository answerLikeRepository;
+    private final UserRepository userRepository;
 
     // answer 생성
     public Long answerCreate(AnswerResponseDto answerResponseDto, User user) {
@@ -38,20 +36,24 @@ public class AnswerService {
         );
         Answer answer = new Answer(answerResponseDto, post);
         answerRepository.save(answer);
-        System.out.println("답글 생성 완료 답글 타이틀 : "  );
+        System.out.println("답글 생성 완료 답글 타이틀 : " +answer.getAnswerTitle());
+        System.out.println("답글 생성 완료 답글 Id : " +answer.getAnswerId());
+
         return answer.getAnswerId();
     }
 
 
     //answer 조회
-    public List<AnswerResponseDto> answerGet() {
-        List<Answer>answerList = answerRepository.findAllByOrderByCreatedAtDesc();
+    public List<AnswerResponseDto> answerGet(Long pid) {
+
+        List<Answer>answerList = answerRepository.findAllByPost_PidOrderByCreatedAtDesc(pid);
 
         //답변 리스트 담는 중
         ArrayList<AnswerResponseDto> answerResponseDtos = new ArrayList<>();
         for (Answer answer  : answerList) {
-            Long uid = answer.getPost().getUser().getUid();
-            Long pid = answer.getPost().getPid();
+            User user = userRepository.findByUid(answer.getUid()).orElseThrow(
+                    ()-> new NullPointerException("User 가 존재하지 않습니다.")
+            );
             Long answerId = answer.getAnswerId();
 
             boolean answerLike = false;
@@ -63,11 +65,15 @@ public class AnswerService {
             ArrayList<CommnetResponseDto> commnetResponseDtos = new ArrayList<>();
             List<Comment>commentList = commentRepository.findAllByAnswer_answerIdOrderByCreatedAtAsc(answerId);
             for (Comment comment : commentList){
-                CommnetResponseDto commnetResponseDto = new CommnetResponseDto(comment);
+                User commentUser = userRepository.findByUid(comment.getUid()).orElseThrow(
+                        ()-> new NullPointerException("User 가 존재하지 않습니다.")
+                );
+
+                CommnetResponseDto commnetResponseDto = new CommnetResponseDto(commentUser,comment);
                 commnetResponseDtos.add(commnetResponseDto);
             }
 
-            AnswerResponseDto answerResponseDto = new AnswerResponseDto(answer, uid,answerLike, commnetResponseDtos);
+            AnswerResponseDto answerResponseDto = new AnswerResponseDto(answer, user, answerLike, commnetResponseDtos);
             answerResponseDtos.add(answerResponseDto);
 
         }

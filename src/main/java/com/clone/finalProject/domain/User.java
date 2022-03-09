@@ -32,6 +32,9 @@ public class User {
     private String userImage;
 
     @Column
+    private String blogUrl;
+
+    @Column
     private Long point;
 
     @Column
@@ -53,6 +56,8 @@ public class User {
         this.nickname = userInfoRequestDto.getNickname();
         this.career = userInfoRequestDto.getCareer();
         this.userImage = userInfoRequestDto.getUserImage();
+        this.blogUrl = userInfoRequestDto.getBlogUrl();
+
     }
 
     // 유저 패스워드 수정

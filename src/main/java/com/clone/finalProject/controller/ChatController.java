@@ -70,7 +70,6 @@ public class ChatController {
         } else {
             //채팅 메시지 저장
             ChatMessage chatMessage = new ChatMessage(uid, chatMessageDto, chatRoom);
-            System.out.println("test2222");
             chatMessageRepository.save(chatMessage);
         }
 
@@ -128,7 +127,7 @@ public class ChatController {
 
         String channel = String.valueOf(chatMessageDto.getPid());
 
-//        String channel = "1";
+
         Thread.sleep(500); // simulated delay
 
         simpMessagingTemplate.convertAndSend("/topic/greetings"+channel ,chatMessageDto);

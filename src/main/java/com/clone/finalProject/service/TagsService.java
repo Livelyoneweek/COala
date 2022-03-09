@@ -3,6 +3,7 @@ package com.clone.finalProject.service;
 import com.clone.finalProject.domain.Post;
 import com.clone.finalProject.domain.PostLike;
 import com.clone.finalProject.domain.PostTags;
+import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.PostResponseDto;
 import com.clone.finalProject.repository.PostLikeRepository;
 import com.clone.finalProject.repository.PostRepository;
@@ -34,7 +35,7 @@ public class TagsService {
             Post post = postRepository.findByPid(pid).orElseThrow(
                     ()-> new NullPointerException("post가 존재하지 않습니다.")
             );
-            Long uid = post.getUser().getUid();
+            User user = post.getUser();
 
             List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(pid);
             Long postLikeCount = Long.valueOf(postLikes.size());
@@ -47,7 +48,7 @@ public class TagsService {
                 tags.add(tag2);
             }
 
-            PostResponseDto postResponseDto = new PostResponseDto(post, uid,postLikeCount,tags);
+            PostResponseDto postResponseDto = new PostResponseDto(post, user,postLikeCount,tags);
 
             postResponseDtos.add(postResponseDto);
         }

@@ -82,8 +82,7 @@ public class PostLikeService {
 
     // 게시글 조회용 메소드
     private PostResponseDto postGetMethod(Post post) {
-        Long uid = post.getUser().getUid();
-
+        User user = post.getUser();
         List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
         Long postLikeCount = Long.valueOf(postLikes.size());
 
@@ -95,7 +94,7 @@ public class PostLikeService {
             tags.add(tag);
         }
 
-        PostResponseDto postResponseDto = new PostResponseDto(post, uid,postLikeCount,tags);
+        PostResponseDto postResponseDto = new PostResponseDto(post, user,postLikeCount,tags);
         return postResponseDto;
     }
 

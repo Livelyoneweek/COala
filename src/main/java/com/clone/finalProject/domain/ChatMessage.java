@@ -21,13 +21,11 @@ public class ChatMessage extends Timestamped{
     @Column
     private String message;
 
-    @Column
+    @Column(nullable = false)
     private String senderName;
 
     @Column
     private String opposingUserName;
-
-
 
     @ManyToOne
     @JoinColumn(name = "CHATROOM_ID")

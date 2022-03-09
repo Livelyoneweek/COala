@@ -26,9 +26,13 @@ public class AnswerLikeService {
     @Transactional
     public HashMap<String, String> answerLike(AnswerLikeResponseDto answerLikeResponseDto) {
         Long uid = answerLikeResponseDto.getUid();
+        System.out.println("uid : " +uid);
         Long pid = answerLikeResponseDto.getPid();
+        System.out.println("pid : " +pid);
         Long answerId = answerLikeResponseDto.getAnswerId();
+        System.out.println("answerId : " +answerId);
         Long answerUid = answerLikeResponseDto.getAnswerUid();
+        System.out.println("answerUid : " +answerUid);
 
         HashMap<String, String> result = new HashMap<>();
 
@@ -38,7 +42,7 @@ public class AnswerLikeService {
             );
 
             // 답변 채택이 이미 있는데 같은 답변일 때 (채택 취소)
-            if(answerId == answerLike.getAnswerId()) {
+            if(answerId.equals(answerLike.getAnswerId()) ) {
                 answerLikeRepository.deleteByAnswerId(answerId);
 
                 Post post = postRepository.findById(pid).orElseThrow(
