@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,6 +23,7 @@ public class CommnetResponseDto {
     private Long pid;
     private Long answerId;
     private String comment;
+    private LocalDateTime createdAt;
 
     public CommnetResponseDto(User user, Comment comment) {
         this.uid = user.getUid();
@@ -31,6 +34,7 @@ public class CommnetResponseDto {
         this.pid = comment.getPid();
         this.commentId= comment.getCommentId();
         this.comment =comment.getComment();
+        this.createdAt = comment.getCreatedAt();
 
     }
 

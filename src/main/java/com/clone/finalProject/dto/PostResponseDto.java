@@ -28,7 +28,6 @@ public class PostResponseDto {
     private String category;
     private List<String> tag;
 
-
     public PostResponseDto (Post post, User user, Long postLikeCount, List<String> tag) {
         this.pid= post.getPid();
         this.postTitle = post.getPostTitle();

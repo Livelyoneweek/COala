@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -24,6 +25,7 @@ public class AnswerResponseDto {
     private String answerTitle;
     private String answerComment;
     private String answerImg;
+    private LocalDateTime createdAt;
     private boolean answerLike;
     private List<CommnetResponseDto> commnetResponseDtoList;
 
@@ -34,6 +36,7 @@ public class AnswerResponseDto {
         this.answerTitle = answer.getAnswerTitle();
         this.answerComment= answer.getAnswerComment();
         this.answerImg= answer.getAnswerImg();
+        this.createdAt = answer.getCreatedAt();
         this.uid= user.getUid();
         this.nickname= user.getNickname();
         this.career= user.getCareer();
