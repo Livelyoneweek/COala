@@ -59,6 +59,8 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
                 System.out.println("full channel:" + channel);
                 System.out.println("===========================================");
             String destination = "greetings";
+
+
             System.out.println("===DISCONNECT : " + destination + "===");
 
             /* 채팅방의 인원수를 -1한다. */

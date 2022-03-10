@@ -1,9 +1,6 @@
 package com.clone.finalProject.service;
 
-import com.clone.finalProject.domain.Answer;
-import com.clone.finalProject.domain.Comment;
-import com.clone.finalProject.domain.Post;
-import com.clone.finalProject.domain.User;
+import com.clone.finalProject.domain.*;
 import com.clone.finalProject.dto.AnswerResponseDto;
 import com.clone.finalProject.dto.CommnetResponseDto;
 
@@ -12,6 +9,7 @@ import com.clone.finalProject.dto.PostResponseDto;
 
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,8 +25,11 @@ public class AnswerService {
     private final CommentRepository commentRepository;
     private final AnswerLikeRepository answerLikeRepository;
     private final UserRepository userRepository;
+    private final AlarmRepository alarmRepository;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     // answer 생성
+    @Transactional
     public Long answerCreate(AnswerResponseDto answerResponseDto, User user) {
         Long pid = answerResponseDto.getPid();
         Post post = postRepository.findByPid(pid).orElseThrow(
@@ -38,6 +39,13 @@ public class AnswerService {
         answerRepository.save(answer);
         System.out.println("답글 생성 완료 답글 타이틀 : " +answer.getAnswerTitle());
         System.out.println("답글 생성 완료 답글 Id : " +answer.getAnswerId());
+
+        //생성되었을떄 포스트 유저 컬럼으로 Alarm 객체 저장
+        Alarm alarm = new Alarm("AnswerCreate",pid,answer.getAnswerId(),post.getUser());
+        alarmRepository.save(alarm);
+
+        // 답변 생성 된걸 포스트 주인한테 알림
+        simpMessagingTemplate.convertAndSend("/queue/user"+post.getUser().getNickname() ,"AnswerCreate");
 
         return answer.getAnswerId();
     }

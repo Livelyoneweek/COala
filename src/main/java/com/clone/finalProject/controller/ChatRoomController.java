@@ -2,8 +2,10 @@ package com.clone.finalProject.controller;
 
 
 import com.clone.finalProject.dto.ChatMessagedResponseDto;
+import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,9 +36,9 @@ public class ChatRoomController {
     }
 
     // 귓속말 채팅 내역 조회
-    @GetMapping("/islogin/chatting/{uid}")
-    public List<ChatMessagedResponseDto> chatMainUser(@PathVariable Long uid) {
-        List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.chatMainUser(uid);
+    @GetMapping("/islogin/chatting")
+    public List<ChatMessagedResponseDto> chatMainUser( @AuthenticationPrincipal UserDetailsImpl userDeta) {
+        List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.chatMainUser(userDeta.getUid());
 
         return chatMessagedResponseDtoList;
     }

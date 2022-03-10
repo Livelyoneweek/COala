@@ -1,13 +1,13 @@
 package com.clone.finalProject.service;
 
+import com.clone.finalProject.domain.Alarm;
 import com.clone.finalProject.domain.AnswerLike;
 import com.clone.finalProject.domain.Post;
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.AnswerLikeResponseDto;
-import com.clone.finalProject.repository.AnswerLikeRepository;
-import com.clone.finalProject.repository.PostRepository;
-import com.clone.finalProject.repository.UserRepository;
+import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,6 +20,8 @@ public class AnswerLikeService {
     private final AnswerLikeRepository answerLikeRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final AlarmRepository alarmRepository;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
 
     // 답변 채택 시 없으면 생성, 있으면 삭제하거나 실패
@@ -41,7 +43,7 @@ public class AnswerLikeService {
                     ()-> new NullPointerException("answerLike가 존재하지 않습니다.")
             );
 
-            // 답변 채택이 이미 있는데 같은 답변일 때 (채택 취소)
+            // 답변 채택이 이미 있는데 같은 답변일 때 (채택 취소) ,, 채택취소 못하게 수정
             if(answerId.equals(answerLike.getAnswerId()) ) {
                 answerLikeRepository.deleteByAnswerId(answerId);
 
@@ -50,7 +52,7 @@ public class AnswerLikeService {
                 );
                 post.checkUpdate("noCheck");
 
-                result.put("status","delete");
+                result.put("status","false");
 
                 // 포인트 점수 추가 업데이트
                 User user =userRepository.findByUid(answerUid).orElseThrow(
@@ -99,6 +101,13 @@ public class AnswerLikeService {
 
             user.userPointUpdate(point, weekPoint, monthPoint);
             userRepository.save(user);
+
+            //생성되었을떄 포스트 유저 컬럼으로 Alarm 객체 저장
+            Alarm alarm = new Alarm("AnswerChoose",pid,answerId ,post.getUser());
+            alarmRepository.save(alarm);
+
+            // 답변 채택된걸 답변 주인한테 알림
+            simpMessagingTemplate.convertAndSend("/queue/user"+userRepository.findByUid(answerUid).get().getNickname() ,"AnswerChoose");
 
         }
 

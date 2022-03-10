@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -21,6 +22,7 @@ public class PostResponseDto {
     private String postTitle;
     private String postComment;
     private String postImg;
+    private LocalDateTime createdAt;
     private Long postLikeCount;
     private String status;
     private String category;
@@ -34,6 +36,7 @@ public class PostResponseDto {
         this.postImg= post.getPostImg();
         this.category = post.getCategory();
         this.status= post.getStatus();
+        this.createdAt = post.getCreatedAt();
         this.uid= user.getUid();
         this.nickname= user.getNickname();
         this.career= user.getCareer();
