@@ -27,6 +27,7 @@ public class Alarm extends Timestamped{
     @JoinColumn(name = "USER_ID")
     private User user;
 
+
     public Alarm (String type,Long pid, Long answerId, User user) {
         this.type = type;
         this.pid = pid;

@@ -13,7 +13,6 @@ public class AlarmService {
 
     private final AlarmRepository alarmRepository;
 
-
     // 알람 메시지 조회
     public List<Alarm> alarmGet(Long uid) {
 
