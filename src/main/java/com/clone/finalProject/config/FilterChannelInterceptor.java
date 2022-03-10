@@ -35,20 +35,15 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
                 System.out.println("유저 connect 완료");
 
         }else if(StompCommand.SUBSCRIBE == headerAccessor.getCommand()){
-            System.out.println("===========================================");
+//                System.out.println("===========================================");
 //                System.out.println("full message:" + message);
 //                System.out.println("full channel:" + channel);
 //                System.out.println("===========================================");
-            String getroom = chatService.getRoomId(Optional.ofNullable(
-                            (String) message.getHeaders()
-                                    .get("simpDestination"))
-                    .orElse("InvalidRoomId"));
             String destination = chatService.getRoomId(
                     Optional.ofNullable(
                             (String) message.getHeaders()
                                     .get("simpDestination")).orElse("error"));
             System.out.println("=== destination : " + destination + "===");
-            System.out.println("====== getroomID : " + getroom);
             redisChatRepository.plusUserCount(destination);
                 /*
             채팅방에 들어온 클라이언트 sessionId를 roomId와 맵핑해 놓는다.
@@ -56,16 +51,14 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
             */
             String sessionId = (String) message.getHeaders().get("simpSessionId");
             System.out.println("===sessionId : " + sessionId+ "===");
-//                String roomId = chatService.getRoomId(Optional.ofNullable((String) message.getHeaders().get("simpDestination"))
-//                        .orElse("InvalidRoomId"));
 
         }else if(StompCommand.DISCONNECT == headerAccessor.getCommand()){
             // 유저가 Websocket으로 disconnect() 를 한 뒤 호출됨 or 세션이 끊어졌을 때 발생함(페이지 이동~ 브라우저 닫기 등)
-
-            String destination = chatService.getRoomId(
-                    Optional.ofNullable(
-                            (String) message.getHeaders()
-                                    .get("simpDestination")).orElse("error"));
+            System.out.println("===========================================");
+                System.out.println("full message:" + message);
+                System.out.println("full channel:" + channel);
+                System.out.println("===========================================");
+            String destination = "greetings";
             System.out.println("===DISCONNECT : " + destination + "===");
 
             /* 채팅방의 인원수를 -1한다. */

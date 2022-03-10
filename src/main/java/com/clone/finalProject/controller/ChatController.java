@@ -7,9 +7,11 @@ import com.clone.finalProject.dto.ChatMessageDto;
 
 import com.clone.finalProject.repository.ChatMessageRepository;
 import com.clone.finalProject.repository.ChatRoomRepository;
+import com.clone.finalProject.repository.RedisChatRepository;
 import com.clone.finalProject.repository.UserRepository;
 import com.clone.finalProject.security.jwt.JwtDecoder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -27,6 +29,8 @@ public class ChatController {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final UserRepository userRepository;
+    private final RedisChatRepository redisChatRepository;
+    private final RedisTemplate redisTemplate;
 
     //메인 페이지 채널
     @MessageMapping("/message")
@@ -75,8 +79,9 @@ public class ChatController {
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+        String destination = "greetings";
+        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+        System.out.println("USERCOUNT : " + chatMessageDto.getUserCount());
 
         Thread.sleep(500); // simulated delay
         return chatMessageDto;
