@@ -72,10 +72,18 @@ public class PostController {
         return postResponseDto;
     }
 
-    // 태그로 게시글 검색
-    @GetMapping("/islogin/post/search/{postTitle}")
+    // 타이틀로 게시글 검색
+    @GetMapping("/post/search/{postTitle}")
     public List<PostResponseDto> postTitleGet(@PathVariable String postTitle) {
         List<PostResponseDto> postResponseDtoList = postService.postTitleGet(postTitle);
+
+        return postResponseDtoList;
+    }
+
+    // 카테고리로 게시글 검색
+    @GetMapping("/category/search/{category}")
+    public List<PostResponseDto> postCategoryGet(@PathVariable String category) {
+        List<PostResponseDto> postResponseDtoList = postService.postCategoryGet(category);
 
         return postResponseDtoList;
     }

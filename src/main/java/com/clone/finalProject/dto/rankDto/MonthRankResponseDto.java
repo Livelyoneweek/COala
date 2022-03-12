@@ -10,6 +10,8 @@ public class MonthRankResponseDto {
     private String username;
     private String nickname;
     private String career;
+    private String userImage;
+    private String blogUrl;
     private Long monthPoint;
 
     // 월간 랭킹
@@ -18,6 +20,8 @@ public class MonthRankResponseDto {
         this.nickname = user.getNickname();
         this.career = user.getCareer();
         this.monthPoint = user.getMonthPoint();
+        this.userImage = user.getUserImage();
+        this.blogUrl = user.getBlogUrl();
 
     }
 }

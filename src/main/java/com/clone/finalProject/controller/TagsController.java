@@ -19,9 +19,13 @@ public class TagsController {
 
 
     //태그 조회
-    @GetMapping("/islogin/tag/search")
-    public List<PostResponseDto> searchTag(@RequestBody String tag) {
+    @GetMapping("/tag/search/{tag}")
+    public List<PostResponseDto> searchTag(@PathVariable String tag) {
+        System.out.println("tag : "  + tag);
         List<PostResponseDto> postResponseDtoList = tagsService.searchTag(tag);
         return postResponseDtoList;
     }
+
+
+
 }

@@ -152,6 +152,25 @@ public class PostService {
 
     }
 
+    //카게고리로 검색하여 게시글 조회
+    public List<PostResponseDto> postCategoryGet(String category) {
+
+        List<Post> postList = postRepository.findByCategoryContaining(category);
+
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
+
+            postResponseDtos.add(postResponseDto);
+
+        }
+        return postResponseDtos;
+
+    }
+
+
     // 게시글 조회용 메소드
     private PostResponseDto postGetMethod(Post post) {
         User user = post.getUser();
@@ -195,6 +214,7 @@ public class PostService {
             System.out.println("postTags 객체 생성");
         }
     }
+
 
 
 }

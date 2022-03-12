@@ -64,9 +64,9 @@ public class AnswerService {
             );
             Long answerId = answer.getAnswerId();
 
-            boolean answerLike = false;
+            String status = "false";
             if(answerLikeRepository.findById(answerId).isPresent()){
-                answerLike =true;
+                status ="true";
             }
 
             //답변에 댓글 리스트 담는중
@@ -81,7 +81,7 @@ public class AnswerService {
                 commnetResponseDtos.add(commnetResponseDto);
             }
 
-            AnswerResponseDto answerResponseDto = new AnswerResponseDto(answer, user, answerLike, commnetResponseDtos);
+            AnswerResponseDto answerResponseDto = new AnswerResponseDto(answer, user, status, commnetResponseDtos);
             answerResponseDtos.add(answerResponseDto);
 
         }

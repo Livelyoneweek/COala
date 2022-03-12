@@ -26,8 +26,11 @@ public class TagsService {
     @Transactional
     public List<PostResponseDto> searchTag(String tag) {
 
+        System.out.println("tag2 : "  + tag);
+
         List<PostTags> postTagsList = postTagsRepository.findAllByTags_TagName(tag);
 
+        System.out.println("test111");
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
         for(PostTags postTags : postTagsList) {
             Long pid = postTags.getPost().getPid();
@@ -40,12 +43,15 @@ public class TagsService {
             List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(pid);
             Long postLikeCount = Long.valueOf(postLikes.size());
 
+            System.out.println("test222");
+
             //태그 추가
             List<PostTags> postTagsList2 = postTagsRepository.findAllByPost_Pid(post.getPid());
             List<String> tags = new ArrayList<>();
             for (PostTags postTags2 : postTagsList2) {
                 String tag2 = postTags2.getTags().getTagName();
                 tags.add(tag2);
+                System.out.println("test333");
             }
 
             PostResponseDto postResponseDto = new PostResponseDto(post, user,postLikeCount,tags);
@@ -55,4 +61,9 @@ public class TagsService {
 
         return postResponseDtos;
     }
+
+
+
+
+
 }

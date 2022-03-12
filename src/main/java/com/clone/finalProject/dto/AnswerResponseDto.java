@@ -1,7 +1,6 @@
 package com.clone.finalProject.dto;
 
 import com.clone.finalProject.domain.Answer;
-import com.clone.finalProject.domain.Post;
 
 import com.clone.finalProject.domain.User;
 import lombok.AllArgsConstructor;
@@ -26,11 +25,11 @@ public class AnswerResponseDto {
     private String answerComment;
     private String answerImg;
     private LocalDateTime createdAt;
-    private boolean answerLike;
+    private String status;
     private List<CommnetResponseDto> commnetResponseDtoList;
 
 
-    public AnswerResponseDto(Answer answer, User user, boolean answerLike, List<CommnetResponseDto> commnetResponseDtoList) {
+    public AnswerResponseDto(Answer answer, User user, String status, List<CommnetResponseDto> commnetResponseDtoList) {
         this.answerId = answer.getAnswerId();
         this.pid= answer.getPost().getPid();
         this.answerTitle = answer.getAnswerTitle();
@@ -42,7 +41,7 @@ public class AnswerResponseDto {
         this.career= user.getCareer();
         this.userImage= user.getUserImage();
         this.blogUrl= user.getBlogUrl();
-        this.answerLike = answerLike;
+        this.status = status;
         this.commnetResponseDtoList = commnetResponseDtoList;
 
     }
