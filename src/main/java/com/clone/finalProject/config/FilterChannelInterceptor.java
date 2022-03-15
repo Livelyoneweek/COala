@@ -35,37 +35,43 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
                 System.out.println("유저 connect 완료");
 
         }else if(StompCommand.SUBSCRIBE == headerAccessor.getCommand()){
-//                System.out.println("===========================================");
-//                System.out.println("full message:" + message);
-//                System.out.println("full channel:" + channel);
-//                System.out.println("===========================================");
+
             String destination = chatService.getRoomId(
                     Optional.ofNullable(
-                            (String) message.getHeaders()
-                                    .get("simpDestination")).orElse("error"));
-            System.out.println("=== destination : " + destination + "===");
+                                    (String) message.getHeaders()
+                                            .get("simpDestination"))
+                            .orElse("error"));
+
+            String sessionId = (String) message.getHeaders()
+                    .get("simpSessionId");
+
+            redisChatRepository.setUserEnterInfo(sessionId, destination);
+
+            System.out.println("=== SUBSCRIBE sessionId : " + sessionId);
+            System.out.println(("=== SUBSCRIBE destination : " + destination));
+
+            /* 채팅방의 인원수를 +1한다. */
             redisChatRepository.plusUserCount(destination);
-                /*
-            채팅방에 들어온 클라이언트 sessionId를 roomId와 맵핑해 놓는다.
-            (나중에 특정 세션이 어떤 채팅방에 들어가 있는지 알기 위함)
-            */
-            String sessionId = (String) message.getHeaders().get("simpSessionId");
-            System.out.println("===sessionId : " + sessionId+ "===");
+
+
+
 
         }else if(StompCommand.DISCONNECT == headerAccessor.getCommand()){
-            // 유저가 Websocket으로 disconnect() 를 한 뒤 호출됨 or 세션이 끊어졌을 때 발생함(페이지 이동~ 브라우저 닫기 등)
-            System.out.println("===========================================");
-                System.out.println("full message:" + message);
-                System.out.println("full channel:" + channel);
-                System.out.println("===========================================");
-            String destination = "greetings";
+            System.out.println("유저 disconnetct");
 
+            String destination = (String) message.getHeaders()
+                    .get("simpSessionId");
 
-            System.out.println("===DISCONNECT : " + destination + "===");
+            String roomId = redisChatRepository.getUserEnterRoomId(destination);
 
             /* 채팅방의 인원수를 -1한다. */
-            redisChatRepository.minusUserCount(destination);
-            System.out.println("유저 disconnetct");
+            redisChatRepository.minusUserCount(roomId);
+            System.out.println("=== DISCONNECT sessionId : " + destination);
+            System.out.println(("=== DISCONNECT destination : " + destination));
+            /* 퇴장한 클라이언트의 roomId 맵핑 정보를 삭제한다. */
+            redisChatRepository.removeUserEnterInfo(destination);
+
+
         }
 
 //        System.out.println("auth:" + headerAccessor.getNativeHeader("Authorization"));

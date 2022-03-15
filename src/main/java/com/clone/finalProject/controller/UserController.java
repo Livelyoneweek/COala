@@ -36,7 +36,7 @@ public class UserController {
         System.out.println("nickName : " + user.getNickname());
         System.out.println("nickName : " + user.getUid());
         System.out.println("nickName : " + user.getCareer());
-        return new IsloginResponseDto(user.getUsername(),user.getNickname(),user.getUid(),user.getCareer());
+        return new IsloginResponseDto(user.getUsername(),user.getNickname(),user.getUid(),user.getCareer(),user.getUserImage());
     }
 
     //아이디 중복 확인

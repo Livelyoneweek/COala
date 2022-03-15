@@ -5,11 +5,13 @@ import com.clone.finalProject.domain.ChatMessage;
 import com.clone.finalProject.domain.ChatRoom;
 import com.clone.finalProject.dto.ChatMessageDto;
 
+//import com.clone.finalProject.dto.ChatRoomDto;
 import com.clone.finalProject.repository.ChatMessageRepository;
 import com.clone.finalProject.repository.ChatRoomRepository;
 import com.clone.finalProject.repository.RedisChatRepository;
 import com.clone.finalProject.repository.UserRepository;
 import com.clone.finalProject.security.jwt.JwtDecoder;
+import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.messaging.handler.annotation.Header;
@@ -31,6 +33,7 @@ public class ChatController {
     private final UserRepository userRepository;
     private final RedisChatRepository redisChatRepository;
     private final RedisTemplate redisTemplate;
+    private final ChatService chatService;
 
     //메인 페이지 채널
     @MessageMapping("/message")
@@ -64,24 +67,26 @@ public class ChatController {
         System.out.println("message : " + chatMessageDto.getMessage());
         System.out.println("SenderName : " + chatMessageDto.getSenderName());
         System.out.println("status : " + chatMessageDto.getStatus());
-        System.out.println("여기서 끊기는거지?");
+
 
         if(chatMessageDto.getStatus().equals("JOIN")) {
             chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 입장하셨습니다");
+            chatMessageDto.setUserCount(redisChatRepository.getUserCount("greetings"));
 
         } else if (chatMessageDto.getStatus().equals("OUT")) {
             chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 퇴장하셨습니다");
+            chatMessageDto.setUserCount(redisChatRepository.getUserCount("greetings"));
 
         } else {
             //채팅 메시지 저장
             ChatMessage chatMessage = new ChatMessage(uid, chatMessageDto, chatRoom);
             chatMessageRepository.save(chatMessage);
         }
-
+//        chatService.createChatRoom(chatMessageDto);
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        String destination = "greetings";
-        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
-        System.out.println("USERCOUNT : " + chatMessageDto.getUserCount());
+//        String destination = "greetings";
+//        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+        System.out.println(" ====== USERCOUNT : " + chatMessageDto.getUserCount());
 
         Thread.sleep(500); // simulated delay
         return chatMessageDto;
@@ -132,7 +137,7 @@ public class ChatController {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         String channel = String.valueOf(chatMessageDto.getPid());
-
+        System.out.println(" === channel : " + channel + " === ");
 
         Thread.sleep(500); // simulated delay
 

@@ -1,11 +1,17 @@
 package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.ChatMessage;
+import com.clone.finalProject.domain.ChatRoom;
+import com.clone.finalProject.dto.ChatMessageDto;
 import com.clone.finalProject.dto.ChatMessagedResponseDto;
+//import com.clone.finalProject.dto.ChatRoomDto;
 import com.clone.finalProject.repository.ChatMessageRepository;
+import com.clone.finalProject.repository.ChatRoomRepository;
+import com.clone.finalProject.repository.RedisChatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +20,9 @@ import java.util.List;
 public class ChatService {
 
     private final ChatMessageRepository chatMessageRepository;
+    private final ChatRoomRepository chatRoomRepository;
+    private final RedisChatRepository redisChatRepository;
 
-
-    /* destination정보에서 roomId 추출 */
     public String getRoomId(String destination) {
         int lastIndex = destination.lastIndexOf('/');
         if (lastIndex != -1)
