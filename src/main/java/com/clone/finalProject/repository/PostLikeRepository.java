@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface PostLikeRepository extends JpaRepository<PostLike,Long> {
 
     Optional<PostLike> findByUser_UidAndPost_Pid(Long uid, Long pid);
+    List<PostLike> findAllByUser_Uid(Long uid);
     List<PostLike> findAllByPost_Pid(Long pid);
 
 

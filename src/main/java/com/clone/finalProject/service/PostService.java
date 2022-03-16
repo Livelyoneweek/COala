@@ -22,8 +22,6 @@ public class PostService {
     private final TagsRepository tagsRepository;
     private final PostTagsRepository postTagsRepository;
 
-
-
     // post 생성
     @Transactional
     public Long postCreate(PostRequestDto postRequestDto, User user) {
@@ -46,25 +44,13 @@ public class PostService {
 
     // post 조회 (답변채택)
     public List<PostResponseDto> postGet() {
-        List<Post>postList = postRepository.findAllByStatusContainingOrderByCreatedAtDesc("check");
+        List<Post>postList = postRepository.findAllByStatusContainingOrderByCreatedAtDesc("selection");
 
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
         for (Post post : postList) {
-            Long uid = post.getUser().getUid();
 
-            List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
-            Long postLikeCount = Long.valueOf(postLikes.size());
-
-            //태그 추가
-            List<PostTags> postTagsList = postTagsRepository.findAllByPost_Pid(post.getPid());
-            List<String> tags = new ArrayList<>();
-            for (PostTags postTags : postTagsList) {
-                String tag = postTags.getTags().getTagName();
-                tags.add(tag);
-            }
-
-
-            PostResponseDto postResponseDto = new PostResponseDto(post, uid,postLikeCount,tags);
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
 
             postResponseDtos.add(postResponseDto);
 
@@ -79,28 +65,17 @@ public class PostService {
 
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
         for (Post post : postList) {
-            Long uid = post.getUser().getUid();
 
-            List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
-            Long postLikeCount = Long.valueOf(postLikes.size());
-
-            //태그 추가
-            List<PostTags> postTagsList = postTagsRepository.findAllByPost_Pid(post.getPid());
-            List<String> tags = new ArrayList<>();
-            for (PostTags postTags : postTagsList) {
-                String tag = postTags.getTags().getTagName();
-                tags.add(tag);
-            }
-
-            PostResponseDto postResponseDto = new PostResponseDto(post, uid,postLikeCount,tags);
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
 
             postResponseDtos.add(postResponseDto);
 
         }
         return postResponseDtos;
     }
-    
-    
+
+
 
     //post 삭제
     @Transactional
@@ -116,6 +91,8 @@ public class PostService {
             commentRepository.deleteAllByPid(pid);
 
             answerRepository.deleteAllByPost_pid(pid);
+
+            postTagsRepository.deleteAllByPost_Pid(pid);
 
             postRepository.deleteById(pid);
             System.out.println("포스트 삭제 완료 pid : " + pid);
@@ -138,7 +115,6 @@ public class PostService {
 
             creatTags(postRequestDto, post);
 
-
             post.update(postRequestDto);
             System.out.println("포스트 수정 완료 pid :"  + pid);
 
@@ -151,9 +127,55 @@ public class PostService {
         Post post = postRepository.findByPid(pid).orElseThrow(
                 ()-> new NullPointerException("post가 존재하지 않습니다.")
         );
-        Long uid = post.getUser().getUid();
 
-        List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(pid);
+        // 게시글 조회용 메소드
+        PostResponseDto postResponseDto = postGetMethod(post);
+
+        return postResponseDto;
+    }
+
+    //게시글 타이틀 검색하여 조회
+    public List<PostResponseDto> postTitleGet(String postTitle) {
+
+        List<Post> postList = postRepository.findByPostTitleContaining(postTitle);
+
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
+
+            postResponseDtos.add(postResponseDto);
+
+        }
+        return postResponseDtos;
+
+    }
+
+    //카게고리로 검색하여 게시글 조회
+    public List<PostResponseDto> postCategoryGet(String category) {
+
+        List<Post> postList = postRepository.findByCategoryContaining(category);
+
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
+
+            postResponseDtos.add(postResponseDto);
+
+        }
+        return postResponseDtos;
+
+    }
+
+
+    // 게시글 조회용 메소드
+    private PostResponseDto postGetMethod(Post post) {
+        User user = post.getUser();
+
+        List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
         Long postLikeCount = Long.valueOf(postLikes.size());
 
         //태그 추가
@@ -164,41 +186,12 @@ public class PostService {
             tags.add(tag);
         }
 
-        PostResponseDto postResponseDto = new PostResponseDto(post, uid,postLikeCount,tags);
-
+        PostResponseDto postResponseDto = new PostResponseDto(post, user,postLikeCount,tags);
         return postResponseDto;
     }
 
-    //게시글 타이틀 검색하여 조회
-    public List<PostResponseDto> postTitleGet(PostResponseDto postResponseDto) {
-        String postTitle = postResponseDto.getPostTitle();
-        List<Post> postList = postRepository.findByPostTitleContaining(postTitle);
 
-        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-        for (Post post : postList) {
-            Long uid = post.getUser().getUid();
-
-            List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
-            Long postLikeCount = Long.valueOf(postLikes.size());
-
-            //태그 추가
-            List<PostTags> postTagsList = postTagsRepository.findAllByPost_Pid(post.getPid());
-            List<String> tags = new ArrayList<>();
-            for (PostTags postTags : postTagsList) {
-                String tag = postTags.getTags().getTagName();
-                tags.add(tag);
-            }
-
-            PostResponseDto postResponseDto2 = new PostResponseDto(post, uid,postLikeCount,tags);
-
-            postResponseDtos.add(postResponseDto2);
-
-        }
-        return postResponseDtos;
-
-    }
-
-    // 태그 및 포스트태그 생성
+    // 태그 및 포스트태그 생성 메소드
     private void creatTags(PostRequestDto requestDto, Post post) {
         for(int i = 0; i < requestDto.getTags().size(); i++){
 
@@ -214,7 +207,6 @@ public class PostService {
                 System.out.println("tag 없어서 객체 새로 생성 tagName : " + tagName);
             }
 
-
             PostTags postTags = new PostTags();
             postTags.setPost(post);
             postTags.setTags(tag);
@@ -224,4 +216,6 @@ public class PostService {
     }
 
 
+
 }
+

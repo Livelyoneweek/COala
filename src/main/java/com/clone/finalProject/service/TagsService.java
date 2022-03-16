@@ -3,11 +3,11 @@ package com.clone.finalProject.service;
 import com.clone.finalProject.domain.Post;
 import com.clone.finalProject.domain.PostLike;
 import com.clone.finalProject.domain.PostTags;
+import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.PostResponseDto;
 import com.clone.finalProject.repository.PostLikeRepository;
 import com.clone.finalProject.repository.PostRepository;
 import com.clone.finalProject.repository.PostTagsRepository;
-import com.clone.finalProject.repository.TagsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TagsService {
-    private final TagsRepository tagsRepository;
     private final PostTagsRepository postTagsRepository;
     private final PostRepository postRepository;
     private final PostLikeRepository postLikeRepository;
@@ -27,8 +26,11 @@ public class TagsService {
     @Transactional
     public List<PostResponseDto> searchTag(String tag) {
 
+        System.out.println("tag2 : "  + tag);
+
         List<PostTags> postTagsList = postTagsRepository.findAllByTags_TagName(tag);
 
+        System.out.println("test111");
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
         for(PostTags postTags : postTagsList) {
             Long pid = postTags.getPost().getPid();
@@ -36,10 +38,12 @@ public class TagsService {
             Post post = postRepository.findByPid(pid).orElseThrow(
                     ()-> new NullPointerException("post가 존재하지 않습니다.")
             );
-            Long uid = post.getUser().getUid();
+            User user = post.getUser();
 
             List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(pid);
             Long postLikeCount = Long.valueOf(postLikes.size());
+
+            System.out.println("test222");
 
             //태그 추가
             List<PostTags> postTagsList2 = postTagsRepository.findAllByPost_Pid(post.getPid());
@@ -47,13 +51,15 @@ public class TagsService {
             for (PostTags postTags2 : postTagsList2) {
                 String tag2 = postTags2.getTags().getTagName();
                 tags.add(tag2);
+                System.out.println("test333");
             }
 
-            PostResponseDto postResponseDto = new PostResponseDto(post, uid,postLikeCount,tags);
+            PostResponseDto postResponseDto = new PostResponseDto(post, user,postLikeCount,tags);
 
             postResponseDtos.add(postResponseDto);
         }
 
         return postResponseDtos;
     }
+
 }

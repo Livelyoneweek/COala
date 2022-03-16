@@ -11,6 +11,8 @@ public class WeekRankResponseDto {
     private String username;
     private String nickname;
     private String career;
+    private String userImage;
+    private String blogUrl;
     private Long weekPoint;
 
     // 주간 랭킹
@@ -19,6 +21,8 @@ public class WeekRankResponseDto {
         this.nickname = user.getNickname();
         this.career = user.getCareer();
         this.weekPoint = user.getWeekPoint();
+        this.userImage = user.getUserImage();
+        this.blogUrl = user.getBlogUrl();
 
     }
 }

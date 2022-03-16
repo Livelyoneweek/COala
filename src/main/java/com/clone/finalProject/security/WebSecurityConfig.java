@@ -137,7 +137,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("POST,/app/**");
 
 
-        skipPathList.add("PUT,/islogin/**");
+//        skipPathList.add("PUT,/islogin/**");
 
 
 

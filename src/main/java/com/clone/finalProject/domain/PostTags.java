@@ -16,11 +16,11 @@ public class PostTags {
     @Id
     private Long postTagId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "POST_ID")
     private Post post;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "TAG_ID")
     private Tags tags;
 

@@ -32,6 +32,9 @@ public class User {
     private String userImage;
 
     @Column
+    private String blogUrl;
+
+    @Column
     private Long point;
 
     @Column
@@ -53,10 +56,19 @@ public class User {
         this.nickname = userInfoRequestDto.getNickname();
         this.career = userInfoRequestDto.getCareer();
         this.userImage = userInfoRequestDto.getUserImage();
+        this.blogUrl = userInfoRequestDto.getBlogUrl();
+
     }
 
     // 유저 패스워드 수정
     public void userPasswordUpdate(String encodePassword){
         this.password = encodePassword;
+    }
+
+    // 유저 점수 업데이트
+    public void userPointUpdate (Long point, Long weekPoint, Long monthPoint) {
+        this.point = point;
+        this.weekPoint = weekPoint;
+        this.monthPoint = monthPoint;
     }
 }

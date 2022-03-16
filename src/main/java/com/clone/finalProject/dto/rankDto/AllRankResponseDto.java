@@ -11,7 +11,10 @@ public class AllRankResponseDto {
     private String username;
     private String nickname;
     private String career;
+    private String userImage;
+    private String blogUrl;
     private Long point;
+
 
     //전체 랭킹
     public AllRankResponseDto(User user) {
@@ -19,5 +22,7 @@ public class AllRankResponseDto {
         this.nickname = user.getNickname();
         this.career = user.getCareer();
         this.point = user.getPoint();
+        this.userImage = user.getUserImage();
+        this.blogUrl = user.getBlogUrl();
     }
 }

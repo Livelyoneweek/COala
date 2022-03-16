@@ -19,7 +19,7 @@ public class CommentController {
     @PostMapping("/islogin/comment/write")
     public Long commentCreate(@RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         System.out.println("댓글 작성 진행");
-        System.out.println(" 댓글 title : " +commnetResponseDto.getCommentTitle());
+        System.out.println(" 댓글 내용: " +commnetResponseDto.getComment());
 
         User user = userDeta.getUser();
         Long commentId = commnetService.commentCreate(commnetResponseDto, user);
@@ -28,7 +28,7 @@ public class CommentController {
     }
 
     // commnet 삭제
-    @DeleteMapping("/islogin/comment/delete/commentId")
+    @DeleteMapping("/islogin/comment/delete/{commentId}")
     public void postDelete(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         Long uid = userDeta.getUid();
         commnetService.commentDelete(uid, commentId);
@@ -36,7 +36,7 @@ public class CommentController {
     }
 
     // commnet 수정
-    @PutMapping("/islogin/comment/revice/commentId")
+    @PutMapping("/islogin/comment/revice/{commentId}")
     public void postEdit(@PathVariable Long commentId, @RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
         Long uid = userDeta.getUid();
         commnetService.commentEdit(commentId, commnetResponseDto, uid);

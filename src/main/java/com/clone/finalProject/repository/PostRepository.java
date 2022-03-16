@@ -1,6 +1,7 @@
 package com.clone.finalProject.repository;
 
 import com.clone.finalProject.domain.Post;
+import com.clone.finalProject.domain.PostTags;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByStatusContainsOrderByCreatedAtDesc(String noCheck);
 
 
-
     List<Post> findByPostTitleContaining(String keyword);
+    List<Post> findByCategoryContaining(String keyword);
 
 }
