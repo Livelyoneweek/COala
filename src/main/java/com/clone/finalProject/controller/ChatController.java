@@ -38,10 +38,9 @@ public class ChatController {
     //메인 페이지 채널
     @MessageMapping("/message")
     @SendTo("/topic/greetings")
-    public ChatMessageDto greeting(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
-
+    public ChatMessageDto greeting(ChatMessageDto chatMessageDto) throws Exception {
         chatMessageDto.setCreatedAt(LocalDateTime.now());
-
+        Thread.sleep(500); // simulated delay
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         ChatRoom chatRoom = new ChatRoom();
         if(!chatRoomRepository.findByArea("main").isPresent()) {
@@ -56,12 +55,12 @@ public class ChatController {
 
         Long uid = 0L;
         /* 토큰 정보 추출 */
-        if (token != null) {
-            String tokenInfo = token.substring(7);
-            String username = jwtDecoder.decodeUsername(tokenInfo);
-            System.out.println("메인 페이지 채널 username : " + username);
-            uid = userRepository.findByUsername(username).get().getUid();
-        }
+//        if (token != null) {
+//            String tokenInfo = token.substring(7);
+//            String username = jwtDecoder.decodeUsername(tokenInfo);
+//            System.out.println("메인 페이지 채널 username : " + username);
+//            uid = userRepository.findByUsername(username).get().getUid();
+//        }
 
 
         System.out.println("message : " + chatMessageDto.getMessage());
@@ -72,10 +71,12 @@ public class ChatController {
         if(chatMessageDto.getStatus().equals("JOIN")) {
             chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 입장하셨습니다");
             chatMessageDto.setUserCount(redisChatRepository.getUserCount("greetings"));
+            System.out.println("=== 연결이다 : " + chatMessageDto.getMessage());
 
         } else if (chatMessageDto.getStatus().equals("OUT")) {
             chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 퇴장하셨습니다");
             chatMessageDto.setUserCount(redisChatRepository.getUserCount("greetings"));
+            System.out.println("===== 끊겼다 : " + chatMessageDto.getMessage());
 
         } else {
             //채팅 메시지 저장
@@ -84,11 +85,11 @@ public class ChatController {
         }
 //        chatService.createChatRoom(chatMessageDto);
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//        String destination = "greetings";
-//        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+        String destination = "greetings";
+        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
         System.out.println(" ====== USERCOUNT : " + chatMessageDto.getUserCount());
 
-        Thread.sleep(500); // simulated delay
+
         return chatMessageDto;
 
     }

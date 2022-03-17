@@ -59,17 +59,17 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
         }else if(StompCommand.DISCONNECT == headerAccessor.getCommand()){
             System.out.println("유저 disconnetct");
 
-            String destination = (String) message.getHeaders()
+            String sessionId = (String) message.getHeaders()
                     .get("simpSessionId");
 
-            String roomId = redisChatRepository.getUserEnterRoomId(destination);
+            String destination = redisChatRepository.getUserEnterRoomId(sessionId);
 
             /* 채팅방의 인원수를 -1한다. */
-            redisChatRepository.minusUserCount(roomId);
-            System.out.println("=== DISCONNECT sessionId : " + destination);
+            redisChatRepository.minusUserCount(destination);
+            System.out.println("=== DISCONNECT sessionId : " + sessionId);
             System.out.println(("=== DISCONNECT destination : " + destination));
             /* 퇴장한 클라이언트의 roomId 맵핑 정보를 삭제한다. */
-            redisChatRepository.removeUserEnterInfo(destination);
+            redisChatRepository.removeUserEnterInfo(sessionId);
 
 
         }
