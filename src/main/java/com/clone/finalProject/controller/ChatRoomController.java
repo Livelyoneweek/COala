@@ -24,8 +24,7 @@ import java.util.Map;
 public class ChatRoomController {
 
     private final ChatService chatService;
-    private final CacheService cacheService;
-    private final FwordRepository fwordRepository;
+
 
     // 메인페이지 채널 채팅 내역 조회
     @GetMapping("/chatting/main")
@@ -53,35 +52,7 @@ public class ChatRoomController {
     }
 
 
-    //내장 캐시로 욕설 디비담는 테스트 진행 중
-    @GetMapping("/test/pls")
-    public HashMap<Integer,String> testpls() {
-        HashMap<Integer,String> fowrds = cacheService.getCacheData("key");
-        return fowrds;
-    }
 
-    // 욕설 test
-    @Transactional
-    @GetMapping("/test/pls2")
-    public void test22(){
-
-//        List<Fword>fwordList = fwordRepository.findAll();
-//
-//        for (Fword fword : fwordList) {
-//            String st= fword.getFWord().trim();
-//            fword.update(st);
-//        }
-//        System.out.println("공백 없애기 완료");
-
-        HashMap<Integer,String> fowrds= cacheService.getCacheData("key");
-
-//        전체 출력문
-//        for (Map.Entry<Integer, String> entrySet : fowrds.entrySet()) {
-//            System.out.println(entrySet.getKey() + " : " + entrySet.getValue());
-//        }
-
-
-    }
 
 
 }

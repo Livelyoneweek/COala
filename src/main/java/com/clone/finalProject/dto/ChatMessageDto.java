@@ -20,6 +20,8 @@ public class ChatMessageDto implements Serializable {
     private String status;
     private String area;
     private Long pid;
+    private Long uid;
+    private String career;
     private LocalDateTime createdAt;
     private String opposingUserName;
 
