@@ -83,6 +83,7 @@ public class PostController {
     // 카테고리로 게시글 검색
     @GetMapping("/category/search/{category}")
     public List<PostResponseDto> postCategoryGet(@PathVariable String category) {
+        System.out.println("category : " + category);
         List<PostResponseDto> postResponseDtoList = postService.postCategoryGet(category);
 
         return postResponseDtoList;

@@ -4,6 +4,7 @@ import com.clone.finalProject.domain.Alarm;
 import com.clone.finalProject.domain.AnswerLike;
 import com.clone.finalProject.domain.Post;
 import com.clone.finalProject.domain.User;
+import com.clone.finalProject.dto.AlarmResponseDto;
 import com.clone.finalProject.dto.AnswerLikeResponseDto;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -45,29 +46,29 @@ public class AnswerLikeService {
 
             // 답변 채택이 이미 있는데 같은 답변일 때 (채택 취소) ,, 채택취소 못하게 수정
             if(answerId.equals(answerLike.getAnswerId()) ) {
-                answerLikeRepository.deleteByAnswerId(answerId);
-
-                Post post = postRepository.findById(pid).orElseThrow(
-                        ()-> new NullPointerException("post가 존재하지 않습니다.")
-                );
-                post.checkUpdate("noCheck");
+//                answerLikeRepository.deleteByAnswerId(answerId);
+//
+//                Post post = postRepository.findById(pid).orElseThrow(
+//                        ()-> new NullPointerException("post가 존재하지 않습니다.")
+//                );
+//                post.checkUpdate("noCheck");
 
                 result.put("status","false");
 
-                // 포인트 점수 추가 업데이트
-                User user =userRepository.findByUid(answerUid).orElseThrow(
-                        ()-> new NullPointerException("User가 존재하지 않습니다.")
-                );
-                Long point =user.getPoint();
-                Long weekPoint = user.getWeekPoint();
-                Long monthPoint = user.getMonthPoint();
-
-                point -= 50;
-                weekPoint -= 50;
-                monthPoint -= 50;
-
-                user.userPointUpdate(point, weekPoint, monthPoint);
-                userRepository.save(user);
+//                // 포인트 점수 추가 업데이트
+//                User user =userRepository.findByUid(answerUid).orElseThrow(
+//                        ()-> new NullPointerException("User가 존재하지 않습니다.")
+//                );
+//                Long point =user.getPoint();
+//                Long weekPoint = user.getWeekPoint();
+//                Long monthPoint = user.getMonthPoint();
+//
+//                point -= 50;
+//                weekPoint -= 50;
+//                monthPoint -= 50;
+//
+//                user.userPointUpdate(point, weekPoint, monthPoint);
+//                userRepository.save(user);
 
 
                 // 답변 채택이 이미 있는데 다른 답변일 때는 실패 처리
@@ -107,7 +108,9 @@ public class AnswerLikeService {
             alarmRepository.save(alarm);
 
             // 답변 채택된걸 답변 주인한테 알림
-            simpMessagingTemplate.convertAndSend("/queue/user"+userRepository.findByUid(answerUid).get().getNickname() ,"AnswerChoose");
+            String postPageUrl = "/" + "detail" +"/" + pid;
+            AlarmResponseDto alarmResponseDto = new AlarmResponseDto("AnswerChoose" , postPageUrl);
+            simpMessagingTemplate.convertAndSend("/queue/user"+"/"+userRepository.findByUid(answerUid).get().getNickname() ,alarmResponseDto);
 
         }
 

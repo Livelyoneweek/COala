@@ -94,6 +94,8 @@ public class PostService {
 
             postTagsRepository.deleteAllByPost_Pid(pid);
 
+            postLikeRepository.deleteAllByPost_pid(pid);
+
             postRepository.deleteById(pid);
             System.out.println("포스트 삭제 완료 pid : " + pid);
         }

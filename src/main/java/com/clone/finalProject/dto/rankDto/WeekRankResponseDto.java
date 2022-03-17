@@ -14,6 +14,7 @@ public class WeekRankResponseDto {
     private String userImage;
     private String blogUrl;
     private Long weekPoint;
+    private Long rank;
 
     // 주간 랭킹
     public WeekRankResponseDto(User user) {
@@ -24,5 +25,16 @@ public class WeekRankResponseDto {
         this.userImage = user.getUserImage();
         this.blogUrl = user.getBlogUrl();
 
+    }
+
+
+    public WeekRankResponseDto(User user, Long rank) {
+        this.username = user.getUsername();
+        this.nickname = user.getNickname();
+        this.career = user.getCareer();
+        this.weekPoint = user.getWeekPoint();
+        this.userImage = user.getUserImage();
+        this.blogUrl = user.getBlogUrl();
+        this.rank = rank;
     }
 }

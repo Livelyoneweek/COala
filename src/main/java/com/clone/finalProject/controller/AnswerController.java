@@ -21,8 +21,8 @@ public class AnswerController {
     @PostMapping("/islogin/answer/{pid}")
     public Long postCreate(@RequestBody AnswerResponseDto answerResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         User user = userDeta.getUser();
-        Long answrId = answerService.answerCreate(answerResponseDto,user);
-        return answrId;
+        Long answerId = answerService.answerCreate(answerResponseDto,user);
+        return answerId;
     }
 
     // answer 조회

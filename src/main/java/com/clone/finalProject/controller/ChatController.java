@@ -5,15 +5,13 @@ import com.clone.finalProject.domain.ChatMessage;
 import com.clone.finalProject.domain.ChatRoom;
 import com.clone.finalProject.dto.ChatMessageDto;
 
-//import com.clone.finalProject.dto.ChatRoomDto;
 import com.clone.finalProject.repository.ChatMessageRepository;
 import com.clone.finalProject.repository.ChatRoomRepository;
 import com.clone.finalProject.repository.RedisChatRepository;
 import com.clone.finalProject.repository.UserRepository;
 import com.clone.finalProject.security.jwt.JwtDecoder;
-import com.clone.finalProject.service.ChatService;
+import com.clone.finalProject.service.CacheService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -21,6 +19,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 @RequiredArgsConstructor
 @Controller
@@ -32,8 +32,7 @@ public class ChatController {
     private final ChatMessageRepository chatMessageRepository;
     private final UserRepository userRepository;
     private final RedisChatRepository redisChatRepository;
-    private final RedisTemplate redisTemplate;
-    private final ChatService chatService;
+    private final CacheService cacheService;
 
     //메인 페이지 채널
     @MessageMapping("/message")
@@ -79,6 +78,13 @@ public class ChatController {
             System.out.println("===== 끊겼다 : " + chatMessageDto.getMessage());
 
         } else {
+
+            System.out.println("비속어 필터링 전 채팅 : " + chatMessageDto.getMessage());
+            // 비속어 필터링 메소드
+            chatFilter(chatMessageDto);
+
+            System.out.println("비속어 필터링 후 채팅 : " + chatMessageDto.getMessage());
+
             //채팅 메시지 저장
             ChatMessage chatMessage = new ChatMessage(uid, chatMessageDto, chatRoom);
             chatMessageRepository.save(chatMessage);
@@ -93,6 +99,7 @@ public class ChatController {
         return chatMessageDto;
 
     }
+
 
     //게시글 페이지 채널
     @MessageMapping("/message1")
@@ -124,12 +131,16 @@ public class ChatController {
 
 
         if(chatMessageDto.getStatus().equals("JOIN")) {
-            chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 입장하셨습니다");
+            chatMessageDto.setMessage(chatMessageDto.getSenderName()+"님이 입장하셨습니다");
 
         } else if (chatMessageDto.getStatus().equals("OUT")) {
-            chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 퇴장하셨습니다");
+            chatMessageDto.setMessage(chatMessageDto.getSenderName()+"님이 퇴장하셨습니다");
 
         } else {
+
+            // 비속어 필터링 메소드
+            chatFilter(chatMessageDto);
+
             //채팅 메시지 저장
             ChatMessage chatMessage = new ChatMessage(uid, chatMessageDto, chatRoom);
             chatMessageRepository.save(chatMessage);
@@ -182,6 +193,11 @@ public class ChatController {
             chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 퇴장하셨습니다");
 
         } else {
+
+            // 비속어 필터링 메소드
+            chatFilter(chatMessageDto);
+
+
             //채팅 메시지 저장
             ChatMessage chatMessage = new ChatMessage(senderUid, chatMessageDto, chatRoom);
             chatMessageRepository.save(chatMessage);
@@ -190,16 +206,48 @@ public class ChatController {
             chatMessageRepository.save(chatMessage2);
         }
 
-
-
         String channel = chatMessageDto.getSenderName();
         String channel2 = chatMessageDto.getOpposingUserName();
 
         Thread.sleep(500); // simulated delay
-        simpMessagingTemplate.convertAndSend("/queue/user"+channel ,chatMessageDto);
-        simpMessagingTemplate.convertAndSend("/queue/user"+channel2 ,chatMessageDto);
+        simpMessagingTemplate.convertAndSend("/queue/user" +"/"+channel ,chatMessageDto);
+        simpMessagingTemplate.convertAndSend("/queue/user" +"/"+channel2 ,chatMessageDto);
 
     }
+
+
+    // 비속어 필터링 메소드
+    private void chatFilter(ChatMessageDto chatMessageDto) {
+
+        //비속어 해쉬맵 가져옴
+        HashMap<Integer,String> fowrds = cacheService.getCacheData("key");
+
+        //유저 메시지 공백 제거
+        String message = chatMessageDto.getMessage().trim();
+
+        // 새로운 메시지 생성
+        StringBuilder newMessage = new StringBuilder();
+
+        StringTokenizer st = new StringTokenizer(message," ");
+
+        //반복문 돌면서 욕 필터 후 *로 치환하여 새로운 메시지 작성
+        while(st.hasMoreTokens()){
+            StringBuilder sb = new StringBuilder(st.nextToken());
+            StringBuilder star = new StringBuilder();
+            if(fowrds.containsValue(sb)){
+                for(int i=0; i<sb.length(); i++) {
+                    star.append("*");
+                }
+
+                sb.replace(0,sb.length(), String.valueOf(star));
+
+            }
+            newMessage.append(sb).append(" ");
+        }
+
+        chatMessageDto.setMessage(String.valueOf(newMessage));
+    }
+
 
 
 }

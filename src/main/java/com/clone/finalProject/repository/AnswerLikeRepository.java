@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface AnswerLikeRepository extends JpaRepository<AnswerLike,Long> {
 
     Optional<AnswerLike> findByUidAndPid(Long uid, Long pid);
+    Optional<AnswerLike> findByAnswerId(Long answerId);
     void deleteByAnswerId(Long answerId);
 
 }

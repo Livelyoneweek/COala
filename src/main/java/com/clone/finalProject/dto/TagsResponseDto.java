@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 public class TagsResponseDto {
-    private Long pId;
+    private Long pid;
     private Long uid;
     private String title;
     private String postComment;
