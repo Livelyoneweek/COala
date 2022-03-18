@@ -1,3 +1,3 @@
-# finalProject2
+# 코알라
 
 코알라
