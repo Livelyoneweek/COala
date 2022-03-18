@@ -50,6 +50,9 @@ public class User {
         this.nickname = signupRequestDto.getNickname();
         this.career = signupRequestDto.getCareer();
         this.password = encodePassword;
+        this.point = 0L;
+        this.weekPoint = 0L;
+        this.monthPoint = 0L;
     }
     // 유저 정보 수정
     public void userInfoUpdate(UserInfoRequestDto userInfoRequestDto){

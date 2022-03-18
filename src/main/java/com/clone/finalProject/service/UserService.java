@@ -77,7 +77,17 @@ public class UserService {
         User user = userRepository.findByUid(uid).orElseThrow(
                 () -> new NullPointerException("유저가 존재하지 않습니다.")
         );
-        String enPassword = passwordEncoder.encode(userInfoRequestDto.getPassword());
-        user.userPasswordUpdate(enPassword);
+        // 패스워드 암호화 함
+        System.out.println(userInfoRequestDto.getPassword());
+
+        //기존 패스워드랑 비교해서 맞으면 뉴패스워드로 업데이트
+        if(passwordEncoder.matches(userInfoRequestDto.getPassword(), user.getPassword())){
+            System.out.println("비밀번호 변경 중");
+            String newPassword = passwordEncoder.encode(userInfoRequestDto.getNewPassword());
+            user.userPasswordUpdate(newPassword);
+        } else {
+            System.out.println("변경실패");
+        }
+
     }
 }

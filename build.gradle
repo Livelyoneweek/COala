@@ -53,13 +53,16 @@ dependencies {
     implementation group: 'org.apache.tika', name: 'tika-core', version: '1.24.1'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
 
+    // cache
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+
 
     // Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
     testImplementation 'it.ozimov:embedded-redis:0.7.2'
 
-
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
 }
 
 tasks.named('test') {

@@ -39,12 +39,11 @@ public class CommnetService {
                 ()-> new NullPointerException("comment가 존재하지 않습니다.")
         );
 
-        if(comment.getAnswer().getPost().getUser().getUid()==uid){
+        if(comment.getUid() == uid){
 
             commentRepository.deleteById(commentId);
             System.out.println("comment 삭제 완료 commentId : " + commentId);
         }
-
 
     }
     //commnet 수정
@@ -53,7 +52,7 @@ public class CommnetService {
         Comment comment = commentRepository.findByCommentId(commentId).orElseThrow(
                 ()-> new NullPointerException("comment가 존재하지 않습니다.")
         );
-        if(comment.getAnswer().getPost().getUser().getUid()==uid){
+        if(comment.getUid() == uid){
 
             comment.update(commnetResponseDto);
             System.out.println("comment 수정 완료 commentId : " + commentId);

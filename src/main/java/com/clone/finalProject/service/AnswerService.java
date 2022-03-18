@@ -1,11 +1,7 @@
 package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.*;
-import com.clone.finalProject.dto.AnswerResponseDto;
-import com.clone.finalProject.dto.CommnetResponseDto;
-
-import com.clone.finalProject.dto.PostRequestDto;
-import com.clone.finalProject.dto.PostResponseDto;
+import com.clone.finalProject.dto.*;
 
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -45,7 +42,11 @@ public class AnswerService {
         alarmRepository.save(alarm);
 
         // 답변 생성 된걸 포스트 주인한테 알림
-        simpMessagingTemplate.convertAndSend("/queue/user"+post.getUser().getNickname() ,"AnswerCreate");
+
+        String postPageUrl = "/" + "detail" +"/" + pid;
+        AlarmResponseDto alarmResponseDto = new AlarmResponseDto("AnswerCreate" , postPageUrl);
+
+        simpMessagingTemplate.convertAndSend("/queue/user" +"/" +post.getUser().getNickname() ,alarmResponseDto);
 
         return answer.getAnswerId();
     }
@@ -65,14 +66,16 @@ public class AnswerService {
             Long answerId = answer.getAnswerId();
 
             String status = "false";
-            if(answerLikeRepository.findById(answerId).isPresent()){
+            if(answerLikeRepository.findByAnswerId(answerId).isPresent()){
                 status ="true";
             }
 
             //답변에 댓글 리스트 담는중
             ArrayList<CommnetResponseDto> commnetResponseDtos = new ArrayList<>();
             List<Comment>commentList = commentRepository.findAllByAnswer_answerIdOrderByCreatedAtAsc(answerId);
+
             for (Comment comment : commentList){
+
                 User commentUser = userRepository.findByUid(comment.getUid()).orElseThrow(
                         ()-> new NullPointerException("User 가 존재하지 않습니다.")
                 );
@@ -96,7 +99,7 @@ public class AnswerService {
                 ()-> new NullPointerException("Answer 가 존재하지 않습니다.")
         );
 
-        if (answer.getPost().getUser().getUid() == uid) {
+        if (answer.getUid() == uid) {
             //댓글 및 대댓글 추가 시 포스트 밑에 있는 댓글 , 대댓글 부터 삭제 해야 함
 
             commentRepository.deleteAllByAnswer_answerId(answerId);
@@ -116,7 +119,7 @@ public class AnswerService {
                 ()-> new NullPointerException("Answer가 존재하지 않습니다.")
         );
 
-        if (answer.getPost().getUser().getUid() == uid) {
+        if (answer.getUid() == uid) {
             answer.update(answerResponseDto);
             System.out.println("Answer 수정 완료 answerId :"  + answerId);
         }

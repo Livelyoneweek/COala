@@ -18,4 +18,13 @@ public class Fword {
 
     @Column(nullable = false)
     private String fWord;
+
+    public Fword (String fWord) {
+        this.fWord = fWord;
+    }
+
+    public void update (String fWord){
+        this.fWord = fWord;
+    }
+
 }

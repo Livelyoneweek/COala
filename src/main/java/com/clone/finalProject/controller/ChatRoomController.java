@@ -1,8 +1,11 @@
 package com.clone.finalProject.controller;
 
 
+import com.clone.finalProject.domain.Fword;
 import com.clone.finalProject.dto.ChatMessagedResponseDto;
+import com.clone.finalProject.repository.FwordRepository;
 import com.clone.finalProject.security.UserDetailsImpl;
+import com.clone.finalProject.service.CacheService;
 import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,7 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +25,9 @@ public class ChatRoomController {
 
     private final ChatService chatService;
 
+
     // 메인페이지 채널 채팅 내역 조회
-    @GetMapping("/islogin/chatting/main")
+    @GetMapping("/chatting/main")
     public List<ChatMessagedResponseDto> chatMainGet() {
         List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.chatMainGet();
 
@@ -28,7 +36,7 @@ public class ChatRoomController {
 
 
     // 게시글 페이지 채널 채팅 내역 조회
-    @GetMapping("/islogin/chatting/{pid}")
+    @GetMapping("/chatting/{pid}")
     public List<ChatMessagedResponseDto> chatMainPost(@PathVariable Long pid) {
         List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.chatMainPost(pid);
 
@@ -42,5 +50,9 @@ public class ChatRoomController {
 
         return chatMessagedResponseDtoList;
     }
+
+
+
+
 
 }

@@ -35,12 +35,14 @@ public class PostLikeService {
 
         HashMap<String, String> result = new HashMap<>();
 
+        // 있는 경우 삭제
         if(postLikeRepository.findByUser_UidAndPost_Pid(uid,pid).isPresent()){
             Long postLikeId = postLikeRepository.findByUser_UidAndPost_Pid(uid,pid).get().getPostLikeId();
             postLikeRepository.deleteById(postLikeId);
 
             result.put("postLike","false");
 
+        //없으니 생성
         } else {
             User user = userRepository.findById(uid).orElseThrow(
                     ()-> new NullPointerException("User가 존재하지 않습니다.")

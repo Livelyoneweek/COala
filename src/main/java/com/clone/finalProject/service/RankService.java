@@ -53,4 +53,57 @@ public class RankService {
         return monthRankResponseDtos;
     }
 
+    //종합 나의 랭킹 조회
+    public AllRankResponseDto getAllRankMy(Long uid) {
+        List<User> allRank = userRepository.findAllByOrderByPointDesc();
+
+        User user = userRepository.findByUid(uid).get();
+        Long rank = 0L;
+
+        for (int i = 0; i<allRank.size(); i++) {
+            if (allRank.get(i).getUid().equals(uid)) {
+                rank = (long) (1 + i);
+                break;
+            }
+        }
+        AllRankResponseDto allRankResponseDto = new AllRankResponseDto(user, rank);
+
+        return allRankResponseDto;
+    }
+
+    //주간 나의 랭킹 조회
+    public WeekRankResponseDto getWeekRankMy(long uid) {
+        List<User> allRank = userRepository.findAllByOrderByWeekPointDesc();
+
+        User user = userRepository.findByUid(uid).get();
+        Long rank = 0L;
+
+        for (int i = 0; i<allRank.size(); i++) {
+            if (allRank.get(i).getUid().equals(uid)) {
+                rank = (long) (1 + i);
+                break;
+            }
+        }
+        WeekRankResponseDto weekRankResponseDto = new WeekRankResponseDto(user, rank);
+
+        return weekRankResponseDto;
+    }
+    //월간 나의 랭킹 조회
+    public MonthRankResponseDto getMonthRankMy(long uid) {
+
+        List<User> allRank = userRepository.findAllByOrderByMonthPointDesc();
+
+        User user = userRepository.findByUid(uid).get();
+        Long rank = 0L;
+
+        for (int i = 0; i<allRank.size(); i++) {
+            if (allRank.get(i).getUid().equals(uid)) {
+                rank = (long) (1 + i);
+                break;
+            }
+        }
+        MonthRankResponseDto monthRankResponseDto = new MonthRankResponseDto(user, rank);
+
+        return monthRankResponseDto;
+    }
 }

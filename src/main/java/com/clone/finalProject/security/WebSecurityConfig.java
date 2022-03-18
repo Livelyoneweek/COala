@@ -125,10 +125,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("GET,/post/**");
         skipPathList.add("POST,/images/upload");
         skipPathList.add("GET,/answer/**");
+        skipPathList.add("GET,/tag/**");
+        skipPathList.add("GET,/category/**");
         skipPathList.add("DELETE,/image/delete");
         skipPathList.add("GET,/comment/**");
 
         skipPathList.add("GET,/test/**");
+        skipPathList.add("GET,/read/**");
         skipPathList.add("POST,/test/**");
 
         skipPathList.add("GET,/ws/**");
