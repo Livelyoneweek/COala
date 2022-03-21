@@ -5,12 +5,14 @@ import com.clone.finalProject.dto.PostRequestDto;
 import com.clone.finalProject.dto.PostResponseDto;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -31,15 +33,16 @@ public class PostService {
 
         //태그 확인 후 태그 생성
         if(postRequestDto.getTags() == null){
-            System.out.println("게시판 태그 없음");
+            log.info("게시판 태그 없음");
         }else {
             creatTags(postRequestDto, post);
         }
 
         postRepository.save(post);
-        System.out.println("포스트 생성 완료 포스트 타이틀 : " + postRequestDto.getPostTitle());
+        log.info("포스트 생성 완료 포스트 타이틀 : {}",  postRequestDto.getPostTitle());
         return post.getPid();
     }
+
 
 
     // post 조회 (답변채택)
@@ -99,7 +102,7 @@ public class PostService {
             postLikeRepository.deleteAllByPost_pid(pid);
 
             postRepository.deleteById(pid);
-            System.out.println("포스트 삭제 완료 pid : " + pid);
+            log.info("포스트 삭제 완료 pid : {}",  pid);
         }
 
     }
@@ -115,12 +118,12 @@ public class PostService {
         if (post.getUser().getUid() == uid) {
 
             postTagsRepository.deleteAllByPost_Pid(pid);
-            System.out.println("포스트 수정전 postTags 전부 삭제");
+            log.info("포스트 수정전 postTags 전부 삭제");
 
             creatTags(postRequestDto, post);
 
             post.update(postRequestDto);
-            System.out.println("포스트 수정 완료 pid :"  + pid);
+            log.info("포스트 수정 완료 pid :{}", pid);
 
         }
     }
@@ -200,7 +203,6 @@ public class PostService {
         List<Tags>tagsList = new ArrayList<>();
 
         for(int i = 0; i < requestDto.getTags().size(); i++){
-
             String tagName = requestDto.getTags().get(i);
             Tags tag = new Tags();
 
@@ -212,7 +214,7 @@ public class PostService {
             } else {
                 tag.setTagName(tagName);
                 tagsRepository.save(tag);
-                System.out.println("tag 없어서 객체 새로 생성 tagName : " + tagName);
+                log.info("tag 없어서 객체 새로 생성 tagName : {}",  tagName);
             }
             tagsList.add(tag);
         }
@@ -226,7 +228,7 @@ public class PostService {
     public void creatPostTags(Post post, Tags tag) {
         PostTags postTags = new PostTags(post, tag);
         postTagsRepository.save(postTags);
-        System.out.println("postTags 객체 생성");
+        log.info("postTags 객체 생성");
     }
 
 

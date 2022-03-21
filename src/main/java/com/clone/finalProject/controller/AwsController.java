@@ -2,6 +2,7 @@ package com.clone.finalProject.controller;
 
 import com.clone.finalProject.service.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.HashMap;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class AwsController {
@@ -19,14 +21,14 @@ public class AwsController {
 
     @PostMapping("/images/upload")
     public HashMap<String,String> upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
-        System.out.println("이미지 전송 중");
+        log.info("이미지 전송 중");
 
         String imgUrl = "";
         String fileName = "";
         HashMap<String,String> imgInfo = s3Uploader.upload(multipartFile, "static");
         imgUrl = imgInfo.get("img");
 
-        System.out.println("이미지 url : " + imgUrl );
+        log.info("이미지 url : {}", imgUrl );
 
         fileName = imgInfo.get("fileName");
 

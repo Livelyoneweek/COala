@@ -5,6 +5,7 @@ import com.clone.finalProject.domain.Fword;
 import com.clone.finalProject.repository.FwordRepository;
 import com.clone.finalProject.service.CacheService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class TxtReadController {
@@ -40,7 +42,7 @@ public class TxtReadController {
         String str;
 
         while ((str = br.readLine()) != null) {
-            System.out.println(str);
+            log.info(str);
         }
         br.close();
 
@@ -65,17 +67,17 @@ public class TxtReadController {
 //            String st= fword.getFWord().trim();
 //            fword.update(st);
 //        }
-//        System.out.println("공백 없애기 완료");
+//        log.info("공백 없애기 완료");
 
         HashMap<Integer,String> fowrds= cacheService.getCacheData("key");
 
 
-        System.out.println(fowrds.containsValue("잡놈"));
+        log.info(String.valueOf(fowrds.containsValue("잡놈")));
 
 
 //        전체 출력문
 //        for (Map.Entry<Integer, String> entrySet : fowrds.entrySet()) {
-//            System.out.println(entrySet.getKey() + " : " + entrySet.getValue());
+//            log.info(entrySet.getKey() + " : " + entrySet.getValue());
 //        }
 
 

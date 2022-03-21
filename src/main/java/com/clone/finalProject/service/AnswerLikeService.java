@@ -5,6 +5,7 @@ import com.clone.finalProject.dto.AlarmResponseDto;
 import com.clone.finalProject.dto.AnswerLikeResponseDto;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AnswerLikeService {
@@ -28,13 +30,13 @@ public class AnswerLikeService {
     @Transactional
     public HashMap<String, String> answerLike(AnswerLikeResponseDto answerLikeResponseDto) {
         Long uid = answerLikeResponseDto.getUid();
-        System.out.println("uid : " +uid);
+        log.info("uid : {}", uid);
         Long pid = answerLikeResponseDto.getPid();
-        System.out.println("pid : " +pid);
+        log.info("pid : {}", pid);
         Long answerId = answerLikeResponseDto.getAnswerId();
-        System.out.println("answerId : " +answerId);
+        log.info("answerId : {}", answerId);
         Long answerUid = answerLikeResponseDto.getAnswerUid();
-        System.out.println("answerUid : " +answerUid);
+        log.info("answerUid : {}", answerUid);
 
         Answer answer = answerRepository.findByAnswerId(answerId).orElseThrow(
                 ()-> new NullPointerException("answer 존재하지 않습니다.")

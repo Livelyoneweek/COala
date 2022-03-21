@@ -22,7 +22,7 @@ public class PostController {
     // post 생성
     @PostMapping("/islogin/post/write")
     public Long postCreate(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
-        System.out.println("img : " + postRequestDto.getPostImg());
+        log.info("img : {}", postRequestDto.getPostImg());
         log.info("img : {}",postRequestDto.getPostImg());
 
         User user = userDeta.getUser();
@@ -87,7 +87,7 @@ public class PostController {
     // 카테고리로 게시글 검색
     @GetMapping("/category/search/{category}")
     public List<PostResponseDto> postCategoryGet(@PathVariable String category) {
-        System.out.println("category : " + category);
+        log.info("category : {}", category);
         List<PostResponseDto> postResponseDtoList = postService.postCategoryGet(category);
 
         return postResponseDtoList;

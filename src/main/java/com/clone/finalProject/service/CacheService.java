@@ -4,12 +4,14 @@ package com.clone.finalProject.service;
 import com.clone.finalProject.domain.Fword;
 import com.clone.finalProject.repository.FwordRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CacheService {
@@ -18,7 +20,7 @@ public class CacheService {
 
     @Cacheable(cacheNames = "fwordStore", key ="#key")
     public HashMap<Integer,String> getCacheData(final String key) {
-        System.out.println("캐시에 데이터 없을 경우 출력");
+        log.info("캐시에 데이터 없을 경우 출력");
         List<Fword> fwordList = fwordRepository.findAll();
         HashMap<Integer,String> fwords = new HashMap<>();
         for (int i = 0; i<fwordList.size(); i++) {

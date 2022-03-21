@@ -7,10 +7,12 @@ import com.clone.finalProject.dto.CommnetResponseDto;
 import com.clone.finalProject.repository.AnswerRepository;
 import com.clone.finalProject.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CommnetService {
@@ -27,7 +29,7 @@ public class CommnetService {
 
         Comment comment = new Comment(commnetResponseDto,answer);
         commentRepository.save(comment);
-        System.out.println("commnet 생성 완료");
+        log.info("commnet 생성 완료");
 
         return comment.getCommentId();
 
@@ -42,7 +44,7 @@ public class CommnetService {
         if(comment.getUid() == uid){
 
             commentRepository.deleteById(commentId);
-            System.out.println("comment 삭제 완료 commentId : " + commentId);
+            log.info("comment 삭제 완료 commentId : {}",  commentId);
         }
 
     }
@@ -55,7 +57,7 @@ public class CommnetService {
         if(comment.getUid() == uid){
 
             comment.update(commnetResponseDto);
-            System.out.println("comment 수정 완료 commentId : " + commentId);
+            log.info("comment 수정 완료 commentId : {}",  commentId);
         }
 
 

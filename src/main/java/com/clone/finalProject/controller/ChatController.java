@@ -12,6 +12,7 @@ import com.clone.finalProject.repository.UserRepository;
 import com.clone.finalProject.security.jwt.JwtDecoder;
 import com.clone.finalProject.service.CacheService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class ChatController {
@@ -62,7 +64,7 @@ public class ChatController {
         if (!(String.valueOf(token).equals("null"))) {
             String tokenInfo = token.substring(7);
             username = jwtDecoder.decodeUsername(tokenInfo);
-//            System.out.println("메인 페이지 채널 username : " + username);
+//            log.info("메인 페이지 채널 username : {}", username);
 //            uid = userRepository.findByUsername(username).get().getUid();
         }
 
@@ -71,7 +73,7 @@ public class ChatController {
             if(username!=""){
                 chatMessageDto.setMessage( username+"님이 입장하셨습니다");
 //                chatMessageDto.setUserCount(redisChatRepository.getUserCount("greetings"));
-                System.out.println("=== 연결이다 : " + chatMessageDto.getMessage());
+                log.info("=== 연결이다 : {}", chatMessageDto.getMessage());
             }
 
 
@@ -80,17 +82,17 @@ public class ChatController {
 
             chatMessageDto.setMessage( username+"님이 퇴장하셨습니다");
 //            chatMessageDto.setUserCount(redisChatRepository.getUserCount("greetings"));
-            System.out.println("===== 끊겼다 : " + chatMessageDto.getMessage());
+            log.info("===== 끊겼다 : {}", chatMessageDto.getMessage());
 
         } else {
             uid = chatMessageDto.getUid();
             String career = userRepository.findByUid(uid).get().getCareer();
             chatMessageDto.setCareer(career);
 
-            System.out.println("비속어 필터링 전 채팅 : " + chatMessageDto.getMessage());
+            log.info("비속어 필터링 전 채팅 : {}", chatMessageDto.getMessage());
             // 비속어 필터링 메소드
             chatFilter(chatMessageDto);
-            System.out.println("비속어 필터링 후 채팅 : " + chatMessageDto.getMessage());
+            log.info("비속어 필터링 후 채팅 : {}", chatMessageDto.getMessage());
 
             //채팅 메시지 저장
             ChatMessage chatMessage = new ChatMessage(uid, chatMessageDto, chatRoom);
@@ -100,7 +102,7 @@ public class ChatController {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         String destination = "greetings";
 //        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
-//        System.out.println(" ====== USERCOUNT : " + chatMessageDto.getUserCount());
+//        log.info(" ====== USERCOUNT : " + chatMessageDto.getUserCount());
 
         return chatMessageDto;
 
@@ -111,10 +113,10 @@ public class ChatController {
     @Transactional
     @MessageMapping("/message1")
     public void greeting2(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
-        System.out.println("getPid :" + chatMessageDto.getPid());
-        System.out.println("message : " + chatMessageDto.getMessage());
-        System.out.println("SenderName : " + chatMessageDto.getSenderName());
-        System.out.println("status : " + chatMessageDto.getStatus());
+        log.info("getPid :{}", chatMessageDto.getPid());
+        log.info("message : {}", chatMessageDto.getMessage());
+        log.info("SenderName : {}", chatMessageDto.getSenderName());
+        log.info("status : {}", chatMessageDto.getStatus());
 
         Thread.sleep(500); // simulated delay
 
@@ -141,7 +143,7 @@ public class ChatController {
 
             String tokenInfo = token.substring(7);
             username = jwtDecoder.decodeUsername(tokenInfo);
-//            System.out.println("메인 페이지 채널 username : " + username);
+//            log.info("메인 페이지 채널 username : {}", username);
 //            uid = userRepository.findByUsername(username).get().getUid();
         }
 
@@ -171,14 +173,14 @@ public class ChatController {
 
 //            String destination = String.valueOf(chatMessageDto.getPid());
 //            chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
-//            System.out.println(" ====== POST USERCOUNT:"+ chatMessageDto.getPid() +":"+ chatMessageDto.getUserCount());
+//            log.info(" ====== POST USERCOUNT:{}", chatMessageDto.getPid() +":"+ chatMessageDto.getUserCount());
 
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         String destination = String.valueOf(chatMessageDto.getPid());
-        System.out.println(" === channel : " + destination + " === ");
+        log.info(" === channel : {}", destination + " === ");
 //        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
 
         simpMessagingTemplate.convertAndSend("/topic/greetings"+"/"+destination ,chatMessageDto);
@@ -211,7 +213,7 @@ public class ChatController {
         if (token != null) {
             String tokenInfo = token.substring(7);
             String username = jwtDecoder.decodeUsername(tokenInfo);
-            System.out.println("귓속말 채널 username : " + username);
+            log.info("귓속말 채널 username : {}", username);
         }
 
         if(chatMessageDto.getStatus().equals("JOIN")) {
