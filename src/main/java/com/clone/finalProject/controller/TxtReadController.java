@@ -1,6 +1,7 @@
 package com.clone.finalProject.controller;
 
 
+import com.clone.finalProject.domain.Fword;
 import com.clone.finalProject.repository.FwordRepository;
 import com.clone.finalProject.service.CacheService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -57,7 +59,7 @@ public class TxtReadController {
     @GetMapping("/test/pls2")
     public void test22(){
 
-//        List<Fword>fwordList = fwordRepository.findAll();
+//        List<Fword> fwordList = fwordRepository.findAll();
 //
 //        for (Fword fword : fwordList) {
 //            String st= fword.getFWord().trim();
@@ -66,6 +68,10 @@ public class TxtReadController {
 //        System.out.println("공백 없애기 완료");
 
         HashMap<Integer,String> fowrds= cacheService.getCacheData("key");
+
+
+        System.out.println(fowrds.containsValue("잡놈"));
+
 
 //        전체 출력문
 //        for (Map.Entry<Integer, String> entrySet : fowrds.entrySet()) {

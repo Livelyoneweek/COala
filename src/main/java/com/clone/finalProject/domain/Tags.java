@@ -18,4 +18,8 @@ public class Tags {
     @Column
     private String tagName;
 
+    public Tags (String tagName) {
+        this.tagName = tagName;
+    }
+
 }

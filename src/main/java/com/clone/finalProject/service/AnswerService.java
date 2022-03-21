@@ -66,7 +66,7 @@ public class AnswerService {
             Long answerId = answer.getAnswerId();
 
             String status = "false";
-            if(answerLikeRepository.findByAnswerId(answerId).isPresent()){
+            if(answerLikeRepository.findByAnswer_AnswerId(answerId).isPresent()){
                 status ="true";
             }
 
@@ -104,6 +104,10 @@ public class AnswerService {
 
             commentRepository.deleteAllByAnswer_answerId(answerId);
             System.out.println("답변 삭제 전 댓글 삭제");
+            
+            //
+            answerLikeRepository.deleteByAnswer_AnswerId(answerId);
+            System.out.println("답변 삭제 전 답변채택 삭제");
 
             answerRepository.deleteById(answerId);
             System.out.println("Answer 삭제 완료 answerId : " + answerId);

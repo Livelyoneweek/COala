@@ -6,11 +6,13 @@ import com.clone.finalProject.dto.PostResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.PostService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class PostController {
@@ -21,6 +23,8 @@ public class PostController {
     @PostMapping("/islogin/post/write")
     public Long postCreate(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         System.out.println("img : " + postRequestDto.getPostImg());
+        log.info("img : {}",postRequestDto.getPostImg());
+
         User user = userDeta.getUser();
         Long pid = postService.postCreate(postRequestDto,user);
 

@@ -1,9 +1,6 @@
 package com.clone.finalProject.service;
 
-import com.clone.finalProject.domain.Alarm;
-import com.clone.finalProject.domain.AnswerLike;
-import com.clone.finalProject.domain.Post;
-import com.clone.finalProject.domain.User;
+import com.clone.finalProject.domain.*;
 import com.clone.finalProject.dto.AlarmResponseDto;
 import com.clone.finalProject.dto.AnswerLikeResponseDto;
 import com.clone.finalProject.repository.*;
@@ -13,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -23,6 +21,7 @@ public class AnswerLikeService {
     private final UserRepository userRepository;
     private final AlarmRepository alarmRepository;
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private final AnswerRepository answerRepository;
 
 
     // 답변 채택 시 없으면 생성, 있으면 삭제하거나 실패
@@ -37,6 +36,10 @@ public class AnswerLikeService {
         Long answerUid = answerLikeResponseDto.getAnswerUid();
         System.out.println("answerUid : " +answerUid);
 
+        Answer answer = answerRepository.findByAnswerId(answerId).orElseThrow(
+                ()-> new NullPointerException("answer 존재하지 않습니다.")
+        );
+
         HashMap<String, String> result = new HashMap<>();
 
         if (answerLikeRepository.findByUidAndPid(uid,pid).isPresent()) {
@@ -45,7 +48,7 @@ public class AnswerLikeService {
             );
 
             // 답변 채택이 이미 있는데 같은 답변일 때 (채택 취소) ,, 채택취소 못하게 수정
-            if(answerId.equals(answerLike.getAnswerId()) ) {
+            if(answerId.equals(answerLike.getAnswer().getAnswerId()) ) {
 //                answerLikeRepository.deleteByAnswerId(answerId);
 //
 //                Post post = postRepository.findById(pid).orElseThrow(
@@ -78,7 +81,7 @@ public class AnswerLikeService {
 
             //답변 채택 없어서 생성함
         } else {
-            AnswerLike answerLike = new AnswerLike(answerLikeResponseDto);
+            AnswerLike answerLike = new AnswerLike(answerLikeResponseDto, answer);
 
             answerLikeRepository.save(answerLike);
 

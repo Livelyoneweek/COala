@@ -1,7 +1,5 @@
 package com.clone.finalProject.repository;
 
-import com.clone.finalProject.dto.ChatMessageDto;
-//import com.clone.finalProject.dto.ChatRoomDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ValueOperations;
