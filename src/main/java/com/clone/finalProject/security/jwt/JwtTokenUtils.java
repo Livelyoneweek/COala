@@ -3,9 +3,11 @@ package com.clone.finalProject.security.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.clone.finalProject.security.UserDetailsImpl;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
+@Slf4j
 public final class JwtTokenUtils {
 
     private static final int SEC = 1;
