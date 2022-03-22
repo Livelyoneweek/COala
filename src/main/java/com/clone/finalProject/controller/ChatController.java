@@ -43,6 +43,9 @@ public class ChatController {
     @MessageMapping("/message")
     @SendTo("/topic/greetings")
     public ChatMessageDto greeting(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
+        log.info("채팅테스트:{}",chatMessageDto.getMessage());
+
+        log.info("채팅 헤더 확인:{}",token);
 
         Thread.sleep(500); // simulated delay
 

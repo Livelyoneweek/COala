@@ -24,6 +24,7 @@ public class AnswerLikeService {
     private final AlarmRepository alarmRepository;
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final AnswerRepository answerRepository;
+    private final PointRepository pointRepository;
 
 
     // 답변 채택 시 없으면 생성, 있으면 삭제하거나 실패
@@ -107,6 +108,9 @@ public class AnswerLikeService {
 
             user.userPointUpdate(point, weekPoint, monthPoint);
             userRepository.save(user);
+
+            Point pointEntity = new Point(post.getUser().getUid(), user);
+            pointRepository.save(pointEntity);
 
             //생성되었을떄 포스트 유저 컬럼으로 Alarm 객체 저장
             Alarm alarm = new Alarm("AnswerChoose",pid,answerId ,post.getUser());
