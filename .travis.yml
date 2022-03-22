@@ -18,9 +18,9 @@ before_install:
 script: "./gradlew clean build"
 
 before_deploy:
-  - zip -r jaewon-study *
+  - zip -r springboot-webservice ./*
   - mkdir -p deploy
-  - mv jaewon-study.zip deploy/jaewon-study.zip
+  - mv springboot-webservice.zip deploy/springboot-webservice.zip
 
 deploy:
   - provider: s3
