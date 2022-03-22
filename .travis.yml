@@ -1,15 +1,18 @@
 language: java
 jdk:
-- openjdk8
+  - openjdk8
+
 branches:
   only:
-  - master
+    - master
 before_install:
-   - chmod +x gradlew
+  - chmod +x gradlew
+
+# Travis CI 서버의 Home
 cache:
   directories:
-  - "$HOME/.m2/repository"
-  - "$HOME/.gradle"
+    - '$HOME/.m2/repository'
+    - '$HOME/.gradle'
 script: "./gradlew clean build"
 
 before_deploy:
@@ -22,26 +25,15 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
 
-    bucket: 2022coala
+    bucket: hanghae8-final-project-travis
     region: ap-northeast-2
     skip_cleanup: true
     acl: private
     local_dir: deploy
     wait_until_deployed : true
 
-  - provider: codedeploy
-    access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
-    secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
-    bucket: 2022coala
-    key: springboot-webservice.zip
-    bundle_type: zip
-    application: springboot-webservice # 웹 콘솔에서 등록한 CodeDeploy 어플리케이션
-    deployment_group: springboot-webservice-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
-    region: ap-northeast-2
-    wait-until-deployed: true
-
+# CI 실행 완료 시 메일로 알람
 notifications:
   email:
     recipients:
-    - nakw0410@gmail.com
-    - wlvvwhs@naver.com
+      - nakw0410@gmail.com
