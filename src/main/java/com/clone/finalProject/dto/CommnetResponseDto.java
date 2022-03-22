@@ -1,6 +1,5 @@
 package com.clone.finalProject.dto;
 
-
 import com.clone.finalProject.domain.Comment;
 import com.clone.finalProject.domain.User;
 import lombok.AllArgsConstructor;
