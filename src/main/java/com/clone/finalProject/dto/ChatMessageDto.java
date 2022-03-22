@@ -6,13 +6,12 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Setter
 @Getter
 @NoArgsConstructor
 public class ChatMessageDto implements Serializable {
-//    public class ChatMessageDto implements Serializable {
+    //    public class ChatMessageDto implements Serializable {
 //    private static final long serialVersionUID = 6494678977089006639L;
 
     private String senderName;

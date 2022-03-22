@@ -1,5 +1,6 @@
 package com.clone.finalProject.repository;
 
+import com.clone.finalProject.domain.Post;
 import com.clone.finalProject.domain.PostTags;
 import org.springframework.data.jpa.repository.JpaRepository;
 

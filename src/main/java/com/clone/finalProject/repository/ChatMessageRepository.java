@@ -13,6 +13,5 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage,Long> {
     List<ChatMessage> findTOP50ByChatRoom_UidOrderByCreatedAtDesc(Long uid);
 
 
-
 }
  

@@ -77,8 +77,8 @@ public class PostService {
         }
         return postResponseDtos;
     }
-    
-    
+
+
 
     //post 삭제
     @Transactional
@@ -233,3 +233,4 @@ public class PostService {
 
 
 }
+
