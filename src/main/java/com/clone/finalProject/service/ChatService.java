@@ -89,6 +89,7 @@ public class ChatService {
 
         /* 토큰 정보 추출 */
         if (!(String.valueOf(token).equals("null"))) {
+            log.info("token : {}",String.valueOf(token));
             String tokenInfo = token.substring(7);
             username = jwtDecoder.decodeUsername(tokenInfo);
 //            uid = userRepository.findByUsername(username).get().getUid();
