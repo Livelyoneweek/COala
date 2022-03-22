@@ -6,14 +6,15 @@ branches:
   only:
     - master
 
-before_install:
-  - chmod +x gradlew
-
 # Travis CI 서버의 Home
 cache:
   directories:
     - '$HOME/.m2/repository'
     - '$HOME/.gradle'
+
+before_install:
+  - chmod +x gradlew
+
 script: "./gradlew clean build"
 
 before_deploy:
@@ -34,7 +35,7 @@ deploy:
     wait_until_deployed : true
 
 # CI 실행 완료 시 메일로 알람
-notifications:
-  email:
-    recipients:
-      - nakw0410@gmail.com
+#notifications:
+#  email:
+#    recipients:
+#      - nakw0410@gmail.com
