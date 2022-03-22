@@ -33,16 +33,16 @@ public class PostController {
 
     // post 조회 (답변채택)
     @GetMapping("/post/get/check")
-    public List<PostResponseDto> postGet() {
-        List<PostResponseDto> postResponseDtos = postService.postGet();
+    public List<PostResponseDto> postCheckGet() {
+        List<PostResponseDto> postResponseDtos = postService.postCheckGet();
 
         return postResponseDtos;
     }
 
     // post 조회 (답변대기)
     @GetMapping("/post/get/nocheck")
-    public List<PostResponseDto> postGet2() {
-        List<PostResponseDto> postResponseDtos = postService.postGet2();
+    public List<PostResponseDto> postWaitGet() {
+        List<PostResponseDto> postResponseDtos = postService.postWaitGet();
 
         return postResponseDtos;
     }
@@ -89,5 +89,16 @@ public class PostController {
 
         return postResponseDtoList;
     }
+
+    // post 관심글 조회
+    @GetMapping("/islogin/get/like")
+    public List<PostResponseDto> postLikeGet(@AuthenticationPrincipal UserDetailsImpl userDeta) {
+        Long uid = userDeta.getUid();
+        List<PostResponseDto> postResponseDtos = postService.postLikeGet(uid);
+
+        return postResponseDtos;
+    }
+
+
 
 }

@@ -46,7 +46,7 @@ public class PostService {
 
 
     // post 조회 (답변채택)
-    public List<PostResponseDto> postGet() {
+    public List<PostResponseDto> postCheckGet() {
         List<Post>postList = postRepository.findAllByStatusContainingOrderByCreatedAtDesc("selection");
 
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
@@ -63,7 +63,7 @@ public class PostService {
 
 
     // post 조회 (답변대기)
-    public List<PostResponseDto> postGet2() {
+    public List<PostResponseDto> postWaitGet() {
         List<Post>postList = postRepository.findAllByStatusContainsOrderByCreatedAtDesc("noCheck");
 
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
@@ -167,6 +167,24 @@ public class PostService {
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
         for (Post post : postList) {
 
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
+
+            postResponseDtos.add(postResponseDto);
+
+        }
+        return postResponseDtos;
+
+    }
+
+    // post 관심글 조회
+    public List<PostResponseDto> postLikeGet(Long uid) {
+
+        List<PostLike>postLikeList = postLikeRepository.findAllByUser_Uid(uid);
+
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (PostLike postLike : postLikeList) {
+            Post post = postLike.getPost();
             // 게시글 조회용 메소드
             PostResponseDto postResponseDto = postGetMethod(post);
 
