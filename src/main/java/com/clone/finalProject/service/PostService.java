@@ -5,12 +5,14 @@ import com.clone.finalProject.dto.PostRequestDto;
 import com.clone.finalProject.dto.PostResponseDto;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -21,6 +23,7 @@ public class PostService {
     private final PostLikeRepository postLikeRepository;
     private final TagsRepository tagsRepository;
     private final PostTagsRepository postTagsRepository;
+    private final AnswerLikeRepository answerLikeRepository;
 
     // post 생성
     @Transactional
@@ -29,17 +32,17 @@ public class PostService {
         Post post = new Post(postRequestDto, user);
 
         //태그 확인 후 태그 생성
-
         if(postRequestDto.getTags() == null){
-            System.out.println("게시판 태그 없음");
+            log.info("게시판 태그 없음");
         }else {
             creatTags(postRequestDto, post);
         }
 
         postRepository.save(post);
-        System.out.println("포스트 생성 완료 포스트 타이틀 : " + postRequestDto.getPostTitle());
+        log.info("포스트 생성 완료 포스트 타이틀 : {}",  postRequestDto.getPostTitle());
         return post.getPid();
     }
+
 
 
     // post 조회 (답변채택)
@@ -90,6 +93,8 @@ public class PostService {
             //댓글 및 대댓글 추가 시 포스트 밑에 있는 댓글 , 대댓글 부터 삭제 해야 함
             commentRepository.deleteAllByPid(pid);
 
+            answerLikeRepository.deleteByPid(pid);
+
             answerRepository.deleteAllByPost_pid(pid);
 
             postTagsRepository.deleteAllByPost_Pid(pid);
@@ -97,7 +102,7 @@ public class PostService {
             postLikeRepository.deleteAllByPost_pid(pid);
 
             postRepository.deleteById(pid);
-            System.out.println("포스트 삭제 완료 pid : " + pid);
+            log.info("포스트 삭제 완료 pid : {}",  pid);
         }
 
     }
@@ -113,12 +118,12 @@ public class PostService {
         if (post.getUser().getUid() == uid) {
 
             postTagsRepository.deleteAllByPost_Pid(pid);
-            System.out.println("포스트 수정전 postTags 전부 삭제");
+            log.info("포스트 수정전 postTags 전부 삭제");
 
             creatTags(postRequestDto, post);
 
             post.update(postRequestDto);
-            System.out.println("포스트 수정 완료 pid :"  + pid);
+            log.info("포스트 수정 완료 pid :{}", pid);
 
         }
     }
@@ -172,9 +177,8 @@ public class PostService {
 
     }
 
-
-    // 게시글 조회용 메소드
-    private PostResponseDto postGetMethod(Post post) {
+    // 게시글 조회용에 사용되는 메소드
+    public PostResponseDto postGetMethod(Post post) {
         User user = post.getUser();
 
         List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
@@ -194,29 +198,38 @@ public class PostService {
 
 
     // 태그 및 포스트태그 생성 메소드
-    private void creatTags(PostRequestDto requestDto, Post post) {
-        for(int i = 0; i < requestDto.getTags().size(); i++){
+    public void creatTags(PostRequestDto requestDto, Post post) {
 
+        List<Tags>tagsList = new ArrayList<>();
+
+        for(int i = 0; i < requestDto.getTags().size(); i++){
             String tagName = requestDto.getTags().get(i);
             Tags tag = new Tags();
+
             if (tagsRepository.findByTagName(tagName).isPresent()) {
                 tag = tagsRepository.findByTagName(tagName).orElseThrow(
                         ()-> new NullPointerException("태그가 존재하지 않습니다.")
                 );
+
             } else {
                 tag.setTagName(tagName);
                 tagsRepository.save(tag);
-                System.out.println("tag 없어서 객체 새로 생성 tagName : " + tagName);
+                log.info("tag 없어서 객체 새로 생성 tagName : {}",  tagName);
             }
-
-            PostTags postTags = new PostTags();
-            postTags.setPost(post);
-            postTags.setTags(tag);
-            postTagsRepository.save(postTags);
-            System.out.println("postTags 객체 생성");
+            tagsList.add(tag);
         }
+        for(Tags tags : tagsList) {
+            creatPostTags(post, tags);
+        }
+
     }
 
+    // 태그 및 포스트태그 생성 메소드
+    public void creatPostTags(Post post, Tags tag) {
+        PostTags postTags = new PostTags(post, tag);
+        postTagsRepository.save(postTags);
+        log.info("postTags 객체 생성");
+    }
 
 
 }

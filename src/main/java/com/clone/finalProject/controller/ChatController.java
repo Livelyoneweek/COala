@@ -11,8 +11,9 @@ import com.clone.finalProject.repository.ChatRoomRepository;
 import com.clone.finalProject.repository.RedisChatRepository;
 import com.clone.finalProject.repository.UserRepository;
 import com.clone.finalProject.security.jwt.JwtDecoder;
-import com.clone.finalProject.service.CacheService;
+import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -21,9 +22,10 @@ import org.springframework.stereotype.Controller;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.StringTokenizer;
 
+
+
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class ChatController {
@@ -34,15 +36,16 @@ public class ChatController {
     private final ChatMessageRepository chatMessageRepository;
     private final UserRepository userRepository;
     private final RedisChatRepository redisChatRepository;
-    private final CacheService cacheService;
+    private final ChatService chatService;
 
-    //메인 페이지 채널
+
+    //////////////////////////////////메인 페이지 채널///////////////////////////////////////////////////////////////
     @MessageMapping("/message")
     @SendTo("/topic/greetings")
-    public ChatMessageDto greeting(ChatMessageDto chatMessageDto) throws Exception {
-        chatMessageDto.setCreatedAt(LocalDateTime.now());
+    public ChatMessageDto greeting(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
+
         Thread.sleep(500); // simulated delay
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         ChatRoom chatRoom = new ChatRoom();
 
         // 채팅방있는지 확인 후 없으면 생성, 있으면 채팅방 변수에 할당해놓음 -> 채팅 저장 시에 사용할 예정
@@ -54,68 +57,24 @@ public class ChatController {
                     ()-> new NullPointerException("chatRoom이 존재하지 않습니다.")
             );
         }
+        //채팅 메시지 셋업 메소드
+        chatService.chatSettingMethod(chatMessageDto, token, chatRoom);
 
-        Long uid = 0L;
-
-        /* 토큰 정보 추출 */
-//        if (token != null) {
-//            String tokenInfo = token.substring(7);
-//            String username = jwtDecoder.decodeUsername(tokenInfo);
-//            System.out.println("메인 페이지 채널 username : " + username);
-//            uid = userRepository.findByUsername(username).get().getUid();
-//        }
-
-        if(chatMessageDto.getStatus().equals("JOIN")) {
-            chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 입장하셨습니다");
-            chatMessageDto.setUserCount(redisChatRepository.getUserCount("greetings"));
-            System.out.println("=== 연결이다 : " + chatMessageDto.getMessage());
-
-        } else if (chatMessageDto.getStatus().equals("OUT")) {
-            chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 퇴장하셨습니다");
-            chatMessageDto.setUserCount(redisChatRepository.getUserCount("greetings"));
-            System.out.println("===== 끊겼다 : " + chatMessageDto.getMessage());
-
-        } else {
-            uid = chatMessageDto.getUid();
-            String career = userRepository.findByUid(uid).get().getCareer();
-            chatMessageDto.setCareer(career);
-
-            System.out.println("비속어 필터링 전 채팅 : " + chatMessageDto.getMessage());
-            // 비속어 필터링 메소드
-            chatFilter(chatMessageDto);
-            System.out.println("비속어 필터링 후 채팅 : " + chatMessageDto.getMessage());
-
-            //채팅 메시지 저장
-            ChatMessage chatMessage = new ChatMessage(uid, chatMessageDto, chatRoom);
-            chatMessageRepository.save(chatMessage);
-        }
-//        chatService.createChatRoom(chatMessageDto);
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         String destination = "greetings";
-        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
-        System.out.println(" ====== USERCOUNT : " + chatMessageDto.getUserCount());
-
+        log.info("=== channel : {}",destination);
+//        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
         return chatMessageDto;
-
     }
 
-    //  @Header("Authorization") String token
-    //게시글 페이지 채널
+
+    //////////////////////////////////게시글 페이지 채널///////////////////////////////////////////////////////////////
     @Transactional
     @MessageMapping("/message1")
-    public void greeting2(ChatMessageDto chatMessageDto) throws Exception {
-        System.out.println("getPid :" + chatMessageDto.getPid());
-        System.out.println("message : " + chatMessageDto.getMessage());
-        System.out.println("SenderName : " + chatMessageDto.getSenderName());
-        System.out.println("status : " + chatMessageDto.getStatus());
+    public void greeting2(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
 
         Thread.sleep(500); // simulated delay
 
-        chatMessageDto.setCreatedAt(LocalDateTime.now());
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
         ChatRoom chatRoom = new ChatRoom();
-
         // 채팅방있는지 확인 후 없으면 생성, 있으면 채팅방 변수에 할당해놓음 -> 채팅 저장 시에 사용할 예정
         if(!(chatRoomRepository.findByPid(chatMessageDto.getPid()).isPresent())) {
             chatRoom = new ChatRoom("post",chatMessageDto.getPid());
@@ -125,55 +84,21 @@ public class ChatController {
                     ()-> new NullPointerException("chatRoom이 존재하지 않습니다.")
             );
         }
-
-        Long uid = 0L;
-        /* 토큰 정보 추출 */
-//        if (token != null) {
-//            String tokenInfo = token.substring(7);
-//            String username = jwtDecoder.decodeUsername(tokenInfo);
-//            System.out.println("게시글 채널 username : " + username);
-//            uid = userRepository.findByUsername(username).get().getUid();
-//        }
-
-        if(chatMessageDto.getStatus().equals("JOIN")) {
-            chatMessageDto.setMessage(chatMessageDto.getSenderName()+"님이 입장하셨습니다");
-
-        } else if (chatMessageDto.getStatus().equals("OUT")) {
-            chatMessageDto.setMessage(chatMessageDto.getSenderName()+"님이 퇴장하셨습니다");
-
-        } else {
-
-            uid = chatMessageDto.getUid();
-            String career = userRepository.findByUid(uid).get().getCareer();
-            chatMessageDto.setCareer(career);
-
-            // 비속어 필터링 메소드
-            chatFilter(chatMessageDto);
-
-            //채팅 메시지 저장
-            ChatMessage chatMessage = new ChatMessage(uid, chatMessageDto, chatRoom);
-            chatMessageRepository.save(chatMessage);
-        }
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        String channel = String.valueOf(chatMessageDto.getPid());
-        System.out.println(" === channel : " + channel + " === ");
+        //채팅 메시지 셋업 메소드
+        chatService.chatSettingMethod(chatMessageDto, token, chatRoom);
 
         String destination = String.valueOf(chatMessageDto.getPid());
-        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+        log.info("=== channel : {}",destination);
+//        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
 
-        System.out.println(" ====== USERCOUNT : " + chatMessageDto.getUserCount());
-
-        simpMessagingTemplate.convertAndSend("/topic/greetings"+"/"+channel ,chatMessageDto);
+        simpMessagingTemplate.convertAndSend("/topic/greetings"+"/"+destination ,chatMessageDto);
     }
 
-    //유저 개인 귓속말 채널
+    //////////////////////////////////유저 개인 귓속말 채널///////////////////////////////////////////////////////////////
     @MessageMapping("/user")
     public void greeting3(ChatMessageDto chatMessageDto,@Header("Authorization") String token) throws Exception {
         chatMessageDto.setCreatedAt(LocalDateTime.now());
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
         Long senderUid = userRepository.findByUsername(chatMessageDto.getSenderName()).get().getUid();
         Long opposingUid = userRepository.findByUsername(chatMessageDto.getOpposingUserName()).get().getUid();
 
@@ -195,7 +120,7 @@ public class ChatController {
         if (token != null) {
             String tokenInfo = token.substring(7);
             String username = jwtDecoder.decodeUsername(tokenInfo);
-            System.out.println("귓속말 채널 username : " + username);
+            log.info("귓속말 채널 username : {}", username);
         }
 
         if(chatMessageDto.getStatus().equals("JOIN")) {
@@ -207,8 +132,7 @@ public class ChatController {
         } else {
 
             // 비속어 필터링 메소드
-            chatFilter(chatMessageDto);
-
+            chatService.chatFilter(chatMessageDto);
 
             //채팅 메시지 저장
             ChatMessage chatMessage = new ChatMessage(senderUid, chatMessageDto, chatRoom);
@@ -225,39 +149,6 @@ public class ChatController {
         simpMessagingTemplate.convertAndSend("/queue/user" +"/"+channel ,chatMessageDto);
         simpMessagingTemplate.convertAndSend("/queue/user" +"/"+channel2 ,chatMessageDto);
 
-    }
-
-
-    // 비속어 필터링 메소드
-    private void chatFilter(ChatMessageDto chatMessageDto) {
-
-        //비속어 해쉬맵 가져옴
-        HashMap<Integer,String> fowrds = cacheService.getCacheData("key");
-
-        //유저 메시지 공백 제거
-        String message = chatMessageDto.getMessage().trim();
-
-        // 새로운 메시지 생성
-        StringBuilder newMessage = new StringBuilder();
-
-        StringTokenizer st = new StringTokenizer(message," ");
-
-        //반복문 돌면서 욕 필터 후 *로 치환하여 새로운 메시지 작성
-        while(st.hasMoreTokens()){
-            StringBuilder sb = new StringBuilder(st.nextToken());
-            StringBuilder star = new StringBuilder();
-            if(fowrds.containsValue(sb)){
-                for(int i=0; i<sb.length(); i++) {
-                    star.append("*");
-                }
-
-                sb.replace(0,sb.length(), String.valueOf(star));
-
-            }
-            newMessage.append(sb).append(" ");
-        }
-
-        chatMessageDto.setMessage(String.valueOf(newMessage));
     }
 
 }

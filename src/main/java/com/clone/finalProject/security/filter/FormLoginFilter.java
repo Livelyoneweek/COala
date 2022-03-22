@@ -3,6 +3,7 @@ package com.clone.finalProject.security.filter;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,7 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+@Slf4j
 public class FormLoginFilter extends UsernamePasswordAuthenticationFilter {
     final private ObjectMapper objectMapper;
 
@@ -26,8 +27,8 @@ public class FormLoginFilter extends UsernamePasswordAuthenticationFilter {
         UsernamePasswordAuthenticationToken authRequest;
         try {
             JsonNode requestBody = objectMapper.readTree(request.getInputStream());
-            System.out.println("username : " + requestBody.get("username").asText());
-            System.out.println("password : " + requestBody.get("password").asText());
+            log.info("username : " + requestBody.get("username").asText());
+            log.info("password : " + requestBody.get("password").asText());
             String username = requestBody.get("username").asText();
             String password = requestBody.get("password").asText();
             authRequest = new UsernamePasswordAuthenticationToken(username, password);

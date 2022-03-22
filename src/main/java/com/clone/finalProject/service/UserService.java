@@ -5,12 +5,13 @@ import com.clone.finalProject.dto.SignupRequestDto;
 import com.clone.finalProject.dto.UserInfoRequestDto;
 import com.clone.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -45,7 +46,7 @@ public class UserService {
         String enPassword = passwordEncoder.encode(requestDto.getPassword());
         User user = new User(requestDto, enPassword);
         userRepository.save(user); // DB 저장
-        System.out.println("회원가입 완료");
+        log.info("회원가입 완료");
 
     }
 
@@ -78,15 +79,15 @@ public class UserService {
                 () -> new NullPointerException("유저가 존재하지 않습니다.")
         );
         // 패스워드 암호화 함
-        System.out.println(userInfoRequestDto.getPassword());
+        log.info(userInfoRequestDto.getPassword());
 
         //기존 패스워드랑 비교해서 맞으면 뉴패스워드로 업데이트
         if(passwordEncoder.matches(userInfoRequestDto.getPassword(), user.getPassword())){
-            System.out.println("비밀번호 변경 중");
+            log.info("비밀번호 변경 중");
             String newPassword = passwordEncoder.encode(userInfoRequestDto.getNewPassword());
             user.userPasswordUpdate(newPassword);
         } else {
-            System.out.println("변경실패");
+            log.info("변경실패");
         }
 
     }

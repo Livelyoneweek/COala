@@ -5,10 +5,12 @@ import com.clone.finalProject.dto.CommnetResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.CommnetService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class CommentController {
@@ -18,8 +20,8 @@ public class CommentController {
     //commnet 생성
     @PostMapping("/islogin/comment/write")
     public Long commentCreate(@RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
-        System.out.println("댓글 작성 진행");
-        System.out.println(" 댓글 내용: " +commnetResponseDto.getComment());
+        log.info("댓글 작성 진행");
+        log.info(" 댓글 내용: {}", commnetResponseDto.getComment());
 
         User user = userDeta.getUser();
         Long commentId = commnetService.commentCreate(commnetResponseDto, user);

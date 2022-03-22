@@ -1,10 +1,12 @@
 package com.clone.finalProject.security.jwt;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.NoSuchElementException;
 
+@Slf4j
 @Component
 public class HeaderTokenExtractor {
 
@@ -21,8 +23,8 @@ public class HeaderTokenExtractor {
          * 이셉션을(예외)를 던져주어야 합니다.
          */
         if (header == null || header.equals("") || header.length() < HEADER_PREFIX.length()) {
-            System.out.println("error request : " + request.getRequestURI());
-            System.out.println("header : " + header);
+            log.info("error request : " + request.getRequestURI());
+            log.info("header : " + header);
             throw new NoSuchElementException("올바른 JWT 정보가 아닙니다.");
         }
 

@@ -6,6 +6,7 @@ import com.clone.finalProject.repository.RedisChatRepository;
 import com.clone.finalProject.security.jwt.JwtDecoder;
 import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 //@Order(Ordered.HIGHEST_PRECEDENCE + 99)
@@ -32,61 +34,63 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
 
         if (StompCommand.CONNECT == headerAccessor.getCommand()) {
                 // 유저가 Websocket으로 connect()를 한 뒤 호출됨
-                System.out.println("유저 connect 완료");
+                log.info("유저 connect 완료");
+                log.info("===========================================");
+                log.info("full message: {}", message);
 
         }else if(StompCommand.SUBSCRIBE == headerAccessor.getCommand()){
-
-            String destination = chatService.getRoomId(
-                    Optional.ofNullable(
-                                    (String) message.getHeaders()
-                                            .get("simpDestination"))
-                            .orElse("error"));
-
-            String sessionId = (String) message.getHeaders()
-                    .get("simpSessionId");
-
-            redisChatRepository.setUserEnterInfo(sessionId, destination);
-
-            System.out.println("=== SUBSCRIBE sessionId : " + sessionId);
-            System.out.println(("=== SUBSCRIBE destination : " + destination));
-
-            /* 채팅방의 인원수를 +1한다. */
-            redisChatRepository.plusUserCount(destination);
+//일단 주석처리//////////////////////////////////////////////////////////////////////////////////////////////
+//            String destination = chatService.getRoomId(
+//                    Optional.ofNullable(
+//                                    (String) message.getHeaders()
+//                                            .get("simpDestination"))
+//                            .orElse("error"));
+//
+//            String sessionId = (String) message.getHeaders()
+//                    .get("simpSessionId");
+//
+//            redisChatRepository.setUserEnterInfo(sessionId, destination);
+//
+//            log.info("=== SUBSCRIBE sessionId : " + sessionId);
+//            log.info(("=== SUBSCRIBE destination : " + destination));
+//
+//            /* 채팅방의 인원수를 +1한다. */
+//            redisChatRepository.plusUserCount(destination);
 
 
 
 
         }else if(StompCommand.DISCONNECT == headerAccessor.getCommand()){
-            System.out.println("유저 disconnetct");
-
-            String sessionId = (String) message.getHeaders()
-                    .get("simpSessionId");
-
-            String destination = redisChatRepository.getUserEnterRoomId(sessionId);
-
-            /* 채팅방의 인원수를 -1한다. */
-            redisChatRepository.minusUserCount(destination);
-            System.out.println("=== DISCONNECT sessionId : " + sessionId);
-            System.out.println(("=== DISCONNECT destination : " + destination));
-            /* 퇴장한 클라이언트의 roomId 맵핑 정보를 삭제한다. */
-            redisChatRepository.removeUserEnterInfo(sessionId);
+            log.info("유저 disconnetct");
+//일단 주석처리////////////////////////////////////////////////////////////////////////////////////////////////////
+//            String sessionId = (String) message.getHeaders()
+//                    .get("simpSessionId");
+//
+//            String destination = redisChatRepository.getUserEnterRoomId(sessionId);
+//
+//            /* 채팅방의 인원수를 -1한다. */
+//            redisChatRepository.minusUserCount(destination);
+//            log.info("=== DISCONNECT sessionId : " + sessionId);
+//            log.info(("=== DISCONNECT destination : " + destination));
+//            /* 퇴장한 클라이언트의 roomId 맵핑 정보를 삭제한다. */
+//            redisChatRepository.removeUserEnterInfo(sessionId);
 
 
         }
 
-//        System.out.println("auth:" + headerAccessor.getNativeHeader("Authorization"));
+//        log.info("auth:{}", headerAccessor.getNativeHeader("Authorization"));
 
 
-////        System.out.println(headerAccessor.getHeader("nativeHeaders").getClass());
+////        log.info(headerAccessor.getHeader("nativeHeaders").getClass());
 //        if (StompCommand.CONNECT.equals(headerAccessor.getCommand())) {
 //            String jwtToken = headerAccessor.getFirstNativeHeader("Authorization").substring(7);
 //
-////            System.out.println("juwtToken : " + jwtToken);
+////            log.info("juwtToken : {}", jwtToken);
 //
 //            jwtDecoder.isValidToken(jwtToken);
 //
-//            System.out.println("msg: " + "토큰인증완료?");
-//            System.out.println("=================================================================================");
+//            log.info("msg: {}", "토큰인증완료?");
+//            log.info("=================================================================================");
 //        }
 
 

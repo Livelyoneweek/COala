@@ -5,6 +5,7 @@ import com.clone.finalProject.dto.*;
 
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AnswerService {
@@ -34,8 +36,8 @@ public class AnswerService {
         );
         Answer answer = new Answer(answerResponseDto, post);
         answerRepository.save(answer);
-        System.out.println("답글 생성 완료 답글 타이틀 : " +answer.getAnswerTitle());
-        System.out.println("답글 생성 완료 답글 Id : " +answer.getAnswerId());
+        log.info("답글 생성 완료 답글 타이틀 : {}", answer.getAnswerTitle());
+        log.info("답글 생성 완료 답글 Id : {}", answer.getAnswerId());
 
         //생성되었을떄 포스트 유저 컬럼으로 Alarm 객체 저장
         Alarm alarm = new Alarm("AnswerCreate",pid,answer.getAnswerId(),post.getUser());
@@ -66,7 +68,7 @@ public class AnswerService {
             Long answerId = answer.getAnswerId();
 
             String status = "false";
-            if(answerLikeRepository.findByAnswerId(answerId).isPresent()){
+            if(answerLikeRepository.findByAnswer_AnswerId(answerId).isPresent()){
                 status ="true";
             }
 
@@ -103,10 +105,14 @@ public class AnswerService {
             //댓글 및 대댓글 추가 시 포스트 밑에 있는 댓글 , 대댓글 부터 삭제 해야 함
 
             commentRepository.deleteAllByAnswer_answerId(answerId);
-            System.out.println("답변 삭제 전 댓글 삭제");
+            log.info("답변 삭제 전 댓글 삭제");
+            
+            //
+            answerLikeRepository.deleteByAnswer_AnswerId(answerId);
+            log.info("답변 삭제 전 답변채택 삭제");
 
             answerRepository.deleteById(answerId);
-            System.out.println("Answer 삭제 완료 answerId : " + answerId);
+            log.info("Answer 삭제 완료 answerId : {}",  answerId);
         }
 
     }
@@ -121,7 +127,7 @@ public class AnswerService {
 
         if (answer.getUid() == uid) {
             answer.update(answerResponseDto);
-            System.out.println("Answer 수정 완료 answerId :"  + answerId);
+            log.info("Answer 수정 완료 answerId :{}", answerId);
         }
     }
 }

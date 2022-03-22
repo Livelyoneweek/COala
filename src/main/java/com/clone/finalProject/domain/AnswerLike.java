@@ -21,17 +21,15 @@ public class AnswerLike {
     @Column(nullable = false)
     private Long pid;
 
-    @Column(nullable = false)
-    private Long answerId;
+    @ManyToOne
+    @JoinColumn(name = "ANSWER_ID")
+    private Answer answer;
 
-    @Column(nullable = false)
-    private Long answerUid;
 
-    public AnswerLike (AnswerLikeResponseDto answerLikeResponseDto) {
+    public AnswerLike (AnswerLikeResponseDto answerLikeResponseDto, Answer answer) {
         this.uid =answerLikeResponseDto.getUid();
         this.pid =answerLikeResponseDto.getPid();
-        this.answerId =answerLikeResponseDto.getAnswerId();
-        this.answerUid =answerLikeResponseDto.getAnswerUid();
+        this.answer =answer;
     }
 
 }

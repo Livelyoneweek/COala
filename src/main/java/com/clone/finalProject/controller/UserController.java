@@ -5,9 +5,11 @@ import com.clone.finalProject.dto.*;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -19,10 +21,10 @@ public class UserController {
     @PostMapping("/user/signup")
     public SignupResponseDto registerUser(@RequestBody SignupRequestDto requestDto) {
 
-        System.out.println("username :" + requestDto.getUsername());
-        System.out.println("nickname :" + requestDto.getNickname());
-        System.out.println("password :" + requestDto.getPassword());
-        System.out.println("passwordCheck :" + requestDto.getPasswordCheck());
+        log.info("username :{}", requestDto.getUsername());
+        log.info("nickname :{}", requestDto.getNickname());
+        log.info("password :{}", requestDto.getPassword());
+        log.info("passwordCheck :{}", requestDto.getPasswordCheck());
 
         userService.registerUser(requestDto);
         return new SignupResponseDto(true);
@@ -32,10 +34,10 @@ public class UserController {
     @PostMapping("/islogin/user")
     public IsloginResponseDto islogin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
-        System.out.println("username : " + user.getUsername());
-        System.out.println("nickName : " + user.getNickname());
-        System.out.println("nickName : " + user.getUid());
-        System.out.println("nickName : " + user.getCareer());
+        log.info("username : {}", user.getUsername());
+        log.info("nickName : {}", user.getNickname());
+        log.info("nickName : {}", user.getUid());
+        log.info("nickName : {}", user.getCareer());
         return new IsloginResponseDto(user.getUsername(),user.getNickname(),user.getUid(),user.getCareer(),user.getUserImage());
     }
 
@@ -54,17 +56,17 @@ public class UserController {
     @PostMapping("/islogin/user/getinfo/uid")
     public IsloginResponseDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
-        System.out.println("username : " + user.getUsername());
-        System.out.println("nickName : " + user.getNickname());
+        log.info("username : {}", user.getUsername());
+        log.info("nickName : {}", user.getNickname());
         return new IsloginResponseDto(user.getUsername(),user.getNickname(),user.getUid(),user.getCareer(), user.getUserImage());
     }
 
 //    회원 정보 수정
     @PutMapping("/islogin/user/getinfo/{uid}")
     public UserInfoResponseDto updateUserInfo(@PathVariable Long uid, @RequestBody UserInfoRequestDto userInfoRequestDto){
-        System.out.println("nickname :" + userInfoRequestDto.getNickname());
-        System.out.println("career :" + userInfoRequestDto.getCareer());
-        System.out.println("userimage_url :" + userInfoRequestDto.getUserImage());
+        log.info("nickname :{}", userInfoRequestDto.getNickname());
+        log.info("career :{}", userInfoRequestDto.getCareer());
+        log.info("userimage_url {}",  userInfoRequestDto.getUserImage());
 
         userService.updateUserInfo(uid, userInfoRequestDto);
         return new UserInfoResponseDto(true);

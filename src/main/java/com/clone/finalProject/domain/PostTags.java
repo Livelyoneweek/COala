@@ -24,5 +24,10 @@ public class PostTags {
     @JoinColumn(name = "TAG_ID")
     private Tags tags;
 
+    public PostTags (Post post, Tags tags) {
+        this.post=post;
+        this.tags=tags;
+    }
+
 
 }
