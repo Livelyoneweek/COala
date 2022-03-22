@@ -6,12 +6,12 @@ files :
     overwrite : yes
 
 
-### 파일 권한 추가
-#permission:
-#  - object: /
-#    pattern: "**"
-#    owner: ubuntu
-#    group: ubuntu
+## 파일 권한 추가
+permission:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
 ##
 #hooks:
 #  ApplicationStart:
