@@ -12,33 +12,33 @@ cache:
   - "$HOME/.gradle"
 script: "./gradlew clean build"
 
-before_deploy:
-  - zip -r springboot-webservice ./*
-  - mkdir -p deploy
-  - mv springboot-webservice.zip deploy/springboot-webservice.zip
-
-deploy:
-  - provider: s3
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
-
-    bucket: 2022coala
-    region: ap-northeast-2
-    skip_cleanup: true
-    acl: private
-    local_dir: deploy
-    wait_until_deployed : true
-
-  - provider: codedeploy
-    access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
-    secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
-    bucket: 2022coala
-    key: springboot-webservice.zip
-    bundle_type: zip
-    application: springboot-webservice # 웹 콘솔에서 등록한 CodeDeploy 어플리케이션
-    deployment_group: springboot-webservice-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
-    region: ap-northeast-2
-    wait-until-deployed: true
+#before_deploy:
+#  - zip -r springboot-webservice ./*
+#  - mkdir -p deploy
+#  - mv springboot-webservice.zip deploy/springboot-webservice.zip
+#
+#deploy:
+#  - provider: s3
+#    access_key_id: $AWS_ACCESS_KEY
+#    secret_access_key: $AWS_SECRET_KEY
+#
+#    bucket: 2022coala
+#    region: ap-northeast-2
+#    skip_cleanup: true
+#    acl: private
+#    local_dir: deploy
+#    wait_until_deployed : true
+#
+#  - provider: codedeploy
+#    access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
+#    secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
+#    bucket: 2022coala
+#    key: springboot-webservice.zip
+#    bundle_type: zip
+#    application: springboot-webservice # 웹 콘솔에서 등록한 CodeDeploy 어플리케이션
+#    deployment_group: springboot-webservice-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
+#    region: ap-northeast-2
+#    wait-until-deployed: true
 
 
 notifications:
