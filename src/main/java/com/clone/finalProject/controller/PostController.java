@@ -60,11 +60,8 @@ public class PostController {
     // post 수정
     @PutMapping("/islogin/post/revice/{pid}")
     public Long postEdit(@PathVariable Long pid, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
-
         Long uid = userDeta.getUid();
-
         postService.postEdit(pid, postRequestDto, uid);
-
         return pid;
     }
 
