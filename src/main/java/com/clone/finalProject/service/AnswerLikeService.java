@@ -91,7 +91,7 @@ public class AnswerLikeService {
             Post post = postRepository.findById(pid).orElseThrow(
                     ()-> new NullPointerException("Post가 존재하지 않습니다.")
             );
-            post.checkUpdate("selection");
+            post.checkUpdate("check");
             result.put("status","true");
 
             // 포인트 점수 추가 업데이트
