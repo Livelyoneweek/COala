@@ -11,35 +11,23 @@ permissions:
     owner: ubuntu
     group: ubuntu
 
-hooks:
-  ApplicationStart:
-    - location: deploy.sh
-      timeout: 100
-      runas: ubuntu
-
-
-## 파일 권한 추가
-#permission:
-#  - object: /
-#    pattern: "**"
-#    owner: ec2-user
-#    group: ec2-user
-
 #hooks:
-#  AfterInstall: # 배포가 끝나면 아래 명령어를 실행
-#    - location: execute-deploy.sh
-#      timeout: 180
-
-#hooks:
-#  AfterInstall:
-#    - location: stop.sh
-#      timeout: 60
-#      runas: ec2-user
 #  ApplicationStart:
-#    - location: start.sh
-#        timeout: 60
-#        runas: ec2-user
-#  ValidateService:
-#    - location: health.sh
-#        timeout: 60
-#        runas: ec2-user
+#    - location: deploy.sh
+#      timeout: 100
+#      runas: ubuntu
+
+
+hooks:
+  AfterInstall:
+    - location: stop.sh
+      timeout: 60
+      runas: ubuntu
+  ApplicationStart:
+    - location: start.sh
+        timeout: 60
+        runas: ubuntu
+  ValidateService:
+    - location: health.sh
+        timeout: 60
+        runas: ubuntu
