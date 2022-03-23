@@ -82,7 +82,7 @@ public class AnswerService {
                         ()-> new NullPointerException("User 가 존재하지 않습니다.")
                 );
 
-                CommnetResponseDto commnetResponseDto = new CommnetResponseDto(commentUser,comment);
+                CommnetResponseDto commnetResponseDto = new CommnetResponseDto(commentUser,comment,answerId);
                 commnetResponseDtos.add(commnetResponseDto);
             }
 
