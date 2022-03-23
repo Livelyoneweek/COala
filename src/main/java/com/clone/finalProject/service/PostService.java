@@ -24,6 +24,7 @@ public class PostService {
     private final TagsRepository tagsRepository;
     private final PostTagsRepository postTagsRepository;
     private final AnswerLikeRepository answerLikeRepository;
+    private final AlarmRepository alarmRepository;
 
     // post 생성
     @Transactional
@@ -100,6 +101,8 @@ public class PostService {
             postTagsRepository.deleteAllByPost_Pid(pid);
 
             postLikeRepository.deleteAllByPost_pid(pid);
+
+            alarmRepository.deleteAllByPid(pid);
 
             postRepository.deleteById(pid);
             log.info("포스트 삭제 완료 pid : {}",  pid);

@@ -1,6 +1,7 @@
 package com.clone.finalProject.controller;
 
 import com.clone.finalProject.domain.Alarm;
+import com.clone.finalProject.dto.AlarmPageResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.AlarmService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,12 @@ public class AlarmController {
 
     //알람 메시지 조회
     @GetMapping("/islogin/alarm")
-    public List<Alarm> alarmGet( @AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public List<AlarmPageResponseDto> alarmGet(@AuthenticationPrincipal UserDetailsImpl userDeta) {
 
         Long uid = userDeta.getUid();
-        List<Alarm> alarmList = alarmService.alarmGet(uid);
+        List<AlarmPageResponseDto> alarmPageResponseDtoList = alarmService.alarmGet(uid);
 
-        return alarmList;
+        return alarmPageResponseDtoList;
     }
 
 
