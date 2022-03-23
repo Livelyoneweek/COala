@@ -265,7 +265,7 @@ public class PostService {
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page,size,sort);
 
-        Page<Post> postList = postRepository.findAllByStatusContaining(pageable,"check");
+        Page<Post> postList = postRepository.findAllByStatusContaining(pageable,"selection");
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
 
         for (Post post : postList) {
