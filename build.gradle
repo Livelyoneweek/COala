@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.clone'
-version = '0.0.1-SNAPSHOT' + new Date().format("yyyyMMddHHmmss")
+version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -65,7 +65,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-batch'
 
     // Health Check
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+//    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 }
 
