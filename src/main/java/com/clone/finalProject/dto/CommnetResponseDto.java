@@ -24,7 +24,7 @@ public class CommnetResponseDto {
     private String comment;
     private LocalDateTime createdAt;
 
-    public CommnetResponseDto(User user, Comment comment) {
+    public CommnetResponseDto(User user, Comment comment,Long answerId) {
         this.uid = user.getUid();
         this.nickname= user.getNickname();
         this.career= user.getCareer();
@@ -34,6 +34,7 @@ public class CommnetResponseDto {
         this.commentId= comment.getCommentId();
         this.comment =comment.getComment();
         this.createdAt = comment.getCreatedAt();
+        this.answerId = answerId;
 
     }
 

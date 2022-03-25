@@ -2,6 +2,8 @@ package com.clone.finalProject.repository;
 
 
 import com.clone.finalProject.domain.PostLike;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -15,6 +17,8 @@ public interface PostLikeRepository extends JpaRepository<PostLike,Long> {
     List<PostLike> findAllByPost_Pid(Long pid);
 
     void deleteAllByPost_pid(Long pid);
+
+    Page<PostLike> findAllByUser_Uid(Pageable pageable,Long uid);
 
 
 }

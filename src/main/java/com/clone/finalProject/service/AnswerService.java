@@ -1,8 +1,9 @@
 package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.*;
-import com.clone.finalProject.dto.*;
-
+import com.clone.finalProject.dto.AlarmResponseDto;
+import com.clone.finalProject.dto.AnswerResponseDto;
+import com.clone.finalProject.dto.CommnetResponseDto;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -82,7 +82,7 @@ public class AnswerService {
                         ()-> new NullPointerException("User 가 존재하지 않습니다.")
                 );
 
-                CommnetResponseDto commnetResponseDto = new CommnetResponseDto(commentUser,comment);
+                CommnetResponseDto commnetResponseDto = new CommnetResponseDto(commentUser,comment,answerId);
                 commnetResponseDtos.add(commnetResponseDto);
             }
 

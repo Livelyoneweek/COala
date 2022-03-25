@@ -9,6 +9,10 @@ import com.clone.finalProject.repository.PostLikeRepository;
 import com.clone.finalProject.repository.PostRepository;
 import com.clone.finalProject.repository.PostTagsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,9 +28,13 @@ public class TagsService {
 
     //태그 검색하여 조회
     @Transactional
-    public List<PostResponseDto> searchTag(String tag) {
+    public List<PostResponseDto> searchTag(String tag,int page, int size, String sortBy, boolean isAsc) {
 
-        List<PostTags> postTagsList = postTagsRepository.findAllByTags_TagName(tag);
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<PostTags> postTagsList = postTagsRepository.findAllByTags_TagName(pageable,tag);
 
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
         for(PostTags postTags : postTagsList) {

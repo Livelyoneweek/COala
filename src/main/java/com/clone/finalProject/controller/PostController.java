@@ -33,16 +33,25 @@ public class PostController {
 
     // post 조회 (답변채택)
     @GetMapping("/post/get/check")
-    public List<PostResponseDto> postGet() {
-        List<PostResponseDto> postResponseDtos = postService.postGet();
+    public List<PostResponseDto> postCheckGet(@RequestParam("page") int page,
+                                              @RequestParam("size") int size,
+                                              @RequestParam("sortBy")String sortBy,
+                                              @RequestParam("isAsc")boolean isAsc) {
+
+        page = page -1;
+        List<PostResponseDto> postResponseDtos = postService.postCheckGet(page, size, sortBy, isAsc);
 
         return postResponseDtos;
     }
 
     // post 조회 (답변대기)
     @GetMapping("/post/get/nocheck")
-    public List<PostResponseDto> postGet2() {
-        List<PostResponseDto> postResponseDtos = postService.postGet2();
+    public List<PostResponseDto> postWaitGet(@RequestParam("page") int page,
+                                             @RequestParam("size") int size,
+                                             @RequestParam("sortBy")String sortBy,
+                                             @RequestParam("isAsc")boolean isAsc) {
+        page = page -1;
+        List<PostResponseDto> postResponseDtos = postService.postWaitGet(page, size, sortBy, isAsc);
 
         return postResponseDtos;
     }
@@ -60,11 +69,8 @@ public class PostController {
     // post 수정
     @PutMapping("/islogin/post/revice/{pid}")
     public Long postEdit(@PathVariable Long pid, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
-
         Long uid = userDeta.getUid();
-
         postService.postEdit(pid, postRequestDto, uid);
-
         return pid;
     }
 
@@ -78,19 +84,44 @@ public class PostController {
 
     // 타이틀로 게시글 검색
     @GetMapping("/post/search/{postTitle}")
-    public List<PostResponseDto> postTitleGet(@PathVariable String postTitle) {
-        List<PostResponseDto> postResponseDtoList = postService.postTitleGet(postTitle);
+    public List<PostResponseDto> postTitleGet(@PathVariable String postTitle,
+                                              @RequestParam("page") int page,
+                                              @RequestParam("size") int size,
+                                              @RequestParam("sortBy")String sortBy,
+                                              @RequestParam("isAsc")boolean isAsc) {
+        page = page -1;
+        List<PostResponseDto> postResponseDtoList = postService.postTitleGet(postTitle,page, size, sortBy, isAsc);
 
         return postResponseDtoList;
     }
 
     // 카테고리로 게시글 검색
     @GetMapping("/category/search/{category}")
-    public List<PostResponseDto> postCategoryGet(@PathVariable String category) {
+    public List<PostResponseDto> postCategoryGet(@PathVariable String category,
+                                                 @RequestParam("page") int page,
+                                                 @RequestParam("size") int size,
+                                                 @RequestParam("sortBy")String sortBy,
+                                                 @RequestParam("isAsc")boolean isAsc) {
         log.info("category : {}", category);
-        List<PostResponseDto> postResponseDtoList = postService.postCategoryGet(category);
+        page = page -1;
+        List<PostResponseDto> postResponseDtoList = postService.postCategoryGet(category,page, size, sortBy, isAsc);
 
         return postResponseDtoList;
     }
+
+    // post 관심글 조회
+    @GetMapping("/islogin/get/like")
+    public List<PostResponseDto> postLikeGet(@AuthenticationPrincipal UserDetailsImpl userDeta,
+                                             @RequestParam("page") int page,
+                                             @RequestParam("size") int size,
+                                             @RequestParam("sortBy")String sortBy,
+                                             @RequestParam("isAsc")boolean isAsc) {
+        Long uid = userDeta.getUid();
+        page = page -1;
+        List<PostResponseDto> postResponseDtos = postService.postLikeGet(uid,page, size, sortBy, isAsc);
+
+        return postResponseDtos;
+    }
+
 
 }

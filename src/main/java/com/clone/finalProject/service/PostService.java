@@ -6,6 +6,10 @@ import com.clone.finalProject.dto.PostResponseDto;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +28,7 @@ public class PostService {
     private final TagsRepository tagsRepository;
     private final PostTagsRepository postTagsRepository;
     private final AnswerLikeRepository answerLikeRepository;
+    private final AlarmRepository alarmRepository;
 
     // post 생성
     @Transactional
@@ -46,37 +51,37 @@ public class PostService {
 
 
     // post 조회 (답변채택)
-    public List<PostResponseDto> postGet() {
-        List<Post>postList = postRepository.findAllByStatusContainingOrderByCreatedAtDesc("selection");
-
-        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-        for (Post post : postList) {
-
-            // 게시글 조회용 메소드
-            PostResponseDto postResponseDto = postGetMethod(post);
-
-            postResponseDtos.add(postResponseDto);
-
-        }
-        return postResponseDtos;
-    }
+//    public List<PostResponseDto> postCheckGet() {
+//        List<Post>postList = postRepository.findAllByStatusContainingOrderByCreatedAtDesc("check");
+//
+//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+//        for (Post post : postList) {
+//
+//            // 게시글 조회용 메소드
+//            PostResponseDto postResponseDto = postGetMethod(post);
+//
+//            postResponseDtos.add(postResponseDto);
+//
+//        }
+//        return postResponseDtos;
+//    }
 
 
     // post 조회 (답변대기)
-    public List<PostResponseDto> postGet2() {
-        List<Post>postList = postRepository.findAllByStatusContainsOrderByCreatedAtDesc("noCheck");
-
-        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-        for (Post post : postList) {
-
-            // 게시글 조회용 메소드
-            PostResponseDto postResponseDto = postGetMethod(post);
-
-            postResponseDtos.add(postResponseDto);
-
-        }
-        return postResponseDtos;
-    }
+//    public List<PostResponseDto> postWaitGet() {
+//        List<Post>postList = postRepository.findAllByStatusContainsOrderByCreatedAtDesc("noCheck");
+//
+//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+//        for (Post post : postList) {
+//
+//            // 게시글 조회용 메소드
+//            PostResponseDto postResponseDto = postGetMethod(post);
+//
+//            postResponseDtos.add(postResponseDto);
+//
+//        }
+//        return postResponseDtos;
+//    }
 
 
 
@@ -100,6 +105,8 @@ public class PostService {
             postTagsRepository.deleteAllByPost_Pid(pid);
 
             postLikeRepository.deleteAllByPost_pid(pid);
+
+            alarmRepository.deleteAllByPid(pid);
 
             postRepository.deleteById(pid);
             log.info("포스트 삭제 완료 pid : {}",  pid);
@@ -142,40 +149,58 @@ public class PostService {
     }
 
     //게시글 타이틀 검색하여 조회
-    public List<PostResponseDto> postTitleGet(String postTitle) {
-
-        List<Post> postList = postRepository.findByPostTitleContaining(postTitle);
-
-        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-        for (Post post : postList) {
-
-            // 게시글 조회용 메소드
-            PostResponseDto postResponseDto = postGetMethod(post);
-
-            postResponseDtos.add(postResponseDto);
-
-        }
-        return postResponseDtos;
-
-    }
+//    public List<PostResponseDto> postTitleGet(String postTitle) {
+//
+//        List<Post> postList = postRepository.findByPostTitleContaining(postTitle);
+//
+//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+//        for (Post post : postList) {
+//
+//            // 게시글 조회용 메소드
+//            PostResponseDto postResponseDto = postGetMethod(post);
+//
+//            postResponseDtos.add(postResponseDto);
+//
+//        }
+//        return postResponseDtos;
+//
+//    }
 
     //카게고리로 검색하여 게시글 조회
-    public List<PostResponseDto> postCategoryGet(String category) {
+//    public List<PostResponseDto> postCategoryGet(String category) {
+//
+//        List<Post> postList = postRepository.findByCategoryContaining(category);
+//
+//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+//        for (Post post : postList) {
+//
+//            // 게시글 조회용 메소드
+//            PostResponseDto postResponseDto = postGetMethod(post);
+//
+//            postResponseDtos.add(postResponseDto);
+//
+//        }
+//        return postResponseDtos;
+//
+//    }
 
-        List<Post> postList = postRepository.findByCategoryContaining(category);
-
-        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-        for (Post post : postList) {
-
-            // 게시글 조회용 메소드
-            PostResponseDto postResponseDto = postGetMethod(post);
-
-            postResponseDtos.add(postResponseDto);
-
-        }
-        return postResponseDtos;
-
-    }
+    // post 관심글 조회
+//    public List<PostResponseDto> postLikeGet(Long uid) {
+//
+//        List<PostLike>postLikeList = postLikeRepository.findAllByUser_Uid(uid);
+//
+//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+//        for (PostLike postLike : postLikeList) {
+//            Post post = postLike.getPost();
+//            // 게시글 조회용 메소드
+//            PostResponseDto postResponseDto = postGetMethod(post);
+//
+//            postResponseDtos.add(postResponseDto);
+//
+//        }
+//        return postResponseDtos;
+//
+//    }
 
     // 게시글 조회용에 사용되는 메소드
     public PostResponseDto postGetMethod(Post post) {
@@ -231,6 +256,112 @@ public class PostService {
         log.info("postTags 객체 생성");
     }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // post 조회 (답변채택)
+    public List<PostResponseDto> postCheckGet(int page, int size, String sortBy, boolean isAsc) {
+
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<Post> postList = postRepository.findAllByStatusContaining(pageable,"selection");
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+
+        for (Post post : postList) {
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
+            postResponseDtos.add(postResponseDto);
+
+        }
+        return postResponseDtos;
+    }
+
+//     post 조회 (답변대기)
+    public List<PostResponseDto> postWaitGet(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<Post> postList = postRepository.findAllByStatusContains(pageable,"noCheck");
+
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
+
+            postResponseDtos.add(postResponseDto);
+
+        }
+        return postResponseDtos;
+    }
+
+    //게시글 타이틀 검색하여 조회
+    public List<PostResponseDto> postTitleGet(String postTitle,int page, int size, String sortBy, boolean isAsc) {
+
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<Post> postList = postRepository.findAllByPostTitleContaining(pageable,postTitle);
+
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
+
+            postResponseDtos.add(postResponseDto);
+
+        }
+        return postResponseDtos;
+
+    }
+
+    //카게고리로 검색하여 게시글 조회
+    public List<PostResponseDto> postCategoryGet(String category,int page, int size, String sortBy, boolean isAsc) {
+
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<Post> postList = postRepository.findAllByCategoryContaining(pageable,category);
+
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
+
+            postResponseDtos.add(postResponseDto);
+
+        }
+        return postResponseDtos;
+
+    }
+
+    // post 관심글 조회
+    public List<PostResponseDto> postLikeGet(Long uid,int page, int size, String sortBy, boolean isAsc) {
+
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<PostLike>postLikeList = postLikeRepository.findAllByUser_Uid(pageable,uid);
+
+        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (PostLike postLike : postLikeList) {
+            Post post = postLike.getPost();
+            // 게시글 조회용 메소드
+            PostResponseDto postResponseDto = postGetMethod(post);
+
+            postResponseDtos.add(postResponseDto);
+
+        }
+        return postResponseDtos;
+
+    }
 
 }
 
