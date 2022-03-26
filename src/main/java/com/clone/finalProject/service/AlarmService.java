@@ -22,6 +22,7 @@ public class AlarmService {
     // 알람 메시지 조회
     public List<AlarmPageResponseDto> alarmGet(Long uid) {
 
+
         List<Alarm> alarmList = alarmRepository.findAllByUser_UidOrderByCreatedAt(uid);
 
         List<AlarmPageResponseDto> alarmPageResponseDtoList = new ArrayList<>();
