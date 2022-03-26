@@ -63,6 +63,7 @@ public class User {
 
     }
 
+
     // 유저 패스워드 수정
     public void userPasswordUpdate(String encodePassword){
         this.password = encodePassword;
