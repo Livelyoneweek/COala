@@ -19,26 +19,26 @@ public class RankController {
     private final RankService rankService;
 
     // 전체 랭킹 조회
-    @GetMapping("/user/ranking/total")
+    @GetMapping("/user/get/ranking/total")
     public List<AllRankResponseDto> totalRank() {
         return rankService.getAllRank();
     }
 
     // 주간 랭킹 조회
-    @GetMapping("/user/ranking/weekend")
+    @GetMapping("/user/get/ranking/weekend")
     public List<WeekRankResponseDto> weekRank() {
         return rankService.getWeekRank();
     }
 
     // 월간 랭킹 조회
-    @GetMapping("/user/ranking/month")
+    @GetMapping("/user/get/ranking/month")
     public List<MonthRankResponseDto> monthRank() {
         return rankService.getMonthRank();
     }
 
 
     //종합 나의 랭킹
-    @GetMapping("/islogin/ranking/total")
+    @GetMapping("/islogin/get/myranking/total")
     public AllRankResponseDto myTotalRank(@AuthenticationPrincipal UserDetailsImpl userDeta) {
         long uid = userDeta.getUid();
         AllRankResponseDto allRankResponseDto = rankService.getAllRankMy(uid);
@@ -47,7 +47,7 @@ public class RankController {
     }
 
     //주간 나의 랭킹
-    @GetMapping("/islogin/ranking/weekend")
+    @GetMapping("/islogin/get/myranking/weekend")
     public WeekRankResponseDto myWeekRank(@AuthenticationPrincipal UserDetailsImpl userDeta) {
         long uid = userDeta.getUid();
         WeekRankResponseDto weekRankResponseDto = rankService.getWeekRankMy(uid);
@@ -55,8 +55,8 @@ public class RankController {
         return weekRankResponseDto;
     }
 
-    //주간 나의 랭킹
-    @GetMapping("/islogin/ranking/month")
+    //월간 나의 랭킹
+    @GetMapping("/islogin/get/myranking/month")
     public MonthRankResponseDto myMonthRank(@AuthenticationPrincipal UserDetailsImpl userDeta) {
         long uid = userDeta.getUid();
         MonthRankResponseDto monthRankResponseDto = rankService.getMonthRankMy(uid);

@@ -40,8 +40,8 @@ public class ChatController {
 
 
     //////////////////////////////////메인 페이지 채널///////////////////////////////////////////////////////////////
-    @MessageMapping("/message")
-    @SendTo("/topic/greetings")
+    @MessageMapping("/mainchat")
+    @SendTo("/topic/mainchat")
     public ChatMessageDto greeting(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
         log.info("채팅테스트:{}",chatMessageDto.getMessage());
 
@@ -65,14 +65,14 @@ public class ChatController {
 
         String destination = "greetings";
         log.info("=== channel : {}",destination);
-//        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
         return chatMessageDto;
     }
 
 
     //////////////////////////////////게시글 페이지 채널///////////////////////////////////////////////////////////////
     @Transactional
-    @MessageMapping("/message1")
+    @MessageMapping("/postchat")
     public void greeting2(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
 
         Thread.sleep(500); // simulated delay
@@ -92,9 +92,9 @@ public class ChatController {
 
         String destination = String.valueOf(chatMessageDto.getPid());
         log.info("=== channel : {}",destination);
-//        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
 
-        simpMessagingTemplate.convertAndSend("/topic/greetings"+"/"+destination ,chatMessageDto);
+        simpMessagingTemplate.convertAndSend("/topic/postchat"+"/"+destination ,chatMessageDto);
     }
 
     //////////////////////////////////유저 개인 귓속말 채널///////////////////////////////////////////////////////////////

@@ -17,7 +17,7 @@ public class PostLikeController {
     private final PostLikeService postLikeService;
 
     //관심 등록 할 때 있으면 삭제 없으면 생성
-    @PostMapping("/islogin/post/like")
+    @PostMapping("/islogin/post/create/like")
     public HashMap<String, String> postLike (@RequestBody AnswerLikeResponseDto answerLikeResponseDto) {
         HashMap<String, String> result = postLikeService.postLike(answerLikeResponseDto);
 
