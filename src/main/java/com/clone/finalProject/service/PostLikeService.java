@@ -54,6 +54,7 @@ public class PostLikeService {
                     ()-> new NullPointerException("Post가 존재하지 않습니다.")
             );
 
+
             PostLike postLike = new PostLike(user, post);
             postLikeRepository.save(postLike);
 
