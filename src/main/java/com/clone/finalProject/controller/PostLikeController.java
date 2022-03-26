@@ -24,12 +24,19 @@ public class PostLikeController {
         return result;
     }
 
-    // 관심 글  조회
-    @GetMapping("/islogin/post/like/get/{uid}")
-    public List<PostResponseDto> postLikeGet (@PathVariable Long uid ) {
-        List<PostResponseDto> postResponseDtoList = postLikeService.postLikeGet(uid);
-
-        return postResponseDtoList;
-    }
+//    // 관심 글  조회
+//    @GetMapping("/islogin/post/like/get/{uid}")
+//    public List<PostResponseDto> postLikeGet (@PathVariable Long uid,
+//                                              @PathVariable String postTitle,
+//                                              @RequestParam("page") int page,
+//                                              @RequestParam("size") int size,
+//                                              @RequestParam("sortBy")String sortBy,
+//                                              @RequestParam("isAsc")boolean isAsc) {
+//
+//        page = page -1;
+//        List<PostResponseDto> postResponseDtoList = postLikeService.postLikeGet(uid,page, size, sortBy, isAsc);
+//
+//        return postResponseDtoList;
+//    }
 
 }

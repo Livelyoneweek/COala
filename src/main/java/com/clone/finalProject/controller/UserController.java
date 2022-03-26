@@ -74,8 +74,8 @@ public class UserController {
     //    회원 비밀번호 수정
     @PutMapping("/islogin/user/password/{uid}")
     public UserInfoResponseDto updatePassword(@PathVariable Long uid, @RequestBody UserInfoRequestDto userInfoRequestDto){
-        userService.updatePassword(uid, userInfoRequestDto);
-        return new UserInfoResponseDto(true);
+        UserInfoResponseDto userInfoResponseDto = userService.updatePassword(uid, userInfoRequestDto);
+        return userInfoResponseDto;
     }
 
 }
