@@ -63,7 +63,6 @@ public class User {
 
     }
 
-
     // 유저 패스워드 수정
     public void userPasswordUpdate(String encodePassword){
         this.password = encodePassword;
@@ -75,6 +74,7 @@ public class User {
         this.weekPoint = weekPoint;
         this.monthPoint = monthPoint;
     }
+
 
     public void weekPointReset(){
         this.weekPoint = 0L;
