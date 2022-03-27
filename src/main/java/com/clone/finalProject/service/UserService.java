@@ -33,6 +33,7 @@ public class UserService {
             throw new IllegalArgumentException("중복된 아이디입니다.");
         }
 
+
         //중복된 닉네임이 존재할 경우
 //        if (userRepository.existsByNickname(nickname)) {
 //            throw new IllegalArgumentException("중복된 닉네임입니다.");
