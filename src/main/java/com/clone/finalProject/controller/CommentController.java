@@ -37,7 +37,6 @@ public class CommentController {
 
     }
 
-
     // commnet 수정
     @PutMapping("/islogin/comment/edit/{commentId}")
     public void postEdit(@PathVariable Long commentId, @RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
