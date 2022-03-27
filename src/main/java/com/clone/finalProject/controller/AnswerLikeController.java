@@ -1,7 +1,7 @@
 package com.clone.finalProject.controller;
 
 
-import com.clone.finalProject.dto.AnswerLikeResponseDto;
+import com.clone.finalProject.dto.answrDto.AnswerLikeResponseDto;
 import com.clone.finalProject.service.AnswerLikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

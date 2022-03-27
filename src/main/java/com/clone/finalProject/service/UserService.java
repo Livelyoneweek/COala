@@ -1,9 +1,9 @@
 package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.User;
-import com.clone.finalProject.dto.SignupRequestDto;
-import com.clone.finalProject.dto.UserInfoRequestDto;
-import com.clone.finalProject.dto.UserInfoResponseDto;
+import com.clone.finalProject.dto.userDto.SignupRequestDto;
+import com.clone.finalProject.dto.userDto.UserInfoRequestDto;
+import com.clone.finalProject.dto.userDto.UserInfoResponseDto;
 import com.clone.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
 package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.*;
-import com.clone.finalProject.dto.AlarmResponseDto;
-import com.clone.finalProject.dto.AnswerLikeResponseDto;
+import com.clone.finalProject.dto.alarmDto.AlarmResponseDto;
+import com.clone.finalProject.dto.answrDto.AnswerLikeResponseDto;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.clone.finalProject.dto;
+package com.clone.finalProject.dto.chatMessageDto;
 
 import com.clone.finalProject.domain.ChatMessage;
 import lombok.Getter;

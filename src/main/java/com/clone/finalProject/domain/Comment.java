@@ -1,6 +1,6 @@
 package com.clone.finalProject.domain;
 
-import com.clone.finalProject.dto.CommnetResponseDto;
+import com.clone.finalProject.dto.commentDto.CommnetResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

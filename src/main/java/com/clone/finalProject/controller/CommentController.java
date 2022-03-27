@@ -1,7 +1,7 @@
 package com.clone.finalProject.controller;
 
 import com.clone.finalProject.domain.User;
-import com.clone.finalProject.dto.CommnetResponseDto;
+import com.clone.finalProject.dto.commentDto.CommnetResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.CommnetService;
 import lombok.RequiredArgsConstructor;

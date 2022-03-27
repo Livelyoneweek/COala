@@ -1,4 +1,4 @@
-package com.clone.finalProject.dto;
+package com.clone.finalProject.dto.postDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

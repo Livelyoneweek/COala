@@ -2,8 +2,8 @@ package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.ChatMessage;
 import com.clone.finalProject.domain.ChatRoom;
-import com.clone.finalProject.dto.ChatMessageDto;
-import com.clone.finalProject.dto.ChatMessagedResponseDto;
+import com.clone.finalProject.dto.chatMessageDto.ChatMessageDto;
+import com.clone.finalProject.dto.chatMessageDto.ChatMessagedResponseDto;
 import com.clone.finalProject.repository.ChatMessageRepository;
 import com.clone.finalProject.repository.UserRepository;
 import com.clone.finalProject.security.jwt.JwtDecoder;

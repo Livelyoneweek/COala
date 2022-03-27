@@ -1,7 +1,7 @@
 package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.Alarm;
-import com.clone.finalProject.dto.AlarmPageResponseDto;
+import com.clone.finalProject.dto.alarmDto.AlarmPageResponseDto;
 import com.clone.finalProject.repository.AlarmRepository;
 import com.clone.finalProject.repository.PostRepository;
 import lombok.RequiredArgsConstructor;

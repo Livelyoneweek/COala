@@ -1,8 +1,8 @@
 package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.*;
-import com.clone.finalProject.dto.PostRequestDto;
-import com.clone.finalProject.dto.PostResponseDto;
+import com.clone.finalProject.dto.postDto.PostRequestDto;
+import com.clone.finalProject.dto.postDto.PostResponseDto;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
 package com.clone.finalProject.controller;
 
 import com.clone.finalProject.domain.User;
-import com.clone.finalProject.dto.PostRequestDto;
-import com.clone.finalProject.dto.PostResponseDto;
+import com.clone.finalProject.dto.postDto.PostRequestDto;
+import com.clone.finalProject.dto.postDto.PostResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.PostService;
 import lombok.RequiredArgsConstructor;
