@@ -101,11 +101,12 @@ public class UserService {
 
     }
 
-    //weekPoint 초기화 매주 수요일 새벽1시 실행
     // 초 분 시 일 월 요일 년도 (생략가능)
     // 1 월 7 토
+
+    //weekPoint 초기화 매주 수요일 새벽1시 실행
     @Transactional
-    @Scheduled(cron="0 00 11 * * 1")
+    @Scheduled(cron="0 00 01 * * 3")
     public void weekPointReset() {
         List<User> userList = userRepository.findAll();
         for (User user : userList) {

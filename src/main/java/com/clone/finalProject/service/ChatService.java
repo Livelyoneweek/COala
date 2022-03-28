@@ -38,15 +38,13 @@ public class ChatService {
     // 메인페이지 채널 채팅 내역 조회
     public List<ChatMessagedResponseDto> chatMainGet() {
 
-        List<ChatMessage> chatMessageList = chatMessageRepository.findTOP50ByChatRoom_AreaOrderByCreatedAtDesc("main");
-
+        List<ChatMessage> chatMessageList = chatMessageRepository.findTOP20ByChatRoom_AreaOrderByCreatedAtDesc("main");
 
         List<ChatMessagedResponseDto> chatMessagedResponseDtoList = new ArrayList<>();
         for(ChatMessage chatMessage : chatMessageList) {
             ChatMessagedResponseDto chatMessagedResponseDto = new ChatMessagedResponseDto(chatMessage);
 
             chatMessagedResponseDtoList.add(chatMessagedResponseDto);
-
         }
         return chatMessagedResponseDtoList;
     }
@@ -54,14 +52,13 @@ public class ChatService {
     // 게시글 페이지 채널 채팅 내역 조회
     public List<ChatMessagedResponseDto> chatMainPost(Long pid) {
 
-        List<ChatMessage> chatMessageList = chatMessageRepository.findTOP50ByChatRoom_PidOrderByCreatedAtDesc(pid);
+        List<ChatMessage> chatMessageList = chatMessageRepository.findTOP20ByChatRoom_PidOrderByCreatedAtDesc(pid);
 
         List<ChatMessagedResponseDto> chatMessagedResponseDtoList = new ArrayList<>();
         for(ChatMessage chatMessage : chatMessageList) {
             ChatMessagedResponseDto chatMessagedResponseDto = new ChatMessagedResponseDto(chatMessage);
 
             chatMessagedResponseDtoList.add(chatMessagedResponseDto);
-
         }
         return chatMessagedResponseDtoList;
     }
@@ -69,19 +66,17 @@ public class ChatService {
     // 귓속말 채널 채팅 내역 조회
     public List<ChatMessagedResponseDto> chatMainUser(Long uid) {
 
-        List<ChatMessage> chatMessageList = chatMessageRepository.findTOP50ByChatRoom_UidOrderByCreatedAtDesc(uid);
+        List<ChatMessage> chatMessageList = chatMessageRepository.findTOP20ByChatRoom_UidOrderByCreatedAtDesc(uid);
 
         List<ChatMessagedResponseDto> chatMessagedResponseDtoList = new ArrayList<>();
         for(ChatMessage chatMessage : chatMessageList) {
             ChatMessagedResponseDto chatMessagedResponseDto = new ChatMessagedResponseDto(chatMessage);
 
             chatMessagedResponseDtoList.add(chatMessagedResponseDto);
-
         }
         return chatMessagedResponseDtoList;
 
     }
-
     ///////////////////////////채팅 메시지 셋업 메소드////////////////////////////////////////////////////////////////////
     public void chatSettingMethod(ChatMessageDto chatMessageDto, String token, ChatRoom chatRoom) {
         chatMessageDto.setCreatedAt(LocalDateTime.now());
