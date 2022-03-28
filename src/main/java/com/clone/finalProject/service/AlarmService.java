@@ -1,7 +1,7 @@
 package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.Alarm;
-import com.clone.finalProject.dto.AlarmPageResponseDto;
+import com.clone.finalProject.dto.alarmDto.AlarmPageResponseDto;
 import com.clone.finalProject.repository.AlarmRepository;
 import com.clone.finalProject.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +21,7 @@ public class AlarmService {
 
     // 알람 메시지 조회
     public List<AlarmPageResponseDto> alarmGet(Long uid) {
+
 
         List<Alarm> alarmList = alarmRepository.findAllByUser_UidOrderByCreatedAt(uid);
 

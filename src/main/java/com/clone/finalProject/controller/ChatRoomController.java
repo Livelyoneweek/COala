@@ -1,7 +1,7 @@
 package com.clone.finalProject.controller;
 
 
-import com.clone.finalProject.dto.ChatMessagedResponseDto;
+import com.clone.finalProject.dto.chatMessageDto.ChatMessagedResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;

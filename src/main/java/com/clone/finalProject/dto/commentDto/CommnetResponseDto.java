@@ -1,4 +1,4 @@
-package com.clone.finalProject.dto;
+package com.clone.finalProject.dto.commentDto;
 
 import com.clone.finalProject.domain.Comment;
 import com.clone.finalProject.domain.User;

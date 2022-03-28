@@ -2,23 +2,16 @@ package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.Post;
 import com.clone.finalProject.domain.PostLike;
-import com.clone.finalProject.domain.PostTags;
 import com.clone.finalProject.domain.User;
-import com.clone.finalProject.dto.AnswerLikeResponseDto;
-import com.clone.finalProject.dto.PostResponseDto;
+import com.clone.finalProject.dto.answrDto.AnswerLikeResponseDto;
 import com.clone.finalProject.repository.PostLikeRepository;
 import com.clone.finalProject.repository.PostRepository;
 import com.clone.finalProject.repository.PostTagsRepository;
 import com.clone.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -53,6 +46,7 @@ public class PostLikeService {
             Post post = postRepository.findById(pid).orElseThrow(
                     ()-> new NullPointerException("Post가 존재하지 않습니다.")
             );
+
 
             PostLike postLike = new PostLike(user, post);
             postLikeRepository.save(postLike);

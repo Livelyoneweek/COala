@@ -1,7 +1,7 @@
 package com.clone.finalProject.controller;
 
 import com.clone.finalProject.domain.User;
-import com.clone.finalProject.dto.*;
+import com.clone.finalProject.dto.userDto.*;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.UserService;
 import lombok.RequiredArgsConstructor;

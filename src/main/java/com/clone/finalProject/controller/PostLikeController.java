@@ -1,14 +1,12 @@
 package com.clone.finalProject.controller;
 
 
-import com.clone.finalProject.dto.AnswerLikeResponseDto;
-import com.clone.finalProject.dto.PostResponseDto;
+import com.clone.finalProject.dto.answrDto.AnswerLikeResponseDto;
 import com.clone.finalProject.service.PostLikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

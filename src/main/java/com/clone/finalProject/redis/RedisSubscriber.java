@@ -1,6 +1,6 @@
 package com.clone.finalProject.redis;
 
-import com.clone.finalProject.dto.ChatMessageDto;
+import com.clone.finalProject.dto.chatMessageDto.ChatMessageDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

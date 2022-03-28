@@ -3,7 +3,7 @@ package com.clone.finalProject.service;
 import com.clone.finalProject.domain.Answer;
 import com.clone.finalProject.domain.Comment;
 import com.clone.finalProject.domain.User;
-import com.clone.finalProject.dto.CommnetResponseDto;
+import com.clone.finalProject.dto.commentDto.CommnetResponseDto;
 import com.clone.finalProject.repository.AnswerRepository;
 import com.clone.finalProject.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,9 @@
 package com.clone.finalProject.service;
 
 import com.clone.finalProject.domain.User;
-import com.clone.finalProject.dto.SignupRequestDto;
-import com.clone.finalProject.dto.UserInfoRequestDto;
-import com.clone.finalProject.dto.UserInfoResponseDto;
+import com.clone.finalProject.dto.userDto.SignupRequestDto;
+import com.clone.finalProject.dto.userDto.UserInfoRequestDto;
+import com.clone.finalProject.dto.userDto.UserInfoResponseDto;
 import com.clone.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +32,7 @@ public class UserService {
         if (userRepository.existsByUsername(username)) {
             throw new IllegalArgumentException("중복된 아이디입니다.");
         }
+
 
         //중복된 닉네임이 존재할 경우
 //        if (userRepository.existsByNickname(nickname)) {

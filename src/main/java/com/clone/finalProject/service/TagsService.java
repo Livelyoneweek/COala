@@ -4,7 +4,7 @@ import com.clone.finalProject.domain.Post;
 import com.clone.finalProject.domain.PostLike;
 import com.clone.finalProject.domain.PostTags;
 import com.clone.finalProject.domain.User;
-import com.clone.finalProject.dto.PostResponseDto;
+import com.clone.finalProject.dto.postDto.PostResponseDto;
 import com.clone.finalProject.repository.PostLikeRepository;
 import com.clone.finalProject.repository.PostRepository;
 import com.clone.finalProject.repository.PostTagsRepository;

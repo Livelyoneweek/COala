@@ -1,6 +1,6 @@
 package com.clone.finalProject.controller;
 
-import com.clone.finalProject.dto.PostResponseDto;
+import com.clone.finalProject.dto.postDto.PostResponseDto;
 import com.clone.finalProject.service.TagsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

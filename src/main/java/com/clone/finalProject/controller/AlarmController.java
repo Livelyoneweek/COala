@@ -1,6 +1,6 @@
 package com.clone.finalProject.controller;
 
-import com.clone.finalProject.dto.AlarmPageResponseDto;
+import com.clone.finalProject.dto.alarmDto.AlarmPageResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.AlarmService;
 import lombok.RequiredArgsConstructor;

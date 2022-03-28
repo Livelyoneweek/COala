@@ -1,6 +1,6 @@
 package com.clone.finalProject.domain;
 
-import com.clone.finalProject.dto.PostRequestDto;
+import com.clone.finalProject.dto.postDto.PostRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

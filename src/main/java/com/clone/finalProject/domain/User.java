@@ -1,7 +1,7 @@
 package com.clone.finalProject.domain;
 
-import com.clone.finalProject.dto.SignupRequestDto;
-import com.clone.finalProject.dto.UserInfoRequestDto;
+import com.clone.finalProject.dto.userDto.SignupRequestDto;
+import com.clone.finalProject.dto.userDto.UserInfoRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

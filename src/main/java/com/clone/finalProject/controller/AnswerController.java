@@ -2,7 +2,7 @@ package com.clone.finalProject.controller;
 
 
 import com.clone.finalProject.domain.User;
-import com.clone.finalProject.dto.AnswerResponseDto;
+import com.clone.finalProject.dto.answrDto.AnswerResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.AnswerService;
 import lombok.RequiredArgsConstructor;
