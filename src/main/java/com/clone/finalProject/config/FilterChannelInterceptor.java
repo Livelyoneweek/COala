@@ -31,7 +31,6 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
 
-
         if (StompCommand.CONNECT == headerAccessor.getCommand()) {
                 // 유저가 Websocket으로 connect()를 한 뒤 호출됨
                 log.info("유저 connect 완료");
@@ -41,10 +40,7 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
         }else if(StompCommand.SUBSCRIBE == headerAccessor.getCommand()){
 //일단 주석처리//////////////////////////////////////////////////////////////////////////////////////////////
             String destination = chatService.getRoomId(
-                    Optional.ofNullable(
-                                    (String) message.getHeaders()
-                                            .get("simpDestination"))
-                            .orElse("error"));
+                    Optional.ofNullable((String) message.getHeaders().get("simpDestination")).orElse("error"));
 
             String sessionId = (String) message.getHeaders()
                     .get("simpSessionId");

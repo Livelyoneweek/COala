@@ -15,9 +15,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers();
 
+
         http
                 .cors()
                 .and()
@@ -75,7 +82,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             http.headers().frameOptions().disable();
 
 
-
         /* 1.
          * UsernamePasswordAuthenticationFilter 이전에 FormLoginFilter, JwtFilter 를 등록합니다.
          * FormLoginFilter : 로그인 인증을 실시합니다.
@@ -83,10 +89,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          */
         http
                 .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                //시큐리티 인증 예외처리 추가
+                .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
         http.authorizeRequests()
-
                 // 그 외 어떤 요청이든 ''
                 .anyRequest().permitAll()
                 .and()
@@ -95,6 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그아웃 요청 처리 URL
                 .logoutUrl("/user/logout")
                 .permitAll();
+
     }
 
     @Bean
@@ -115,6 +124,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public FormLoginAuthProvider formLoginAuthProvider() {
         return new FormLoginAuthProvider(encodePassword());
     }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {return new AuthenticationEntryPoint() {
+        @Override
+        public void commence(HttpServletRequest request, HttpServletResponse response,
+                             AuthenticationException authException) throws IOException, ServletException {
+
+        }
+    };}
 
     private JwtAuthFilter jwtFilter() throws Exception {
         List<String> skipPathList = new ArrayList<>();
