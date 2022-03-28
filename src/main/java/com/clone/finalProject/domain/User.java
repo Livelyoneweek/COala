@@ -74,4 +74,14 @@ public class User {
         this.weekPoint = weekPoint;
         this.monthPoint = monthPoint;
     }
+
+
+    public void weekPointReset(){
+        this.weekPoint = 0L;
+    }
+
+    public void monthPointReset(){
+        this.weekPoint = 0L;
+    }
+
 }

@@ -52,7 +52,7 @@ public class UserController {
     }
 
     //회원정보 조회
-    @PostMapping("/islogin/user/getinfo/uid")
+    @PostMapping("/islogin/user/get/{uid}")
     public IsloginResponseDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         log.info("username : {}", user.getUsername());
@@ -61,7 +61,7 @@ public class UserController {
     }
 
 //    회원 정보 수정
-    @PutMapping("/islogin/user/getinfo/{uid}")
+    @PutMapping("/islogin/user/edit/{uid}")
     public UserInfoResponseDto updateUserInfo(@PathVariable Long uid, @RequestBody UserInfoRequestDto userInfoRequestDto){
         log.info("nickname :{}", userInfoRequestDto.getNickname());
         log.info("career :{}", userInfoRequestDto.getCareer());
@@ -72,10 +72,10 @@ public class UserController {
     }
 
     //    회원 비밀번호 수정
-    @PutMapping("/islogin/user/password/{uid}")
+    @PutMapping("/islogin/user/edit/pwd/{uid}")
     public UserInfoResponseDto updatePassword(@PathVariable Long uid, @RequestBody UserInfoRequestDto userInfoRequestDto){
-        userService.updatePassword(uid, userInfoRequestDto);
-        return new UserInfoResponseDto(true);
+        UserInfoResponseDto userInfoResponseDto = userService.updatePassword(uid, userInfoRequestDto);
+        return userInfoResponseDto;
     }
 
 }

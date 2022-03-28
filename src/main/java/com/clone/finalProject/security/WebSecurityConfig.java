@@ -142,8 +142,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("GET,/app/**");
         skipPathList.add("POST,/app/**");
 
-        //무중단배포를 위한 허용
         skipPathList.add("GET,/profile");
+        skipPathList.add("GET,/");
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(

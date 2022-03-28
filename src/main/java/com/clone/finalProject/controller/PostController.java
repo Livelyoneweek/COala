@@ -20,7 +20,7 @@ public class PostController {
     private final PostService postService;
 
     // post 생성
-    @PostMapping("/islogin/post/write")
+    @PostMapping("/islogin/post/create")
     public Long postCreate(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         log.info("img : {}", postRequestDto.getPostImg());
         log.info("img : {}",postRequestDto.getPostImg());
@@ -67,7 +67,7 @@ public class PostController {
 
 
     // post 수정
-    @PutMapping("/islogin/post/revice/{pid}")
+    @PutMapping("/islogin/post/edit/{pid}")
     public Long postEdit(@PathVariable Long pid, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
         Long uid = userDeta.getUid();
         postService.postEdit(pid, postRequestDto, uid);
@@ -75,7 +75,7 @@ public class PostController {
     }
 
     //post 게시글 상세 조회
-    @GetMapping("/post/detailget/{pid}")
+    @GetMapping("/post/get/detail/{pid}")
     public PostResponseDto detailPostGet(@PathVariable Long pid) {
         PostResponseDto postResponseDto = postService.detailPostGet(pid);
 
@@ -83,7 +83,7 @@ public class PostController {
     }
 
     // 타이틀로 게시글 검색
-    @GetMapping("/post/search/{postTitle}")
+    @GetMapping("/post/get/title/{postTitle}")
     public List<PostResponseDto> postTitleGet(@PathVariable String postTitle,
                                               @RequestParam("page") int page,
                                               @RequestParam("size") int size,
@@ -96,7 +96,7 @@ public class PostController {
     }
 
     // 카테고리로 게시글 검색
-    @GetMapping("/category/search/{category}")
+    @GetMapping("/post/get/category/{category}")
     public List<PostResponseDto> postCategoryGet(@PathVariable String category,
                                                  @RequestParam("page") int page,
                                                  @RequestParam("size") int size,
@@ -110,7 +110,7 @@ public class PostController {
     }
 
     // post 관심글 조회
-    @GetMapping("/islogin/get/like")
+    @GetMapping("/islogin/post/get/like")
     public List<PostResponseDto> postLikeGet(@AuthenticationPrincipal UserDetailsImpl userDeta,
                                              @RequestParam("page") int page,
                                              @RequestParam("size") int size,

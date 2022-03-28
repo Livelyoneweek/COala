@@ -18,7 +18,7 @@ public class CommentController {
     private final CommnetService commnetService;
 
     //commnet 생성
-    @PostMapping("/islogin/comment/write")
+    @PostMapping("/islogin/comment/create")
     public Long commentCreate(@RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         log.info("댓글 작성 진행");
         log.info(" 댓글 내용: {}", commnetResponseDto.getComment());
@@ -38,7 +38,7 @@ public class CommentController {
     }
 
     // commnet 수정
-    @PutMapping("/islogin/comment/revice/{commentId}")
+    @PutMapping("/islogin/comment/edit/{commentId}")
     public void postEdit(@PathVariable Long commentId, @RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
         Long uid = userDeta.getUid();
         commnetService.commentEdit(commentId, commnetResponseDto, uid);

@@ -20,7 +20,7 @@ public class ChatRoomController {
 
 
     // 메인페이지 채널 채팅 내역 조회
-    @GetMapping("/chatting/main")
+    @GetMapping("/mainchat/get/main")
     public List<ChatMessagedResponseDto> chatMainGet() {
         List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.chatMainGet();
 
@@ -29,7 +29,7 @@ public class ChatRoomController {
 
 
     // 게시글 페이지 채널 채팅 내역 조회
-    @GetMapping("/chatting/{pid}")
+    @GetMapping("/postchat/get/{pid}")
     public List<ChatMessagedResponseDto> chatMainPost(@PathVariable Long pid) {
         List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.chatMainPost(pid);
 

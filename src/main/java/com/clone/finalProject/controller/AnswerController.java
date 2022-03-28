@@ -18,7 +18,7 @@ public class AnswerController {
     private final AnswerService answerService;
 
     // answer 생성
-    @PostMapping("/islogin/answer/{pid}")
+    @PostMapping("/islogin/answer/create/{pid}")
     public Long postCreate(@RequestBody AnswerResponseDto answerResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         User user = userDeta.getUser();
         Long answerId = answerService.answerCreate(answerResponseDto,user);
@@ -43,7 +43,7 @@ public class AnswerController {
 
 
     // answer 수정
-    @PutMapping("/islogin/answer/revice/{answerId}")
+    @PutMapping("/islogin/answer/edit/{answsrId}")
     public void postEdit(@PathVariable Long answerId, @RequestBody AnswerResponseDto answerResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
         Long uid = userDeta.getUid();
         answerService.answerEdit(answerId, answerResponseDto, uid);

@@ -21,7 +21,7 @@ public class TagsController {
 
 
     //태그 조회
-    @GetMapping("/tag/search/{tag}")
+    @GetMapping("/post/get/tag/{tag}")
     public List<PostResponseDto> searchTag(@PathVariable String tag,
                                            @RequestParam("page") int page,
                                            @RequestParam("size") int size,

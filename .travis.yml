@@ -1,27 +1,30 @@
 language: java
 jdk:
-- openjdk8
+  - openjdk8
 branches:
   only:
-  - master
+    - master
 before_install:
-   - chmod +x gradlew
+  - chmod +x gradlew
 cache:
   directories:
-  - "$HOME/.m2/repository"
-  - "$HOME/.gradle"
+    - "$HOME/.m2/repository"
+    - "$HOME/.gradle"
 script: "./gradlew clean build"
 
 before_deploy:
-  - zip -r springboot-webservice ./*
-  - mkdir -p deploy
-  - mv springboot-webservice.zip deploy/springboot-webservice.zip
+  - mkdir -p before-deploy #zip에 포함시킬 파일들을 담을 디렉토리
+  - cp scripts/*.sh before-deploy/
+  - cp appspec.yml before-deploy/
+  - cp build/libs/*.jar before-deploy/
+  - cd before-deploy && zip -r before-deploy * #before-deploy 폴더로 이동 후 전체 압축
+  - cd ../ && mkdir -p deploy #상위 디렉토리로 이동 후 deploy 폴더 생성
+  - mv before-deploy/before-deploy.zip deploy/springboot-webservice.zip #deploy로 zip 파일
 
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-
     bucket: 2022coala
     region: ap-northeast-2
     skip_cleanup: true
@@ -40,8 +43,9 @@ deploy:
     region: ap-northeast-2
     wait-until-deployed: true
 
+
 notifications:
   email:
     recipients:
-    - nakw0410@gmail.com
-    - wlvvwhs@naver.com
+#    - nakw0410@gmail.com
+#    - wlvvwhs@naver.com

@@ -1,6 +1,5 @@
 package com.clone.finalProject.controller;
 
-import com.clone.finalProject.domain.Alarm;
 import com.clone.finalProject.dto.AlarmPageResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.AlarmService;
@@ -20,7 +19,7 @@ public class AlarmController {
     private final AlarmService alarmService;
 
     //알람 메시지 조회
-    @GetMapping("/islogin/alarm")
+    @GetMapping("/islogin/get/alarm")
     public List<AlarmPageResponseDto> alarmGet(@AuthenticationPrincipal UserDetailsImpl userDeta) {
 
         Long uid = userDeta.getUid();
@@ -31,7 +30,7 @@ public class AlarmController {
 
 
     //알람 메시지 삭제
-    @DeleteMapping("/islogin/alarm/{alarmId}")
+    @DeleteMapping("/islogin/delete/alarm/{alarmId}")
     public Long alarmDelete(@PathVariable Long alarmId) {
         alarmService.alarmDelete(alarmId);
 

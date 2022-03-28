@@ -64,8 +64,6 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-batch'
 
-    // Health Check
-//    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 }
 

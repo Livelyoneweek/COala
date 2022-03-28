@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Getter
-public class PostLike {
+public class PostLike extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
