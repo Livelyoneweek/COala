@@ -1,6 +1,5 @@
 package com.clone.finalProject.domain;
 
-import com.clone.finalProject.dto.answrDto.AnswerLikeResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,9 +25,9 @@ public class AnswerLike {
     private Answer answer;
 
 
-    public AnswerLike (AnswerLikeResponseDto answerLikeResponseDto, Answer answer) {
-        this.uid =answerLikeResponseDto.getUid();
-        this.pid =answerLikeResponseDto.getPid();
+    public AnswerLike (Long uid, Long pid , Answer answer) {
+        this.uid =uid;
+        this.pid =pid;
         this.answer =answer;
     }
 

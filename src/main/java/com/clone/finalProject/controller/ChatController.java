@@ -63,7 +63,7 @@ public class ChatController {
         //채팅 메시지 셋업 메소드
         chatService.chatSettingMethod(chatMessageDto, token, chatRoom);
 
-        String destination = "greetings";
+        String destination = "mainchat";
         log.info("=== channel : {}",destination);
         chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
         return chatMessageDto;

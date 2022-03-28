@@ -105,7 +105,7 @@ public class UserService {
     // 초 분 시 일 월 요일 년도 (생략가능)
     // 1 월 7 토
     @Transactional
-    @Scheduled(cron="0 10 15 * 7 ?")
+    @Scheduled(cron="0 00 11 * * 1")
     public void weekPointReset() {
         List<User> userList = userRepository.findAll();
         for (User user : userList) {
