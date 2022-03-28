@@ -40,6 +40,7 @@ public class ChatService {
 
         List<ChatMessage> chatMessageList = chatMessageRepository.findTOP50ByChatRoom_AreaOrderByCreatedAtDesc("main");
 
+
         List<ChatMessagedResponseDto> chatMessagedResponseDtoList = new ArrayList<>();
         for(ChatMessage chatMessage : chatMessageList) {
             ChatMessagedResponseDto chatMessagedResponseDto = new ChatMessagedResponseDto(chatMessage);
