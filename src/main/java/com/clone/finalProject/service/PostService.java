@@ -291,6 +291,7 @@ public class PostService {
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
         for (Post post : postList) {
 
+
             // 게시글 조회용 메소드
             PostResponseDto postResponseDto = postGetMethod(post);
 
