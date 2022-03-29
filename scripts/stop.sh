@@ -14,7 +14,8 @@ if [ -z ${IDLE_PID} ]
 then
   echo "> 현재 구동중인 애플리케이션이 없으므로 종료하지 않습니다."
 else
-  echo "> kill -9 $IDLE_PID"
-  sudo kill -9 ${IDLE_PID}
+  echo "> 종료는 switch에서 실행."
+#  echo "> kill -9 $IDLE_PID"
+#  sudo kill -9 ${IDLE_PID}
   sleep 5
 fi
