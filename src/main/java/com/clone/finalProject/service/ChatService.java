@@ -36,7 +36,7 @@ public class ChatService {
     }
 
     // 메인페이지 채널 채팅 내역 조회
-    public List<ChatMessagedResponseDto> chatMainGet() {
+    public List<ChatMessagedResponseDto> getMainMessage() {
 
         List<ChatMessage> chatMessageList = chatMessageRepository.findTOP50ByChatRoom_AreaOrderByCreatedAtDesc("main");
 
@@ -51,7 +51,7 @@ public class ChatService {
     }
 
     // 게시글 페이지 채널 채팅 내역 조회
-    public List<ChatMessagedResponseDto> chatMainPost(Long pid) {
+    public List<ChatMessagedResponseDto> getPostMessage(Long pid) {
 
         List<ChatMessage> chatMessageList = chatMessageRepository.findTOP50ByChatRoom_PidOrderByCreatedAtDesc(pid);
 
@@ -66,7 +66,7 @@ public class ChatService {
     }
 
     // 귓속말 채널 채팅 내역 조회
-    public List<ChatMessagedResponseDto> chatMainUser(Long uid) {
+    public List<ChatMessagedResponseDto> getWhisperMessage(Long uid) {
 
         List<ChatMessage> chatMessageList = chatMessageRepository.findTOP50ByChatRoom_UidOrderByCreatedAtDesc(uid);
 

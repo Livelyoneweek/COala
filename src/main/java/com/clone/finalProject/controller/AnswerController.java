@@ -19,34 +19,34 @@ public class AnswerController {
 
     // answer 생성
     @PostMapping("/islogin/answer/create/{pid}")
-    public Long postCreate(@RequestBody AnswerResponseDto answerResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public Long createAnswer(@RequestBody AnswerResponseDto answerResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         User user = userDeta.getUser();
-        Long answerId = answerService.answerCreate(answerResponseDto,user);
+        Long answerId = answerService.createAnswer(answerResponseDto,user);
         return answerId;
     }
 
     // answer 조회
     @GetMapping("/answer/get/{pid}")
-    public List<AnswerResponseDto> postGet(@PathVariable Long pid) {
-        List<AnswerResponseDto> answerResponseDtos = answerService.answerGet(pid);
+    public List<AnswerResponseDto> getAnswer(@PathVariable Long pid) {
+        List<AnswerResponseDto> answerResponseDtos = answerService.getAnswer(pid);
 
         return answerResponseDtos;
     }
 
     // answer 삭제
     @DeleteMapping("/islogin/answer/delete/{answerId}")
-    public void postDelete(@PathVariable Long answerId, @AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public void deleteAnswer(@PathVariable Long answerId, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         Long uid = userDeta.getUid();
-        answerService.answerDelete(uid, answerId);
+        answerService.deleteAnswer(uid, answerId);
 
     }
 
 
     // answer 수정
     @PutMapping("/islogin/answer/edit/{answsrId}")
-    public void postEdit(@PathVariable Long answerId, @RequestBody AnswerResponseDto answerResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
+    public void editAnswer(@PathVariable Long answerId, @RequestBody AnswerResponseDto answerResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
         Long uid = userDeta.getUid();
-        answerService.answerEdit(answerId, answerResponseDto, uid);
+        answerService.editAnswer(answerId, answerResponseDto, uid);
 
     }
 
