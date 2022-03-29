@@ -25,28 +25,20 @@ public class UserService {
 
     public void registerUser(SignupRequestDto requestDto) {
 
-        //중복된 이메일(로그인 id)가 존재할 경우
         String username = requestDto.getUsername();
         String nickName = requestDto.getNickname();
         String password = requestDto.getPassword();
         String passwordCheck = requestDto.getPasswordCheck();
 
+        //중복된 username이 존재할 경우
         if (userRepository.existsByUsername(username)) {
             throw new CustomException(ErrorCode.DUPLICATE_ID);
         }
 
-
-        //중복된 닉네임이 존재할 경우
-//        if (userRepository.existsByNickname(nickname)) {
-//            throw new IllegalArgumentException("중복된 닉네임입니다.");
-//        }
-
-        //중복된 이메일이 존재할 경우
+        //중복된 nickName이 존재할 경우
         if (userRepository.existsByNickname(nickName)) {
             throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
         }
-
-        //UserValidator.validateUserRegister(username,password,passwordCheck);
 
         // 패스워드
         String enPassword = passwordEncoder.encode(requestDto.getPassword());
@@ -62,14 +54,14 @@ public class UserService {
     }
 
     // nickName 중복체크
-    public boolean nickName(String nickname) {
+    public boolean nickNameCheck(String nickname) {
         return userRepository.existsByNickname(nickname);
     }
 
 
     //회원 정보 수정
     @Transactional
-    public void updateUserInfo(Long uid, UserInfoRequestDto userInfoRequestDto) {
+    public void editUserInfo(Long uid, UserInfoRequestDto userInfoRequestDto) {
 
         User user = userRepository.findByUid(uid).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND_USER)
@@ -79,7 +71,7 @@ public class UserService {
 
     //회원 비밀번호 수정
     @Transactional
-    public UserInfoResponseDto updatePassword(Long uid, UserInfoRequestDto userInfoRequestDto) {
+    public UserInfoResponseDto editPassword(Long uid, UserInfoRequestDto userInfoRequestDto) {
 
         User user = userRepository.findByUid(uid).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND_USER)
@@ -104,7 +96,7 @@ public class UserService {
     }
 
     // 초 분 시 일 월 요일 년도 (생략가능)
-    // 1 월 7 토
+    // 1 ~ 7 (월요일 ~ 토요일)
 
     //weekPoint 초기화 매주 수요일 새벽1시 실행
     @Transactional

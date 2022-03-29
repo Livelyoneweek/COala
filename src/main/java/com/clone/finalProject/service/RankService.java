@@ -18,7 +18,7 @@ public class RankService {
     private final UserRepository userRepository;
 
     //전체 랭킹 조회
-    public List<AllRankResponseDto> getAllRank() {
+    public List<AllRankResponseDto> getRankingTotal() {
         List<User> allRank = userRepository.findTop10ByOrderByPointDesc();
 
         List<AllRankResponseDto> allrankResponseDtos = new ArrayList<>();
@@ -30,7 +30,7 @@ public class RankService {
     }
 
     //주간 랭킹 조회
-    public List<WeekRankResponseDto> getWeekRank() {
+    public List<WeekRankResponseDto> getRankingWeekend() {
         List<User> allRank = userRepository.findTop10ByOrderByWeekPointDesc();
 
         List<WeekRankResponseDto> weekRankResponseDtos = new ArrayList<>();
@@ -42,7 +42,7 @@ public class RankService {
     }
 
     //월간 랭킹 조회
-    public List<MonthRankResponseDto> getMonthRank() {
+    public List<MonthRankResponseDto> getRankingMonth() {
         List<User> allRank = userRepository.findTop10ByOrderByMonthPointDesc();
 
         List<MonthRankResponseDto> monthRankResponseDtos = new ArrayList<>();
@@ -54,7 +54,7 @@ public class RankService {
     }
 
     //종합 나의 랭킹 조회
-    public AllRankResponseDto getAllRankMy(Long uid) {
+    public AllRankResponseDto getRankingTotalMy(Long uid) {
         List<User> allRank = userRepository.findAllByOrderByPointDesc();
 
         User user = userRepository.findByUid(uid).get();
@@ -72,7 +72,7 @@ public class RankService {
     }
 
     //주간 나의 랭킹 조회
-    public WeekRankResponseDto getWeekRankMy(long uid) {
+    public WeekRankResponseDto getRankingWeekendMy(long uid) {
         List<User> allRank = userRepository.findAllByOrderByWeekPointDesc();
 
         User user = userRepository.findByUid(uid).get();
@@ -89,7 +89,7 @@ public class RankService {
         return weekRankResponseDto;
     }
     //월간 나의 랭킹 조회
-    public MonthRankResponseDto getMonthRankMy(long uid) {
+    public MonthRankResponseDto getRankingMonthMy(long uid) {
 
         List<User> allRank = userRepository.findAllByOrderByMonthPointDesc();
 

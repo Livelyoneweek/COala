@@ -28,7 +28,6 @@ public class AlarmController {
         return alarmPageResponseDtoList;
     }
 
-
     //알람 메시지 삭제
     @DeleteMapping("/islogin/delete/alarm/{alarmId}")
     public Long alarmDelete(@PathVariable Long alarmId) {

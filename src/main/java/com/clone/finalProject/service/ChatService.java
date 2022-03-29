@@ -12,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -46,6 +43,7 @@ public class ChatService {
 
             chatMessagedResponseDtoList.add(chatMessagedResponseDto);
         }
+        Collections.reverse(chatMessagedResponseDtoList);
         return chatMessagedResponseDtoList;
     }
 
@@ -60,6 +58,7 @@ public class ChatService {
 
             chatMessagedResponseDtoList.add(chatMessagedResponseDto);
         }
+        Collections.reverse(chatMessagedResponseDtoList);
         return chatMessagedResponseDtoList;
     }
 
@@ -74,6 +73,7 @@ public class ChatService {
 
             chatMessagedResponseDtoList.add(chatMessagedResponseDto);
         }
+        Collections.reverse(chatMessagedResponseDtoList);
         return chatMessagedResponseDtoList;
 
     }

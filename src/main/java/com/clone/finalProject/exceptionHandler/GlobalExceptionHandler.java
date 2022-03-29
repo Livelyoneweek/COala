@@ -1,7 +1,6 @@
 package com.clone.finalProject.exceptionHandler;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.MessagingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = { CustomException.class })
+    @ExceptionHandler(value = {CustomException.class})
     public ResponseEntity handleCustomException(CustomException e) {
 
         ErrorResponse errorResult = new ErrorResponse();
@@ -20,4 +19,6 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity(errorResult, errorResult.getHttpStatus());
     }
+
+}
 

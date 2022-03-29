@@ -34,7 +34,7 @@ public class PostService {
 
     // post 생성
     @Transactional
-    public Long postCreate(PostRequestDto postRequestDto, User user) {
+    public Long createPost(PostRequestDto postRequestDto, User user) {
 
         if(postRequestDto.getCategory().equals("Javascript")) {
             postRequestDto.setCategory("자바스크립트");
@@ -53,46 +53,9 @@ public class PostService {
         return post.getPid();
     }
 
-
-
-    // post 조회 (답변채택)
-//    public List<PostResponseDto> postCheckGet() {
-//        List<Post>postList = postRepository.findAllByStatusContainingOrderByCreatedAtDesc("check");
-//
-//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-//        for (Post post : postList) {
-//
-//            // 게시글 조회용 메소드
-//            PostResponseDto postResponseDto = postGetMethod(post);
-//
-//            postResponseDtos.add(postResponseDto);
-//
-//        }
-//        return postResponseDtos;
-//    }
-
-
-    // post 조회 (답변대기)
-//    public List<PostResponseDto> postWaitGet() {
-//        List<Post>postList = postRepository.findAllByStatusContainsOrderByCreatedAtDesc("noCheck");
-//
-//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-//        for (Post post : postList) {
-//
-//            // 게시글 조회용 메소드
-//            PostResponseDto postResponseDto = postGetMethod(post);
-//
-//            postResponseDtos.add(postResponseDto);
-//
-//        }
-//        return postResponseDtos;
-//    }
-
-
-
     //post 삭제
     @Transactional
-    public void postDelete(Long pid, Long uid) {
+    public void deletePost (Long pid, Long uid) {
 
         Post post = postRepository.findByPid(pid).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_USER)
@@ -121,7 +84,7 @@ public class PostService {
 
     //post 수정
     @Transactional
-    public void postEdit(Long pid, PostRequestDto postRequestDto, Long uid) {
+    public void editPost(Long pid, PostRequestDto postRequestDto, Long uid) {
 
         Post post = postRepository.findByPid(pid).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
@@ -141,74 +104,20 @@ public class PostService {
     }
 
     //post 상세 조회
-    public PostResponseDto detailPostGet(Long pid) {
+    public PostResponseDto getPostDetail(Long pid) {
 
         Post post = postRepository.findByPid(pid).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
         );
 
         // 게시글 조회용 메소드
-        PostResponseDto postResponseDto = postGetMethod(post);
+        PostResponseDto postResponseDto = getPostMethod(post);
 
         return postResponseDto;
     }
 
-    //게시글 타이틀 검색하여 조회
-//    public List<PostResponseDto> postTitleGet(String postTitle) {
-//
-//        List<Post> postList = postRepository.findByPostTitleContaining(postTitle);
-//
-//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-//        for (Post post : postList) {
-//
-//            // 게시글 조회용 메소드
-//            PostResponseDto postResponseDto = postGetMethod(post);
-//
-//            postResponseDtos.add(postResponseDto);
-//
-//        }
-//        return postResponseDtos;
-//
-//    }
-
-    //카게고리로 검색하여 게시글 조회
-//    public List<PostResponseDto> postCategoryGet(String category) {
-//
-//        List<Post> postList = postRepository.findByCategoryContaining(category);
-//
-//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-//        for (Post post : postList) {
-//
-//            // 게시글 조회용 메소드
-//            PostResponseDto postResponseDto = postGetMethod(post);
-//
-//            postResponseDtos.add(postResponseDto);
-//
-//        }
-//        return postResponseDtos;
-//
-//    }
-
-    // post 관심글 조회
-//    public List<PostResponseDto> postLikeGet(Long uid) {
-//
-//        List<PostLike>postLikeList = postLikeRepository.findAllByUser_Uid(uid);
-//
-//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-//        for (PostLike postLike : postLikeList) {
-//            Post post = postLike.getPost();
-//            // 게시글 조회용 메소드
-//            PostResponseDto postResponseDto = postGetMethod(post);
-//
-//            postResponseDtos.add(postResponseDto);
-//
-//        }
-//        return postResponseDtos;
-//
-//    }
-
     // 게시글 조회용에 사용되는 메소드
-    public PostResponseDto postGetMethod(Post post) {
+    public PostResponseDto getPostMethod(Post post) {
         User user = post.getUser();
 
         List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
@@ -264,7 +173,7 @@ public class PostService {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // post 조회 (답변채택)
-    public List<PostResponseDto> postCheckGet(int page, int size, String sortBy, boolean isAsc) {
+    public List<PostResponseDto> getPostCheck(int page, int size, String sortBy, boolean isAsc) {
 
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
@@ -275,15 +184,15 @@ public class PostService {
 
         for (Post post : postList) {
             // 게시글 조회용 메소드
-            PostResponseDto postResponseDto = postGetMethod(post);
+            PostResponseDto postResponseDto = getPostMethod(post);
             postResponseDtos.add(postResponseDto);
 
         }
         return postResponseDtos;
     }
 
-//     post 조회 (답변대기)
-    public List<PostResponseDto> postWaitGet(int page, int size, String sortBy, boolean isAsc) {
+//  post 조회 (답변대기)
+    public List<PostResponseDto> getPostWait(int page, int size, String sortBy, boolean isAsc) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page,size,sort);
@@ -293,18 +202,16 @@ public class PostService {
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
         for (Post post : postList) {
 
-
             // 게시글 조회용 메소드
-            PostResponseDto postResponseDto = postGetMethod(post);
+            PostResponseDto postResponseDto = getPostMethod(post);
 
             postResponseDtos.add(postResponseDto);
-
         }
         return postResponseDtos;
     }
 
     //게시글 타이틀 검색하여 조회
-    public List<PostResponseDto> postTitleGet(String postTitle,int page, int size, String sortBy, boolean isAsc) {
+    public List<PostResponseDto> getPostTitle(String postTitle, int page, int size, String sortBy, boolean isAsc) {
 
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
@@ -316,7 +223,7 @@ public class PostService {
         for (Post post : postList) {
 
             // 게시글 조회용 메소드
-            PostResponseDto postResponseDto = postGetMethod(post);
+            PostResponseDto postResponseDto = getPostMethod(post);
 
             postResponseDtos.add(postResponseDto);
 
@@ -326,7 +233,7 @@ public class PostService {
     }
 
     //카게고리로 검색하여 게시글 조회
-    public List<PostResponseDto> postCategoryGet(String category,int page, int size, String sortBy, boolean isAsc) {
+    public List<PostResponseDto>getPostCategory(String category, int page, int size, String sortBy, boolean isAsc) {
 
         if(category.equals("Javascript")) {
             category ="자바스크립트";
@@ -342,14 +249,12 @@ public class PostService {
         for (Post post : postList) {
 
             // 게시글 조회용 메소드
-            PostResponseDto postResponseDto = postGetMethod(post);
+            PostResponseDto postResponseDto = getPostMethod(post);
 
             if(postResponseDto.getCategory().equals("자바스크립트")) {
                 postResponseDto.setCategory("Javascript");
             }
-
             postResponseDtos.add(postResponseDto);
-
         }
         return postResponseDtos;
 
@@ -357,7 +262,7 @@ public class PostService {
 
 
     // post 관심글 조회
-    public List<PostResponseDto> postLikeGet(Long uid,int page, int size, String sortBy, boolean isAsc) {
+    public List<PostResponseDto> getPostLike(Long uid, int page, int size, String sortBy, boolean isAsc) {
 
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
@@ -369,7 +274,7 @@ public class PostService {
         for (PostLike postLike : postLikeList) {
             Post post = postLike.getPost();
             // 게시글 조회용 메소드
-            PostResponseDto postResponseDto = postGetMethod(post);
+            PostResponseDto postResponseDto = getPostMethod(post);
 
             postResponseDtos.add(postResponseDto);
 
