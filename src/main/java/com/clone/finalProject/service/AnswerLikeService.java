@@ -3,6 +3,8 @@ package com.clone.finalProject.service;
 import com.clone.finalProject.domain.*;
 import com.clone.finalProject.dto.alarmDto.AlarmResponseDto;
 import com.clone.finalProject.dto.answrDto.AnswerLikeResponseDto;
+import com.clone.finalProject.exceptionHandler.CustomException;
+import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,14 +41,14 @@ public class AnswerLikeService {
         log.info("answerUid : {}", answerUid);
 
         Answer answer = answerRepository.findByAnswerId(answerId).orElseThrow(
-                ()-> new NullPointerException("answer 존재하지 않습니다.")
+                ()-> new CustomException(ErrorCode.NOT_FOUND_ANSWER)
         );
 
         HashMap<String, String> result = new HashMap<>();
 
         if (answerLikeRepository.findByUidAndPid(uid,pid).isPresent()) {
             AnswerLike answerLike = answerLikeRepository.findByUidAndPid(uid,pid).orElseThrow(
-                    ()-> new NullPointerException("answerLike가 존재하지 않습니다.")
+                    ()-> new CustomException(ErrorCode.NOT_FOUND_ANSWERLIKE)
             );
 
             // 답변 채택이 이미 있는데 같은 답변일 때 (채택 취소) ,, 채택취소 못하게 수정
@@ -62,7 +64,7 @@ public class AnswerLikeService {
 
 //                // 포인트 점수 추가 업데이트
 //                User user =userRepository.findByUid(answerUid).orElseThrow(
-//                        ()-> new NullPointerException("User가 존재하지 않습니다.")
+//                        ()-> new CustomException(ErrorCode.NOT_FOUND_USER)
 //                );
 //                Long point =user.getPoint();
 //                Long weekPoint = user.getWeekPoint();
@@ -88,14 +90,14 @@ public class AnswerLikeService {
             answerLikeRepository.save(answerLike);
 
             Post post = postRepository.findById(pid).orElseThrow(
-                    ()-> new NullPointerException("Post가 존재하지 않습니다.")
+                    ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
             );
             post.checkUpdate("selection");
             result.put("status","true");
 
             // 포인트 점수 추가 업데이트
             User user =userRepository.findByUid(answerUid).orElseThrow(
-                    ()-> new NullPointerException("User가 존재하지 않습니다.")
+                    ()-> new CustomException(ErrorCode.NOT_FOUND_USER)
             );
             Long point =user.getPoint();
             Long weekPoint = user.getWeekPoint();

@@ -4,6 +4,8 @@ import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.userDto.SignupRequestDto;
 import com.clone.finalProject.dto.userDto.UserInfoRequestDto;
 import com.clone.finalProject.dto.userDto.UserInfoResponseDto;
+import com.clone.finalProject.exceptionHandler.CustomException;
+import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,7 @@ public class UserService {
         String passwordCheck = requestDto.getPasswordCheck();
 
         if (userRepository.existsByUsername(username)) {
-            throw new IllegalArgumentException("중복된 아이디입니다.");
+            throw new CustomException(ErrorCode.DUPLICATE_ID);
         }
 
 
@@ -41,7 +43,7 @@ public class UserService {
 
         //중복된 이메일이 존재할 경우
         if (userRepository.existsByNickname(nickName)) {
-            throw new IllegalArgumentException("중복된 닉네임입니다.");
+            throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
         }
 
         //UserValidator.validateUserRegister(username,password,passwordCheck);
@@ -70,7 +72,7 @@ public class UserService {
     public void updateUserInfo(Long uid, UserInfoRequestDto userInfoRequestDto) {
 
         User user = userRepository.findByUid(uid).orElseThrow(
-                () -> new NullPointerException("유저가 존재하지 않습니다.")
+                () -> new CustomException(ErrorCode.NOT_FOUND_USER)
         );
         user.userInfoUpdate(userInfoRequestDto);
     }
@@ -80,7 +82,7 @@ public class UserService {
     public UserInfoResponseDto updatePassword(Long uid, UserInfoRequestDto userInfoRequestDto) {
 
         User user = userRepository.findByUid(uid).orElseThrow(
-                () -> new NullPointerException("유저가 존재하지 않습니다.")
+                () -> new CustomException(ErrorCode.NOT_FOUND_USER)
         );
         // 패스워드 암호화 함
         log.info(userInfoRequestDto.getPassword());

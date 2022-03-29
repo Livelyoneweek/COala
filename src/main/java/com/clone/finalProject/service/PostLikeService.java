@@ -4,6 +4,8 @@ import com.clone.finalProject.domain.Post;
 import com.clone.finalProject.domain.PostLike;
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.answrDto.AnswerLikeResponseDto;
+import com.clone.finalProject.exceptionHandler.CustomException;
+import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.PostLikeRepository;
 import com.clone.finalProject.repository.PostRepository;
 import com.clone.finalProject.repository.PostTagsRepository;
@@ -41,10 +43,10 @@ public class PostLikeService {
         //없으니 생성
         } else {
             User user = userRepository.findById(uid).orElseThrow(
-                    ()-> new NullPointerException("User가 존재하지 않습니다.")
+                    ()-> new CustomException(ErrorCode.NOT_FOUND_USER)
             );
             Post post = postRepository.findById(pid).orElseThrow(
-                    ()-> new NullPointerException("Post가 존재하지 않습니다.")
+                    ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
             );
 
 
@@ -70,7 +72,7 @@ public class PostLikeService {
 //
 //        for (PostLike postList : postLikes) {
 //            Post post = postRepository.findByPid(postList.getPost().getPid()).orElseThrow(
-//                    ()-> new NullPointerException("Post가 존재하지 않습니다.")
+//                    ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
 //            );
 //
 //            // 게시글 조회용 메소드

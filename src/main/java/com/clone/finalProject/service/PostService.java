@@ -3,6 +3,8 @@ package com.clone.finalProject.service;
 import com.clone.finalProject.domain.*;
 import com.clone.finalProject.dto.postDto.PostRequestDto;
 import com.clone.finalProject.dto.postDto.PostResponseDto;
+import com.clone.finalProject.exceptionHandler.CustomException;
+import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,7 +92,7 @@ public class PostService {
     public void postDelete(Long pid, Long uid) {
 
         Post post = postRepository.findByPid(pid).orElseThrow(
-                ()-> new NullPointerException("유저가 존재하지 않습니다.")
+                ()-> new CustomException(ErrorCode.NOT_FOUND_USER)
         );
 
         if (post.getUser().getUid() == uid) {
@@ -119,7 +121,7 @@ public class PostService {
     public void postEdit(Long pid, PostRequestDto postRequestDto, Long uid) {
 
         Post post = postRepository.findByPid(pid).orElseThrow(
-                ()-> new NullPointerException("post가 존재하지 않습니다.")
+                ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
         );
 
         if (post.getUser().getUid() == uid) {
@@ -139,7 +141,7 @@ public class PostService {
     public PostResponseDto detailPostGet(Long pid) {
 
         Post post = postRepository.findByPid(pid).orElseThrow(
-                ()-> new NullPointerException("post가 존재하지 않습니다.")
+                ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
         );
 
         // 게시글 조회용 메소드
@@ -233,7 +235,7 @@ public class PostService {
 
             if (tagsRepository.findByTagName(tagName).isPresent()) {
                 tag = tagsRepository.findByTagName(tagName).orElseThrow(
-                        ()-> new NullPointerException("태그가 존재하지 않습니다.")
+                        ()-> new CustomException(ErrorCode.NOT_FOUND_TAG)
                 );
 
             } else {
