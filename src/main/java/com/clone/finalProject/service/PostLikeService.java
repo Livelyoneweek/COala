@@ -26,7 +26,7 @@ public class PostLikeService {
 
 
     //관심 등록 할 때 있으면 삭제 없으면 생성
-    public HashMap<String, String> postLike(AnswerLikeResponseDto answerLikeResponseDto) {
+    public HashMap<String, String> postLikeCreate(AnswerLikeResponseDto answerLikeResponseDto) {
 
         Long uid =answerLikeResponseDto.getUid();
         Long pid = answerLikeResponseDto.getPid();
@@ -49,7 +49,6 @@ public class PostLikeService {
                     ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
             );
 
-
             PostLike postLike = new PostLike(user, post);
             postLikeRepository.save(postLike);
 
@@ -58,50 +57,6 @@ public class PostLikeService {
         }
         return result;
     }
-
-//    //마이페이지에서 관심 글 조회
-//    public List<PostResponseDto> postLikeGet(Long uid,int page, int size, String sortBy, boolean isAsc) {
-//
-//        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-//        Sort sort = Sort.by(direction, sortBy);
-//        Pageable pageable = PageRequest.of(page,size,sort);
-//
-//        List<PostLike> postLikes = postLikeRepository.findAllByUser_Uid(uid);
-//
-//        ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
-//
-//        for (PostLike postList : postLikes) {
-//            Post post = postRepository.findByPid(postList.getPost().getPid()).orElseThrow(
-//                    ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
-//            );
-//
-//            // 게시글 조회용 메소드
-//            PostResponseDto postResponseDto = postGetMethod(post);
-//
-//            postResponseDtos.add(postResponseDto);
-//        }
-//
-//        return postResponseDtos;
-//
-//    }
-//
-//    // 게시글 조회용 메소드
-//    private PostResponseDto postGetMethod(Post post) {
-//        User user = post.getUser();
-//        List<PostLike> postLikes = postLikeRepository.findAllByPost_Pid(post.getPid());
-//        Long postLikeCount = Long.valueOf(postLikes.size());
-//
-//        //태그 추가
-//        List<PostTags> postTagsList = postTagsRepository.findAllByPost_Pid(post.getPid());
-//        List<String> tags = new ArrayList<>();
-//        for (PostTags postTags : postTagsList) {
-//            String tag = postTags.getTags().getTagName();
-//            tags.add(tag);
-//        }
-//
-//        PostResponseDto postResponseDto = new PostResponseDto(post, user,postLikeCount,tags);
-//        return postResponseDto;
-//    }
 
 
 }

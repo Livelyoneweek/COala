@@ -20,49 +20,47 @@ public class RankController {
 
     // 전체 랭킹 조회
     @GetMapping("/user/get/ranking/total")
-    public List<AllRankResponseDto> totalRank() {
-        return rankService.getAllRank();
+    public List<AllRankResponseDto> getRankingTotal() {
+        return rankService.getRankingTotal();
     }
 
     // 주간 랭킹 조회
     @GetMapping("/user/get/ranking/weekend")
-    public List<WeekRankResponseDto> weekRank() {
-        return rankService.getWeekRank();
+    public List<WeekRankResponseDto> getRankingWeekend() {
+        return rankService.getRankingWeekend();
     }
 
     // 월간 랭킹 조회
     @GetMapping("/user/get/ranking/month")
-    public List<MonthRankResponseDto> monthRank() {
-        return rankService.getMonthRank();
+    public List<MonthRankResponseDto> getRankingMonth() {
+        return rankService.getRankingMonth();
     }
 
 
     //종합 나의 랭킹
     @GetMapping("/islogin/get/myranking/total")
-    public AllRankResponseDto myTotalRank(@AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public AllRankResponseDto getRankingTotalMy(@AuthenticationPrincipal UserDetailsImpl userDeta) {
         long uid = userDeta.getUid();
-        AllRankResponseDto allRankResponseDto = rankService.getAllRankMy(uid);
+        AllRankResponseDto allRankResponseDto = rankService.getRankingTotalMy(uid);
 
         return allRankResponseDto;
     }
 
     //주간 나의 랭킹
     @GetMapping("/islogin/get/myranking/weekend")
-    public WeekRankResponseDto myWeekRank(@AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public WeekRankResponseDto getRankingWeekendMy(@AuthenticationPrincipal UserDetailsImpl userDeta) {
         long uid = userDeta.getUid();
-        WeekRankResponseDto weekRankResponseDto = rankService.getWeekRankMy(uid);
+        WeekRankResponseDto weekRankResponseDto = rankService.getRankingWeekendMy(uid);
 
         return weekRankResponseDto;
     }
 
     //월간 나의 랭킹
     @GetMapping("/islogin/get/myranking/month")
-    public MonthRankResponseDto myMonthRank(@AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public MonthRankResponseDto getRankingMonthMy(@AuthenticationPrincipal UserDetailsImpl userDeta) {
         long uid = userDeta.getUid();
-        MonthRankResponseDto monthRankResponseDto = rankService.getMonthRankMy(uid);
+        MonthRankResponseDto monthRankResponseDto = rankService.getRankingMonthMy(uid);
 
         return monthRankResponseDto;
     }
-
-
 }

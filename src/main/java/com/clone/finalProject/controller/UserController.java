@@ -18,7 +18,7 @@ public class UserController {
 
     //회원가입
     @PostMapping("/user/signup")
-    public SignupResponseDto registerUser(@RequestBody SignupRequestDto requestDto) {
+    public SignupResponseDto userSignup(@RequestBody SignupRequestDto requestDto) {
 
         log.info("username :{}", requestDto.getUsername());
         log.info("nickname :{}", requestDto.getNickname());
@@ -31,7 +31,7 @@ public class UserController {
 
     //로그인 유지 확인
     @PostMapping("/islogin/user")
-    public IsloginResponseDto islogin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public IsloginResponseDto isloginUser (@AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
         log.info("username : {}", user.getUsername());
         log.info("nickName : {}", user.getNickname());
@@ -45,10 +45,11 @@ public class UserController {
     public boolean usernameCheck(@RequestBody SignupRequestDto signupRequestDto) {
         return userService.usernameCheck(signupRequestDto.getUsername());
     }
+
     //닉네임 중복 확인
     @PostMapping("/user/signup/nickname")
-    public boolean emailCheck(@RequestBody SignupRequestDto signupRequestDto) {
-        return userService.nickName(signupRequestDto.getNickname());
+    public boolean nickNameCheck(@RequestBody SignupRequestDto signupRequestDto) {
+        return userService.nickNameCheck(signupRequestDto.getNickname());
     }
 
     //회원정보 조회
@@ -62,19 +63,19 @@ public class UserController {
 
 //    회원 정보 수정
     @PutMapping("/islogin/user/edit/{uid}")
-    public UserInfoResponseDto updateUserInfo(@PathVariable Long uid, @RequestBody UserInfoRequestDto userInfoRequestDto){
+    public UserInfoResponseDto editUserInfo(@PathVariable Long uid, @RequestBody UserInfoRequestDto userInfoRequestDto){
         log.info("nickname :{}", userInfoRequestDto.getNickname());
         log.info("career :{}", userInfoRequestDto.getCareer());
         log.info("userimage_url {}",  userInfoRequestDto.getUserImage());
 
-        userService.updateUserInfo(uid, userInfoRequestDto);
+        userService.editUserInfo(uid, userInfoRequestDto);
         return new UserInfoResponseDto(true);
     }
 
-    //    회원 비밀번호 수정
+    //  회원 비밀번호 수정
     @PutMapping("/islogin/user/edit/pwd/{uid}")
-    public UserInfoResponseDto updatePassword(@PathVariable Long uid, @RequestBody UserInfoRequestDto userInfoRequestDto){
-        UserInfoResponseDto userInfoResponseDto = userService.updatePassword(uid, userInfoRequestDto);
+    public UserInfoResponseDto editPassword(@PathVariable Long uid, @RequestBody UserInfoRequestDto userInfoRequestDto){
+        UserInfoResponseDto userInfoResponseDto = userService.editPassword(uid, userInfoRequestDto);
         return userInfoResponseDto;
     }
 

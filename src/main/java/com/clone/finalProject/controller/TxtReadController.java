@@ -8,10 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.transaction.Transactional;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,15 +20,11 @@ import java.util.List;
 @RestController
 public class TxtReadController {
 
-
     private final CacheService cacheService;
     private final FwordRepository fwordRepository;
-
-
-    //욕설 리스트 디비에 넣기 위한 컨트롤러
-    // txt파일을 읽고 한줄씩 내려가면서
-
-    @GetMapping("/read/txt")
+    
+    // txt파일을 읽고 한줄씩 내려가면서 출력
+    @GetMapping("/test/read/txt")
     public String readTxt() throws IOException {
 
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources";
@@ -56,33 +50,28 @@ public class TxtReadController {
         return fowrds;
     }
 
-    // 욕설 test
+    // 욕설 디비 담기 및 테스트
     @Transactional
-    @GetMapping("/test/pls2")
-    public void test22(){
+    @GetMapping("/test/get/text")
+    public void getText(){
 
-//        List<Fword> fwordList = fwordRepository.findAll();
-//
-//        for (Fword fword : fwordList) {
-//            String st= fword.getFWord().trim();
-//            fword.update(st);
-//        }
-//        log.info("공백 없애기 완료");
+    // 욕설 txt DB에 담는 로직
+        List<Fword> fwordList = fwordRepository.findAll();
 
-        HashMap<Integer,String> fowrds= cacheService.getCacheData("key");
+        for (Fword fword : fwordList) {
+            String st= fword.getFWord().trim();
+            fword.update(st);
+        }
+        log.info("공백 없애고 DB에 저장 완료");
 
-
-        log.info(String.valueOf(fowrds.containsValue("잡놈")));
-
-
+        // containsValue 테스트
+//        HashMap<Integer,String> fowrds= cacheService.getCacheData("key");
+//        log.info(String.valueOf(fowrds.containsValue("잡놈")));
 //        전체 출력문
 //        for (Map.Entry<Integer, String> entrySet : fowrds.entrySet()) {
 //            log.info(entrySet.getKey() + " : " + entrySet.getValue());
 //        }
 
-
     }
-
-
 
 }
