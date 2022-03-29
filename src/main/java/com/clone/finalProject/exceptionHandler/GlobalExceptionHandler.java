@@ -1,6 +1,7 @@
 package com.clone.finalProject.exceptionHandler;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.MessagingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -19,4 +20,4 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity(errorResult, errorResult.getHttpStatus());
     }
-}
+

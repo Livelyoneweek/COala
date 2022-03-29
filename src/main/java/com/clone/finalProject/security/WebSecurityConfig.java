@@ -12,12 +12,19 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +56,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(jwtAuthProvider);
     }
 
-//    @Override
-//    public void configure(WebSecurity web) {
-//    // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
-//        web
-//                .ignoring()
-//                .antMatchers("/h2-console/**");
-//    }
+    @Override
+    public void configure(WebSecurity web) {
+    // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
+        web
+                .ignoring()
+                .antMatchers("/h2-console/**")
+                .antMatchers("/static/**","/css/**","/js/**","/images/**")
+                .antMatchers("/swagger-ui/index.html", "/webjars/**", "/swagger/**")
+                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**");
+
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -64,6 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers();
+
 
         http
                 .cors()
@@ -75,7 +87,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             http.headers().frameOptions().disable();
 
 
-
         /* 1.
          * UsernamePasswordAuthenticationFilter 이전에 FormLoginFilter, JwtFilter 를 등록합니다.
          * FormLoginFilter : 로그인 인증을 실시합니다.
@@ -83,10 +94,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          */
         http
                 .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                //시큐리티 인증 예외처리 추가
+                .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
         http.authorizeRequests()
-
                 // 그 외 어떤 요청이든 ''
                 .anyRequest().permitAll()
                 .and()
@@ -95,6 +108,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그아웃 요청 처리 URL
                 .logoutUrl("/user/logout")
                 .permitAll();
+
     }
 
     @Bean
@@ -115,6 +129,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public FormLoginAuthProvider formLoginAuthProvider() {
         return new FormLoginAuthProvider(encodePassword());
     }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {return new AuthenticationEntryPoint() {
+        @Override
+        public void commence(HttpServletRequest request, HttpServletResponse response,
+                             AuthenticationException authException) throws IOException, ServletException {
+
+        }
+    };}
 
     private JwtAuthFilter jwtFilter() throws Exception {
         List<String> skipPathList = new ArrayList<>();
@@ -144,6 +167,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         skipPathList.add("GET,/profile");
         skipPathList.add("GET,/");
+
+        // Swagger
+//        skipPathList.add("GET, /swagger-ui/index.html");
+//        skipPathList.add("GET, /swagger/**");
+//        skipPathList.add("GET, /swagger*/**");
+//        skipPathList.add("GET, /swagger-resources/**");
+//        skipPathList.add("GET, /webjars/**");
+//        skipPathList.add("GET, /v2/**");
+//        skipPathList.add("GET, /api/v2-docs");
+//        skipPathList.add("GET, /configuration/**");
+//        skipPathList.add("GET, /static/**");
+//        skipPathList.add("GET, /css/**");
+//        skipPathList.add("GET, /js/**");
+//        skipPathList.add("GET, /images/**");
+
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(

@@ -5,6 +5,7 @@ package com.clone.finalProject.controller;
 import com.clone.finalProject.domain.ChatMessage;
 import com.clone.finalProject.domain.ChatRoom;
 import com.clone.finalProject.dto.chatMessageDto.ChatMessageDto;
+
 import com.clone.finalProject.repository.ChatMessageRepository;
 import com.clone.finalProject.repository.ChatRoomRepository;
 import com.clone.finalProject.repository.RedisChatRepository;
@@ -18,6 +19,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
@@ -61,7 +63,7 @@ public class ChatController {
         //채팅 메시지 셋업 메소드
         chatService.chatSettingMethod(chatMessageDto, token, chatRoom);
 
-        String destination = "greetings";
+        String destination = "mainchat";
         log.info("=== channel : {}",destination);
         chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
         return chatMessageDto;
@@ -151,5 +153,14 @@ public class ChatController {
         simpMessagingTemplate.convertAndSend("/queue/user" +"/"+channel2 ,chatMessageDto);
 
     }
+
+//    // Missing header 'Authorization 예외처리 함
+//    @ExceptionHandler({MessagingException.class})
+//    public ResponseEntity HandleException (MessagingException ex) {
+//        RestApiException restApiException = new RestApiException();
+//        restApiException.setHttpStatus(HttpStatus.BAD_REQUEST);
+//        restApiException.setErrorMessage("Missing header 'Authorization");
+//        return new ResponseEntity(restApiException, HttpStatus.BAD_REQUEST);
+//    }
 
 }
