@@ -4,6 +4,8 @@ import com.clone.finalProject.domain.Answer;
 import com.clone.finalProject.domain.Comment;
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.commentDto.CommnetResponseDto;
+import com.clone.finalProject.exceptionHandler.CustomException;
+import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.AnswerRepository;
 import com.clone.finalProject.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,7 @@ public class CommnetService {
     //commnet 생성
     public Long commentCreate(CommnetResponseDto commnetResponseDto, User user) {
         Answer answer = answerRepository.findByAnswerId(commnetResponseDto.getAnswerId()).orElseThrow(
-                ()-> new NullPointerException("comment가 존재하지 않습니다.")
+                ()-> new CustomException(ErrorCode.NOT_FOUND_COMMENT)
         );
 
         Comment comment = new Comment(commnetResponseDto,answer);
@@ -38,7 +40,7 @@ public class CommnetService {
     //commnet 삭제
     public void commentDelete(Long uid, Long commentId) {
         Comment comment = commentRepository.findByCommentId(commentId).orElseThrow(
-                ()-> new NullPointerException("comment가 존재하지 않습니다.")
+                ()-> new CustomException(ErrorCode.NOT_FOUND_COMMENT)
         );
 
         if(comment.getUid() == uid){
@@ -52,7 +54,7 @@ public class CommnetService {
     @Transactional
     public void commentEdit(Long commentId, CommnetResponseDto commnetResponseDto, Long uid) {
         Comment comment = commentRepository.findByCommentId(commentId).orElseThrow(
-                ()-> new NullPointerException("comment가 존재하지 않습니다.")
+                ()-> new CustomException(ErrorCode.NOT_FOUND_COMMENT)
         );
         if(comment.getUid() == uid){
 

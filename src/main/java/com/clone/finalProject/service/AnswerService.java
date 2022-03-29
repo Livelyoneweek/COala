@@ -4,6 +4,8 @@ import com.clone.finalProject.domain.*;
 import com.clone.finalProject.dto.alarmDto.AlarmResponseDto;
 import com.clone.finalProject.dto.answrDto.AnswerResponseDto;
 import com.clone.finalProject.dto.commentDto.CommnetResponseDto;
+import com.clone.finalProject.exceptionHandler.CustomException;
+import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +34,7 @@ public class AnswerService {
     public Long answerCreate(AnswerResponseDto answerResponseDto, User user) {
         Long pid = answerResponseDto.getPid();
         Post post = postRepository.findByPid(pid).orElseThrow(
-                ()-> new NullPointerException("post가 존재하지 않습니다.")
+                ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
         );
         Answer answer = new Answer(answerResponseDto, post);
         answerRepository.save(answer);
@@ -63,7 +65,7 @@ public class AnswerService {
         ArrayList<AnswerResponseDto> answerResponseDtos = new ArrayList<>();
         for (Answer answer  : answerList) {
             User user = userRepository.findByUid(answer.getUid()).orElseThrow(
-                    ()-> new NullPointerException("User 가 존재하지 않습니다.")
+                    ()-> new CustomException(ErrorCode.NOT_FOUND_USER)
             );
             Long answerId = answer.getAnswerId();
 
@@ -79,7 +81,7 @@ public class AnswerService {
             for (Comment comment : commentList){
 
                 User commentUser = userRepository.findByUid(comment.getUid()).orElseThrow(
-                        ()-> new NullPointerException("User 가 존재하지 않습니다.")
+                        ()-> new CustomException(ErrorCode.NOT_FOUND_USER)
                 );
 
                 CommnetResponseDto commnetResponseDto = new CommnetResponseDto(commentUser,comment,answerId);
@@ -98,7 +100,7 @@ public class AnswerService {
     public void answerDelete(Long uid, Long answerId) {
 
         Answer answer = answerRepository.findByAnswerId(answerId).orElseThrow(
-                ()-> new NullPointerException("Answer 가 존재하지 않습니다.")
+                ()-> new CustomException(ErrorCode.NOT_FOUND_ANSWER)
         );
 
         if (answer.getUid() == uid) {
@@ -122,7 +124,7 @@ public class AnswerService {
     public void answerEdit(Long answerId, AnswerResponseDto answerResponseDto, Long uid) {
 
         Answer answer = answerRepository.findByAnswerId(answerId).orElseThrow(
-                ()-> new NullPointerException("Answer가 존재하지 않습니다.")
+                ()-> new CustomException(ErrorCode.NOT_FOUND_ANSWER)
         );
 
         if (answer.getUid() == uid) {

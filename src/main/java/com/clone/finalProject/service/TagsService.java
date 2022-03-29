@@ -5,6 +5,8 @@ import com.clone.finalProject.domain.PostLike;
 import com.clone.finalProject.domain.PostTags;
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.postDto.PostResponseDto;
+import com.clone.finalProject.exceptionHandler.CustomException;
+import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.PostLikeRepository;
 import com.clone.finalProject.repository.PostRepository;
 import com.clone.finalProject.repository.PostTagsRepository;
@@ -41,7 +43,7 @@ public class TagsService {
             Long pid = postTags.getPost().getPid();
 
             Post post = postRepository.findByPid(pid).orElseThrow(
-                    ()-> new NullPointerException("post가 존재하지 않습니다.")
+                    ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
             );
             User user = post.getUser();
 
