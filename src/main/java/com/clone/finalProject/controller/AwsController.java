@@ -20,12 +20,12 @@ public class AwsController {
     private final S3Uploader s3Uploader;
 
     @PostMapping("/images/upload")
-    public HashMap<String,String> upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
+    public HashMap<String,String> uploadImage(@RequestParam("images") MultipartFile multipartFile) throws IOException {
         log.info("이미지 전송 중");
 
         String imgUrl = "";
         String fileName = "";
-        HashMap<String,String> imgInfo = s3Uploader.upload(multipartFile, "static");
+        HashMap<String,String> imgInfo = s3Uploader.uploadImage(multipartFile, "static");
         imgUrl = imgInfo.get("img");
 
         log.info("이미지 url : {}", imgUrl );
@@ -40,8 +40,8 @@ public class AwsController {
 
     // 사진 삭제 테스트
     @DeleteMapping("/image/delete")
-    public String deleteimage(@RequestParam("path") String fileName) {
-        s3Uploader.deleteFile(fileName);
+    public String deleteImageFile(@RequestParam("path") String fileName) {
+        s3Uploader.deleteImageFile(fileName);
         return "삭제완료";
     }
 }

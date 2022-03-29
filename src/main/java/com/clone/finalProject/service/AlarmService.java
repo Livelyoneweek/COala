@@ -20,7 +20,7 @@ public class AlarmService {
     private final PostRepository postRepository;
 
     // 알람 메시지 조회
-    public List<AlarmPageResponseDto> alarmGet(Long uid) {
+    public List<AlarmPageResponseDto> getAlarm(Long uid) {
 
 
         List<Alarm> alarmList = alarmRepository.findAllByUser_UidOrderByCreatedAt(uid);
@@ -42,7 +42,7 @@ public class AlarmService {
     }
 
     // 알람 메시지 삭제
-    public void alarmDelete(Long alarmId) {
+    public void deleteAlarm(Long alarmId) {
 
         alarmRepository.deleteById(alarmId);
     }

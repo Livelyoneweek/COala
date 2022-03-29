@@ -6,7 +6,6 @@ import com.clone.finalProject.domain.ChatMessage;
 import com.clone.finalProject.domain.ChatRoom;
 import com.clone.finalProject.dto.chatMessageDto.ChatMessageDto;
 
-import com.clone.finalProject.exceptionHandler.RestApiException;
 import com.clone.finalProject.repository.ChatMessageRepository;
 import com.clone.finalProject.repository.ChatRoomRepository;
 import com.clone.finalProject.repository.RedisChatRepository;
@@ -15,16 +14,11 @@ import com.clone.finalProject.security.jwt.JwtDecoder;
 import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -48,7 +42,7 @@ public class ChatController {
     //////////////////////////////////메인 페이지 채널///////////////////////////////////////////////////////////////
     @MessageMapping("/mainchat")
     @SendTo("/topic/mainchat")
-    public ChatMessageDto greeting(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws MessagingException , InterruptedException {
+    public ChatMessageDto mainMessage(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
         log.info("채팅테스트:{}",chatMessageDto.getMessage());
 
         log.info("채팅 헤더 확인:{}",token);
@@ -79,7 +73,7 @@ public class ChatController {
     //////////////////////////////////게시글 페이지 채널///////////////////////////////////////////////////////////////
     @Transactional
     @MessageMapping("/postchat")
-    public void greeting2(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
+    public void postMessage(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
 
         Thread.sleep(500); // simulated delay
 
@@ -105,7 +99,7 @@ public class ChatController {
 
     //////////////////////////////////유저 개인 귓속말 채널///////////////////////////////////////////////////////////////
     @MessageMapping("/user")
-    public void greeting3(ChatMessageDto chatMessageDto,@Header("Authorization") String token) throws Exception {
+    public void whisperMessage(ChatMessageDto chatMessageDto,@Header("Authorization") String token) throws Exception {
         chatMessageDto.setCreatedAt(LocalDateTime.now());
 
         Long senderUid = userRepository.findByUsername(chatMessageDto.getSenderName()).get().getUid();

@@ -18,8 +18,8 @@ public class AnswerLikeController {
 
     // 답변 채택 시 없으면 생성, 있으면 삭제하거나 실패
     @PostMapping("/islogin/answer/create/like")
-    public HashMap<String,String> answerLike(@RequestBody AnswerLikeResponseDto answerLikeResponseDto) {
-        HashMap<String,String> result = answerLikeService.answerLike(answerLikeResponseDto);
+    public HashMap<String,String> creatAnswerLike(@RequestBody AnswerLikeResponseDto answerLikeResponseDto) {
+        HashMap<String,String> result = answerLikeService.creatAnswerLike(answerLikeResponseDto);
 
         return result;
     }

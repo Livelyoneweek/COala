@@ -20,18 +20,18 @@ public class AlarmController {
 
     //알람 메시지 조회
     @GetMapping("/islogin/get/alarm")
-    public List<AlarmPageResponseDto> alarmGet(@AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public List<AlarmPageResponseDto> getAlarm(@AuthenticationPrincipal UserDetailsImpl userDeta) {
 
         Long uid = userDeta.getUid();
-        List<AlarmPageResponseDto> alarmPageResponseDtoList = alarmService.alarmGet(uid);
+        List<AlarmPageResponseDto> alarmPageResponseDtoList = alarmService.getAlarm(uid);
 
         return alarmPageResponseDtoList;
     }
 
     //알람 메시지 삭제
     @DeleteMapping("/islogin/delete/alarm/{alarmId}")
-    public Long alarmDelete(@PathVariable Long alarmId) {
-        alarmService.alarmDelete(alarmId);
+    public Long deleteAlarm(@PathVariable Long alarmId) {
+        alarmService.deleteAlarm(alarmId);
 
         return alarmId;
     }

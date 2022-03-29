@@ -31,7 +31,7 @@ public class AnswerService {
 
     // answer 생성
     @Transactional
-    public Long answerCreate(AnswerResponseDto answerResponseDto, User user) {
+    public Long createAnswer(AnswerResponseDto answerResponseDto, User user) {
         Long pid = answerResponseDto.getPid();
         Post post = postRepository.findByPid(pid).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
@@ -57,7 +57,7 @@ public class AnswerService {
 
 
     //answer 조회
-    public List<AnswerResponseDto> answerGet(Long pid) {
+    public List<AnswerResponseDto> getAnswer(Long pid) {
 
         List<Answer>answerList = answerRepository.findAllByPost_PidOrderByCreatedAtDesc(pid);
 
@@ -97,7 +97,7 @@ public class AnswerService {
 
     //answer 삭제
     @Transactional
-    public void answerDelete(Long uid, Long answerId) {
+    public void deleteAnswer(Long uid, Long answerId) {
 
         Answer answer = answerRepository.findByAnswerId(answerId).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_ANSWER)
@@ -121,7 +121,7 @@ public class AnswerService {
 
     //answer 수정
     @Transactional
-    public void answerEdit(Long answerId, AnswerResponseDto answerResponseDto, Long uid) {
+    public void editAnswer(Long answerId, AnswerResponseDto answerResponseDto, Long uid) {
 
         Answer answer = answerRepository.findByAnswerId(answerId).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_ANSWER)

@@ -34,7 +34,7 @@ public class S3Uploader {
     // 3. S3에 저장된 파일 이름과 주소 반환
 
     // 파라미터로 multipartFile(업로드하려는 파일)과 dirName(이 파일을 업로드하고 싶은 S3 버킷의 폴더 이름)을 받는다.
-    public HashMap<String, String> upload(MultipartFile multipartFile, String dirName) throws IOException {
+    public HashMap<String, String> uploadImage(MultipartFile multipartFile, String dirName) throws IOException {
 
         // 0. 이미지 파일인지 체크
         isImage(multipartFile);
@@ -66,7 +66,7 @@ public class S3Uploader {
     }
 
     // 파일 삭제하기
-    public void deleteFile(String fileName) {
+    public void deleteImageFile(String fileName) {
         amazonS3Client.deleteObject(bucket, fileName);
     }
 

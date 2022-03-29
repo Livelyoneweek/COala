@@ -19,33 +19,31 @@ public class CommentController {
 
     //commnet 생성
     @PostMapping("/islogin/comment/create")
-    public Long commentCreate(@RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public Long createComment(@RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         log.info("댓글 작성 진행");
         log.info(" 댓글 내용: {}", commnetResponseDto.getComment());
 
         User user = userDeta.getUser();
-        Long commentId = commnetService.commentCreate(commnetResponseDto, user);
+        Long commentId = commnetService.createComment(commnetResponseDto, user);
 
         return commentId;
     }
 
     // commnet 삭제
     @DeleteMapping("/islogin/comment/delete/{commentId}")
-    public void postDelete(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public void deleteComment(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         Long uid = userDeta.getUid();
-        commnetService.commentDelete(uid, commentId);
+        commnetService.deleteComment(uid, commentId);
 
     }
 
 
     // commnet 수정
     @PutMapping("/islogin/comment/edit/{commentId}")
-    public void postEdit(@PathVariable Long commentId, @RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
+    public void editComment(@PathVariable Long commentId, @RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
         Long uid = userDeta.getUid();
-        commnetService.commentEdit(commentId, commnetResponseDto, uid);
+        commnetService.editComment(commentId, commnetResponseDto, uid);
 
     }
-
-
 
 }

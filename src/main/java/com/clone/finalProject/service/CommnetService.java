@@ -24,7 +24,7 @@ public class CommnetService {
 
 
     //commnet 생성
-    public Long commentCreate(CommnetResponseDto commnetResponseDto, User user) {
+    public Long createComment(CommnetResponseDto commnetResponseDto, User user) {
         Answer answer = answerRepository.findByAnswerId(commnetResponseDto.getAnswerId()).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_COMMENT)
         );
@@ -38,7 +38,7 @@ public class CommnetService {
     }
 
     //commnet 삭제
-    public void commentDelete(Long uid, Long commentId) {
+    public void deleteComment(Long uid, Long commentId) {
         Comment comment = commentRepository.findByCommentId(commentId).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_COMMENT)
         );
@@ -52,7 +52,7 @@ public class CommnetService {
     }
     //commnet 수정
     @Transactional
-    public void commentEdit(Long commentId, CommnetResponseDto commnetResponseDto, Long uid) {
+    public void editComment(Long commentId, CommnetResponseDto commnetResponseDto, Long uid) {
         Comment comment = commentRepository.findByCommentId(commentId).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_COMMENT)
         );

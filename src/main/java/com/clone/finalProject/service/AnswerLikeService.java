@@ -30,7 +30,7 @@ public class AnswerLikeService {
 
     // 답변 채택 시 없으면 생성, 있으면 삭제하거나 실패
     @Transactional
-    public HashMap<String, String> answerLike(AnswerLikeResponseDto answerLikeResponseDto) {
+    public HashMap<String, String> creatAnswerLike(AnswerLikeResponseDto answerLikeResponseDto) {
         Long uid = answerLikeResponseDto.getUid();
         log.info("답변 채택 중 uid : {}", uid);
         Long pid = answerLikeResponseDto.getPid();

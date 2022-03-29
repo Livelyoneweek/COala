@@ -21,8 +21,8 @@ public class ChatRoomController {
 
     // 메인페이지 채널 채팅 내역 조회
     @GetMapping("/mainchat/get/main")
-    public List<ChatMessagedResponseDto> chatMainGet() {
-        List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.chatMainGet();
+    public List<ChatMessagedResponseDto> getMainMessage() {
+        List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.getMainMessage();
 
         return chatMessagedResponseDtoList;
     }
@@ -30,16 +30,16 @@ public class ChatRoomController {
 
     // 게시글 페이지 채널 채팅 내역 조회
     @GetMapping("/postchat/get/{pid}")
-    public List<ChatMessagedResponseDto> chatMainPost(@PathVariable Long pid) {
-        List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.chatMainPost(pid);
+    public List<ChatMessagedResponseDto>getPostMessage(@PathVariable Long pid) {
+        List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.getPostMessage(pid);
 
         return chatMessagedResponseDtoList;
     }
 
     // 귓속말 채팅 내역 조회
     @GetMapping("/islogin/chatting")
-    public List<ChatMessagedResponseDto> chatMainUser( @AuthenticationPrincipal UserDetailsImpl userDeta) {
-        List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.chatMainUser(userDeta.getUid());
+    public List<ChatMessagedResponseDto> getWhisperMessage( @AuthenticationPrincipal UserDetailsImpl userDeta) {
+        List<ChatMessagedResponseDto> chatMessagedResponseDtoList = chatService.getWhisperMessage(userDeta.getUid());
 
         return chatMessagedResponseDtoList;
     }
