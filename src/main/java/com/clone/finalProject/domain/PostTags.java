@@ -20,6 +20,7 @@ public class PostTags extends Timestamped{
     @JoinColumn(name = "POST_ID")
     private Post post;
 
+
     @ManyToOne
     @JoinColumn(name = "TAG_ID")
     private Tags tags;

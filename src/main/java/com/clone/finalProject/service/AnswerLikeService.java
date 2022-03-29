@@ -32,13 +32,13 @@ public class AnswerLikeService {
     @Transactional
     public HashMap<String, String> answerLike(AnswerLikeResponseDto answerLikeResponseDto) {
         Long uid = answerLikeResponseDto.getUid();
-        log.info("uid : {}", uid);
+        log.info("답변 채택 중 uid : {}", uid);
         Long pid = answerLikeResponseDto.getPid();
-        log.info("pid : {}", pid);
+        log.info("답변 채택 중 pid : {}", pid);
         Long answerId = answerLikeResponseDto.getAnswerId();
-        log.info("answerId : {}", answerId);
+        log.info("답변 채택 중 answerId : {}", answerId);
         Long answerUid = answerLikeResponseDto.getAnswerUid();
-        log.info("answerUid : {}", answerUid);
+        log.info("답변 채택 중 answerUid : {}", answerUid);
 
         Answer answer = answerRepository.findByAnswerId(answerId).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_ANSWER)
@@ -85,8 +85,8 @@ public class AnswerLikeService {
 
             //답변 채택 없어서 생성함
         } else {
-            AnswerLike answerLike = new AnswerLike(answerLikeResponseDto, answer);
 
+            AnswerLike answerLike = new AnswerLike(uid, pid, answer);
             answerLikeRepository.save(answerLike);
 
             Post post = postRepository.findById(pid).orElseThrow(

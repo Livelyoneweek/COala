@@ -36,6 +36,9 @@ public class PostService {
     @Transactional
     public Long postCreate(PostRequestDto postRequestDto, User user) {
 
+        if(postRequestDto.getCategory().equals("Javascript")) {
+            postRequestDto.setCategory("자바스크립트");
+        }
         Post post = new Post(postRequestDto, user);
 
         //태그 확인 후 태그 생성
@@ -290,6 +293,7 @@ public class PostService {
         ArrayList<PostResponseDto> postResponseDtos = new ArrayList<>();
         for (Post post : postList) {
 
+
             // 게시글 조회용 메소드
             PostResponseDto postResponseDto = postGetMethod(post);
 
@@ -324,6 +328,10 @@ public class PostService {
     //카게고리로 검색하여 게시글 조회
     public List<PostResponseDto> postCategoryGet(String category,int page, int size, String sortBy, boolean isAsc) {
 
+        if(category.equals("Javascript")) {
+            category ="자바스크립트";
+        }
+
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page,size,sort);
@@ -335,6 +343,10 @@ public class PostService {
 
             // 게시글 조회용 메소드
             PostResponseDto postResponseDto = postGetMethod(post);
+
+            if(postResponseDto.getCategory().equals("자바스크립트")) {
+                postResponseDto.setCategory("Javascript");
+            }
 
             postResponseDtos.add(postResponseDto);
 

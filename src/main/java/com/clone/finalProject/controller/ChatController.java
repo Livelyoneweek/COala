@@ -6,6 +6,7 @@ import com.clone.finalProject.domain.ChatMessage;
 import com.clone.finalProject.domain.ChatRoom;
 import com.clone.finalProject.dto.chatMessageDto.ChatMessageDto;
 
+import com.clone.finalProject.exceptionHandler.RestApiException;
 import com.clone.finalProject.repository.ChatMessageRepository;
 import com.clone.finalProject.repository.ChatRoomRepository;
 import com.clone.finalProject.repository.RedisChatRepository;
@@ -14,11 +15,16 @@ import com.clone.finalProject.security.jwt.JwtDecoder;
 import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -42,7 +48,7 @@ public class ChatController {
     //////////////////////////////////메인 페이지 채널///////////////////////////////////////////////////////////////
     @MessageMapping("/mainchat")
     @SendTo("/topic/mainchat")
-    public ChatMessageDto greeting(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
+    public ChatMessageDto greeting(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws MessagingException , InterruptedException {
         log.info("채팅테스트:{}",chatMessageDto.getMessage());
 
         log.info("채팅 헤더 확인:{}",token);
@@ -63,7 +69,7 @@ public class ChatController {
         //채팅 메시지 셋업 메소드
         chatService.chatSettingMethod(chatMessageDto, token, chatRoom);
 
-        String destination = "greetings";
+        String destination = "mainchat";
         log.info("=== channel : {}",destination);
         chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
         return chatMessageDto;
@@ -153,5 +159,14 @@ public class ChatController {
         simpMessagingTemplate.convertAndSend("/queue/user" +"/"+channel2 ,chatMessageDto);
 
     }
+
+//    // Missing header 'Authorization 예외처리 함
+//    @ExceptionHandler({MessagingException.class})
+//    public ResponseEntity HandleException (MessagingException ex) {
+//        RestApiException restApiException = new RestApiException();
+//        restApiException.setHttpStatus(HttpStatus.BAD_REQUEST);
+//        restApiException.setErrorMessage("Missing header 'Authorization");
+//        return new ResponseEntity(restApiException, HttpStatus.BAD_REQUEST);
+//    }
 
 }

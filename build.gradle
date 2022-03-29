@@ -30,6 +30,7 @@ dependencies {
     // 스프링 시큐리티
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
+
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     implementation 'commons-codec:commons-codec:1.5'
@@ -63,6 +64,10 @@ dependencies {
     testImplementation 'it.ozimov:embedded-redis:0.7.2'
 
     implementation 'org.springframework.boot:spring-boot-starter-batch'
+
+    // Swagger
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
 
 }
