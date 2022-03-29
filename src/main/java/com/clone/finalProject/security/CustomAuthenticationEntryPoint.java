@@ -19,7 +19,6 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException ae) throws IOException, ServletException {
 
         log.info("Pre-authenticated entry point called. Rejecting access");
@@ -27,12 +26,12 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
     }
 
-    public void vaildtoken(HttpServletRequest request, HttpServletResponse response, IllegalArgumentException ae) throws IOException, ServletException {
-
-        log.info("Pre-authenticated entry point called. Rejecting access");
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Not vaild Token");
-
-    }
+//    public void vaildtoken(HttpServletRequest request, HttpServletResponse response, IllegalArgumentException ae) throws IOException, ServletException {
+//
+//        log.info("Pre-authenticated entry point called. Rejecting access");
+//        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Not vaild Token");
+//
+//    }
 
 
 }
