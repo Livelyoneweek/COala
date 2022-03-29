@@ -1,6 +1,5 @@
 package com.clone.finalProject.controller;
 
-
 import com.clone.finalProject.dto.chatMessageDto.ChatMessagedResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.ChatService;
@@ -18,7 +17,6 @@ public class ChatRoomController {
 
     private final ChatService chatService;
 
-
     // 메인페이지 채널 채팅 내역 조회
     @GetMapping("/mainchat/get/main")
     public List<ChatMessagedResponseDto> getMainMessage() {
@@ -26,7 +24,6 @@ public class ChatRoomController {
 
         return chatMessagedResponseDtoList;
     }
-
 
     // 게시글 페이지 채널 채팅 내역 조회
     @GetMapping("/postchat/get/{pid}")
@@ -43,9 +40,5 @@ public class ChatRoomController {
 
         return chatMessagedResponseDtoList;
     }
-
-
-
-
 
 }
