@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -22,8 +23,7 @@ public class AlarmService {
     // 알람 메시지 조회
     public List<AlarmPageResponseDto> getAlarm(Long uid) {
 
-
-        List<Alarm> alarmList = alarmRepository.findAllByUser_UidOrderByCreatedAt(uid);
+        List<Alarm> alarmList = alarmRepository.findAllByUser_UidOrderByCreatedAtDesc(uid);
 
         List<AlarmPageResponseDto> alarmPageResponseDtoList = new ArrayList<>();
         for (Alarm alarm : alarmList) {
@@ -37,6 +37,8 @@ public class AlarmService {
             AlarmPageResponseDto alarmPageResponseDto = new AlarmPageResponseDto(alarm,postTitle);
             alarmPageResponseDtoList.add(alarmPageResponseDto);
         }
+
+//        Collections.reverse(alarmPageResponseDtoList);
 
         return alarmPageResponseDtoList;
     }

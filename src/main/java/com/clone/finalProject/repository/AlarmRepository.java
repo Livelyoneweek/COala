@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AlarmRepository extends JpaRepository<Alarm,Long> {
 
-    List<Alarm> findAllByUser_UidOrderByCreatedAt(Long uid);
+    List<Alarm> findAllByUser_UidOrderByCreatedAtDesc(Long uid);
     void deleteAllByPid(Long pid);
 
 }

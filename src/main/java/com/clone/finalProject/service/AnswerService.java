@@ -3,6 +3,7 @@ package com.clone.finalProject.service;
 import com.clone.finalProject.domain.*;
 import com.clone.finalProject.dto.alarmDto.AlarmResponseDto;
 import com.clone.finalProject.dto.answrDto.AnswerResponseDto;
+import com.clone.finalProject.dto.answrDto.CreateAnswerResponseDto;
 import com.clone.finalProject.dto.commentDto.CommnetResponseDto;
 import com.clone.finalProject.exceptionHandler.CustomException;
 import com.clone.finalProject.exceptionHandler.ErrorCode;
@@ -31,7 +32,7 @@ public class AnswerService {
 
     // answer 생성
     @Transactional
-    public Long createAnswer(AnswerResponseDto answerResponseDto, User user) {
+    public CreateAnswerResponseDto createAnswer(AnswerResponseDto answerResponseDto, User user) {
         Long pid = answerResponseDto.getPid();
         Post post = postRepository.findByPid(pid).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
@@ -52,7 +53,8 @@ public class AnswerService {
 
         simpMessagingTemplate.convertAndSend("/queue/user" +"/" +post.getUser().getNickname() ,alarmResponseDto);
 
-        return answer.getAnswerId();
+        CreateAnswerResponseDto createAnswerResponseDto = new CreateAnswerResponseDto(answer, user);
+        return createAnswerResponseDto;
     }
 
 
@@ -122,7 +124,7 @@ public class AnswerService {
     //answer 수정
     @Transactional
     public void editAnswer(Long answerId, AnswerResponseDto answerResponseDto, Long uid) {
-
+        log.info("답변 수정 answerId {} ", answerId);
         Answer answer = answerRepository.findByAnswerId(answerId).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_ANSWER)
         );

@@ -113,6 +113,10 @@ public class PostService {
         // 게시글 조회용 메소드
         PostResponseDto postResponseDto = getPostMethod(post);
 
+        if(postResponseDto.getCategory().equals("자바스크립트")) {
+            postResponseDto.setCategory("Javascript");
+        }
+
         return postResponseDto;
     }
 
@@ -130,6 +134,7 @@ public class PostService {
             String tag = postTags.getTags().getTagName();
             tags.add(tag);
         }
+
 
         PostResponseDto postResponseDto = new PostResponseDto(post, user,postLikeCount,tags);
         return postResponseDto;
@@ -185,6 +190,11 @@ public class PostService {
         for (Post post : postList) {
             // 게시글 조회용 메소드
             PostResponseDto postResponseDto = getPostMethod(post);
+
+            if(postResponseDto.getCategory().equals("자바스크립트")) {
+                postResponseDto.setCategory("Javascript");
+            }
+
             postResponseDtos.add(postResponseDto);
 
         }
@@ -205,6 +215,10 @@ public class PostService {
             // 게시글 조회용 메소드
             PostResponseDto postResponseDto = getPostMethod(post);
 
+            if(postResponseDto.getCategory().equals("자바스크립트")) {
+                postResponseDto.setCategory("Javascript");
+            }
+
             postResponseDtos.add(postResponseDto);
         }
         return postResponseDtos;
@@ -224,6 +238,10 @@ public class PostService {
 
             // 게시글 조회용 메소드
             PostResponseDto postResponseDto = getPostMethod(post);
+
+            if(postResponseDto.getCategory().equals("자바스크립트")) {
+                postResponseDto.setCategory("Javascript");
+            }
 
             postResponseDtos.add(postResponseDto);
 
@@ -275,6 +293,10 @@ public class PostService {
             Post post = postLike.getPost();
             // 게시글 조회용 메소드
             PostResponseDto postResponseDto = getPostMethod(post);
+
+            if(postResponseDto.getCategory().equals("자바스크립트")) {
+                postResponseDto.setCategory("Javascript");
+            }
 
             postResponseDtos.add(postResponseDto);
 

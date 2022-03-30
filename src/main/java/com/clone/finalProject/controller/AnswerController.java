@@ -2,6 +2,7 @@ package com.clone.finalProject.controller;
 
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.answrDto.AnswerResponseDto;
+import com.clone.finalProject.dto.answrDto.CreateAnswerResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.AnswerService;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,10 @@ public class AnswerController {
 
     // answer 생성
     @PostMapping("/islogin/answer/create/{pid}")
-    public Long createAnswer(@RequestBody AnswerResponseDto answerResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public CreateAnswerResponseDto createAnswer(@RequestBody AnswerResponseDto answerResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         User user = userDeta.getUser();
-        Long answerId = answerService.createAnswer(answerResponseDto,user);
-        return answerId;
+        CreateAnswerResponseDto createAnswerResponseDto = answerService.createAnswer(answerResponseDto,user);
+        return createAnswerResponseDto;
     }
 
     // answer 조회
@@ -42,14 +43,11 @@ public class AnswerController {
 
 
     // answer 수정
-    @PutMapping("/islogin/answer/edit/{answsrId}")
+    @PutMapping("/islogin/answer/edit/{answerId}")
     public void editAnswer(@PathVariable Long answerId, @RequestBody AnswerResponseDto answerResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta){
         Long uid = userDeta.getUid();
         answerService.editAnswer(answerId, answerResponseDto, uid);
 
     }
-
-
-
 
 }
