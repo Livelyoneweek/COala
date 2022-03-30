@@ -24,9 +24,8 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws")
+        registry.addEndpoint("/ws-coala")
                 .setAllowedOriginPatterns("*")
-                //.setAllowedOrigins("*") //cors 설정 넣으면 에러남..
                 .withSockJS(); //SockJS 사용하기 위해 추가
     }
 
