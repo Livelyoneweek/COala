@@ -151,7 +151,7 @@ public class ChatController {
         String channel = chatMessageDto.getSenderName();
         String channel2 = chatMessageDto.getOpposingUserName();
 
-        Thread.sleep(500); // simulated delay
+        Thread.sleep(100); // simulated delay
         simpMessagingTemplate.convertAndSend("/queue/user" +"/"+channel ,chatMessageDto);
         simpMessagingTemplate.convertAndSend("/queue/user" +"/"+channel2 ,chatMessageDto);
 

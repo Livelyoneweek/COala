@@ -158,6 +158,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("POST,/test/**");
         skipPathList.add("GET,/read/**");
 
+        //성능test
+//        skipPathList.add("DELETE,/post/delete/**");
+
         //소켓통신을 위한 허용
         skipPathList.add("GET,/ws-coala/**");
         skipPathList.add("POST,/ws-coala/**");
