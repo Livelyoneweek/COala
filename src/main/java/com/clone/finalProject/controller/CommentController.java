@@ -2,6 +2,7 @@ package com.clone.finalProject.controller;
 
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.commentDto.CommnetResponseDto;
+import com.clone.finalProject.dto.commentDto.CreateCommnetResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.CommnetService;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +20,14 @@ public class CommentController {
 
     //commnet 생성
     @PostMapping("/islogin/comment/create")
-    public Long createComment(@RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
+    public CreateCommnetResponseDto createComment(@RequestBody CommnetResponseDto commnetResponseDto, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         log.info("댓글 작성 진행");
         log.info(" 댓글 내용: {}", commnetResponseDto.getComment());
 
         User user = userDeta.getUser();
-        Long commentId = commnetService.createComment(commnetResponseDto, user);
+        CreateCommnetResponseDto createCommnetResponseDto = commnetService.createComment(commnetResponseDto, user);
 
-        return commentId;
+        return createCommnetResponseDto;
     }
 
     // commnet 삭제

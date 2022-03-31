@@ -100,6 +100,7 @@ public class ChatController {
         simpMessagingTemplate.convertAndSend("/topic/postchat"+"/"+destination ,chatMessageDto);
     }
 
+    //아쉽게도 구현 안하기로 함
     //////////////////////////////////유저 개인 귓속말 채널///////////////////////////////////////////////////////////////
     @MessageMapping("/user")
     public void whisperMessage(ChatMessageDto chatMessageDto,@Header("Authorization") String token) throws Exception {
