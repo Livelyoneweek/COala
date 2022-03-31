@@ -47,7 +47,7 @@ public class ChatController {
 
         log.info("채팅 헤더 확인:{}",token);
 
-        Thread.sleep(500); // simulated delay
+        Thread.sleep(100); // simulated delay
 
         ChatRoom chatRoom = new ChatRoom();
 
@@ -65,7 +65,9 @@ public class ChatController {
 
         String destination = "mainchat";
         log.info("=== channel : {}",destination);
+
         chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+
         return chatMessageDto;
     }
 
@@ -75,7 +77,7 @@ public class ChatController {
     @MessageMapping("/postchat")
     public void postMessage(ChatMessageDto chatMessageDto, @Header("Authorization") String token) throws Exception {
 
-        Thread.sleep(500); // simulated delay
+        Thread.sleep(100); // simulated delay
 
         ChatRoom chatRoom = new ChatRoom();
         // 채팅방있는지 확인 후 없으면 생성, 있으면 채팅방 변수에 할당해놓음 -> 채팅 저장 시에 사용할 예정
@@ -92,6 +94,7 @@ public class ChatController {
 
         String destination = String.valueOf(chatMessageDto.getPid());
         log.info("=== channel : {}",destination);
+
         chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
 
         simpMessagingTemplate.convertAndSend("/topic/postchat"+"/"+destination ,chatMessageDto);

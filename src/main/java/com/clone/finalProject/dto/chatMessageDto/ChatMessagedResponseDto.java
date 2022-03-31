@@ -16,12 +16,14 @@ public class ChatMessagedResponseDto {
     private String message;
     private String opposingUserName;
     private LocalDateTime createdAt;
+    private String career;
 
     public ChatMessagedResponseDto (ChatMessage chatMessage) {
         this.senderName = chatMessage.getSenderName();
         this.message = chatMessage.getMessage();
         this.opposingUserName = chatMessage.getOpposingUserName();
         this.createdAt = chatMessage.getCreatedAt();
+        this.career=chatMessage.getCareer();
     }
 
 }

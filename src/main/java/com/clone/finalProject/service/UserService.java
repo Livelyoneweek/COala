@@ -77,12 +77,12 @@ public class UserService {
                 () -> new CustomException(ErrorCode.NOT_FOUND_USER)
         );
         // 패스워드 암호화 함
-        log.info(userInfoRequestDto.getPassword());
+//        log.info(userInfoRequestDto.getPassword());
 
         UserInfoResponseDto userInfoResponseDto = new UserInfoResponseDto();
         //기존 패스워드랑 비교해서 맞으면 뉴패스워드로 업데이트
         if(passwordEncoder.matches(userInfoRequestDto.getPassword(), user.getPassword())){
-            log.info("비밀번호 변경 중");
+//            log.info("비밀번호 변경 중");
             String newPassword = passwordEncoder.encode(userInfoRequestDto.getNewPassword());
             user.userPasswordUpdate(newPassword);
             userInfoResponseDto = new UserInfoResponseDto(true);
