@@ -27,6 +27,10 @@ public class ChatMessage extends Timestamped{
     @Column
     private String opposingUserName;
 
+    @Column
+    private String career;
+
+
     @ManyToOne
     @JoinColumn(name = "CHATROOM_ID")
     private ChatRoom chatRoom;
@@ -37,6 +41,7 @@ public class ChatMessage extends Timestamped{
         this.senderName=chatMessageDto.getSenderName();
         this.opposingUserName=chatMessageDto.getOpposingUserName();
         this.chatRoom=chatRoom;
+        this.career=chatMessageDto.getCareer();
     }
 
 

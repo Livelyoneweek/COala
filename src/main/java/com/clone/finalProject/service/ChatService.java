@@ -92,14 +92,18 @@ public class ChatService {
         }
 
         if(chatMessageDto.getStatus().equals("JOIN")) {
-            if(username!=""){
-                chatMessageDto.setMessage( username+"님이 입장하셨습니다");
+            if(username!=""&&username!="null"){
+                log.info("JOIN일때 {}",chatMessageDto.getSenderName());
+                chatMessageDto.setMessage(chatMessageDto.getSenderName()+"님이 입장하셨습니다");
                 log.info("=== 연결 : {}",chatMessageDto.getPid());
             }
 
         } else if (chatMessageDto.getStatus().equals("OUT")) {
-            chatMessageDto.setMessage( username+"님이 퇴장하셨습니다");
-            log.info("=== 연결끊김 : {}",chatMessageDto.getPid());
+            if(username!=""&&username!="null"){
+                log.info("OUT일때 {}",chatMessageDto.getSenderName());
+                chatMessageDto.setMessage( chatMessageDto.getSenderName()+"님이 퇴장하셨습니다");
+                log.info("=== 연결끊김 : {}",chatMessageDto.getPid());
+            }
 
         } else {
             uid = chatMessageDto.getUid();
@@ -114,7 +118,10 @@ public class ChatService {
             //채팅 메시지 저장
             ChatMessage chatMessage = new ChatMessage(uid, chatMessageDto, chatRoom);
             chatMessageRepository.save(chatMessage);
+
+
         }
+
     }
 
     ///////////////////////////////////////////// 비속어 필터링 메소드////////////////////////////////////////////////////
@@ -145,6 +152,7 @@ public class ChatService {
             }
             newMessage.append(sb).append(" ");
         }
+        newMessage.deleteCharAt(newMessage.lastIndexOf(" "));
 
         chatMessageDto.setMessage(String.valueOf(newMessage));
     }

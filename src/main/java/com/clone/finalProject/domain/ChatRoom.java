@@ -32,8 +32,4 @@ public class ChatRoom extends Timestamped {
         this.pid = pid;
     }
 
-    public ChatRoom(Long uid, String area) {
-        this.area = area;
-        this.uid = uid;
-    }
 }

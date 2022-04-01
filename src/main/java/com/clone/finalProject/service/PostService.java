@@ -38,7 +38,10 @@ public class PostService {
 
         if(postRequestDto.getCategory().equals("Javascript")) {
             postRequestDto.setCategory("자바스크립트");
+        } else if (postRequestDto.getCategory().equals("C#")){
+            postRequestDto.setCategory("씨샵");
         }
+
         Post post = new Post(postRequestDto, user);
 
         //태그 확인 후 태그 생성
@@ -86,6 +89,12 @@ public class PostService {
     @Transactional
     public void editPost(Long pid, PostRequestDto postRequestDto, Long uid) {
 
+        if(postRequestDto.getCategory().equals("Javascript")) {
+            postRequestDto.setCategory("자바스크립트");
+        } else if (postRequestDto.getCategory().equals("C#")){
+            postRequestDto.setCategory("씨샵");
+        }
+
         Post post = postRepository.findByPid(pid).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_POST)
         );
@@ -115,6 +124,8 @@ public class PostService {
 
         if(postResponseDto.getCategory().equals("자바스크립트")) {
             postResponseDto.setCategory("Javascript");
+        } else if (postResponseDto.getCategory().equals("씨샵")){
+            postResponseDto.setCategory("C#");
         }
 
         return postResponseDto;
@@ -193,6 +204,8 @@ public class PostService {
 
             if(postResponseDto.getCategory().equals("자바스크립트")) {
                 postResponseDto.setCategory("Javascript");
+            } else if (postResponseDto.getCategory().equals("씨샵")){
+                postResponseDto.setCategory("C#");
             }
 
             postResponseDtos.add(postResponseDto);
@@ -217,6 +230,8 @@ public class PostService {
 
             if(postResponseDto.getCategory().equals("자바스크립트")) {
                 postResponseDto.setCategory("Javascript");
+            } else if (postResponseDto.getCategory().equals("씨샵")){
+                postResponseDto.setCategory("C#");
             }
 
             postResponseDtos.add(postResponseDto);
@@ -241,6 +256,8 @@ public class PostService {
 
             if(postResponseDto.getCategory().equals("자바스크립트")) {
                 postResponseDto.setCategory("Javascript");
+            } else if (postResponseDto.getCategory().equals("씨샵")){
+                postResponseDto.setCategory("C#");
             }
 
             postResponseDtos.add(postResponseDto);
@@ -255,6 +272,8 @@ public class PostService {
 
         if(category.equals("Javascript")) {
             category ="자바스크립트";
+        } else if (category.equals("C")) {
+            category ="씨샵";
         }
 
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
@@ -271,7 +290,10 @@ public class PostService {
 
             if(postResponseDto.getCategory().equals("자바스크립트")) {
                 postResponseDto.setCategory("Javascript");
+            } else if (postResponseDto.getCategory().equals("씨샵")){
+                postResponseDto.setCategory("C#");
             }
+
             postResponseDtos.add(postResponseDto);
         }
         return postResponseDtos;
@@ -296,6 +318,8 @@ public class PostService {
 
             if(postResponseDto.getCategory().equals("자바스크립트")) {
                 postResponseDto.setCategory("Javascript");
+            } else if (postResponseDto.getCategory().equals("씨샵")){
+                postResponseDto.setCategory("C#");
             }
 
             postResponseDtos.add(postResponseDto);

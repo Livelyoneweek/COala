@@ -61,7 +61,7 @@ public class PostController {
     @DeleteMapping("/islogin/post/delete/{pid}")
     public Long deletePost(@PathVariable Long pid, @AuthenticationPrincipal UserDetailsImpl userDeta) {
         Long uid = userDeta.getUid();
-        postService.deletePost(pid, uid);
+        postService.deletePost(pid,uid);
 
         return pid;
     }

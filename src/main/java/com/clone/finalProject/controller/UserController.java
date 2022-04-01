@@ -22,8 +22,8 @@ public class UserController {
 
         log.info("username :{}", requestDto.getUsername());
         log.info("nickname :{}", requestDto.getNickname());
-        log.info("password :{}", requestDto.getPassword());
-        log.info("passwordCheck :{}", requestDto.getPasswordCheck());
+//        log.info("password :{}", requestDto.getPassword());
+//        log.info("passwordCheck :{}", requestDto.getPasswordCheck());
 
         userService.registerUser(requestDto);
         return new SignupResponseDto(true);
@@ -37,7 +37,7 @@ public class UserController {
         log.info("nickName : {}", user.getNickname());
         log.info("nickName : {}", user.getUid());
         log.info("nickName : {}", user.getCareer());
-        return new IsloginResponseDto(user.getUsername(),user.getNickname(),user.getUid(),user.getCareer(),user.getUserImage());
+        return new IsloginResponseDto(user.getUsername(),user.getNickname(),user.getUid(),user.getCareer(),user.getUserImage(), user.getBlogUrl());
     }
 
     //아이디 중복 확인
@@ -58,7 +58,7 @@ public class UserController {
         User user = userDetails.getUser();
         log.info("username : {}", user.getUsername());
         log.info("nickName : {}", user.getNickname());
-        return new IsloginResponseDto(user.getUsername(),user.getNickname(),user.getUid(),user.getCareer(), user.getUserImage());
+        return new IsloginResponseDto(user.getUsername(),user.getNickname(),user.getUid(),user.getCareer(), user.getUserImage(),user.getBlogUrl());
     }
 
 //    회원 정보 수정

@@ -4,7 +4,6 @@ import com.clone.finalProject.dto.chatMessageDto.ChatMessagedResponseDto;
 import com.clone.finalProject.security.UserDetailsImpl;
 import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.serializer.DefaultDeserializer;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

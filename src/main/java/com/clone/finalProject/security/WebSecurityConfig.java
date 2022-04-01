@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-    // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
+        // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
         web
                 .ignoring()
                 .antMatchers("/h2-console/**")
@@ -84,7 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            http.headers().frameOptions().disable();
+        http.headers().frameOptions().disable();
 
 
         /* 1.
@@ -158,6 +158,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("POST,/test/**");
         skipPathList.add("GET,/read/**");
 
+        //성능test
+//        skipPathList.add("DELETE,/post/delete/**");
+
         //소켓통신을 위한 허용
         skipPathList.add("GET,/ws-coala/**");
         skipPathList.add("POST,/ws-coala/**");
@@ -207,4 +210,3 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 }
-
