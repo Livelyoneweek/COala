@@ -118,7 +118,10 @@ public class ChatService {
             //채팅 메시지 저장
             ChatMessage chatMessage = new ChatMessage(uid, chatMessageDto, chatRoom);
             chatMessageRepository.save(chatMessage);
+
+
         }
+
     }
 
     ///////////////////////////////////////////// 비속어 필터링 메소드////////////////////////////////////////////////////
@@ -149,6 +152,7 @@ public class ChatService {
             }
             newMessage.append(sb).append(" ");
         }
+        newMessage.deleteCharAt(newMessage.lastIndexOf(" "));
 
         chatMessageDto.setMessage(String.valueOf(newMessage));
     }

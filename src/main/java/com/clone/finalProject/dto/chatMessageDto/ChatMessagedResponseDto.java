@@ -26,4 +26,5 @@ public class ChatMessagedResponseDto {
         this.career=chatMessage.getCareer();
     }
 
+
 }
