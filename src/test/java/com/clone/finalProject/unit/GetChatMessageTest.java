@@ -1,4 +1,4 @@
-package com.clone.finalProject.controller;
+package com.clone.finalProject.unit;
 
 import com.clone.finalProject.domain.ChatMessage;
 import com.clone.finalProject.domain.ChatRoom;
@@ -11,16 +11,14 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ChatMessageControllerTest {
+class GetChatMessageTest {
 
     @Autowired
     ChatService chatService;
@@ -33,11 +31,11 @@ class ChatMessageControllerTest {
 
     ChatRoom chatRoom = new ChatRoom();
 
-    public Long uid;
-    public String message;
-    public String senderName;
-    public String opposingUserName;
-    public String career;
+    public Long uid = 1L;
+    public String message = "즐거운주말보내세요";
+    public String senderName = "코알라choi";
+    public String opposingUserName = "null";
+    public String career= "1년차 이내";
 
     @Test
     @Order(1)
@@ -49,11 +47,6 @@ class ChatMessageControllerTest {
                 ()-> new NullPointerException("chatRoom이 존재하지 않습니다.")
         );
 
-        uid = 1L;
-        message = "채팅테스트입니다채팅테스트입니다";
-        senderName = "sender";
-        opposingUserName = "null";
-        career = "1년차 이내";
 
         ChatMessageDto chatMessageDto = ChatMessageDto.builder()
                 .uid(uid)
@@ -95,12 +88,12 @@ class ChatMessageControllerTest {
         assertEquals(opposingUserName,chatMessagedResponseDtoList.get(last).getOpposingUserName());
     }
 
-    @Test
-    @Order(3)
-    @DisplayName("test 채팅 삭제")
-    @Transactional
-    void deleteTestMessage(){
-        chatMessageRepository.deleteByMessageContains(message);
+//    @Test
+//    @Order(3)
+//    @DisplayName("test 채팅 삭제")
+//    @Transactional
+//    void deleteTestMessage(){
+//        chatMessageRepository.deleteAllByMessageContainsAndUid("즐거운주말보내세요",1L);
+//    }
 
-    }
 }

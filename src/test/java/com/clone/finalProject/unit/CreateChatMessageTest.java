@@ -1,5 +1,7 @@
-package com.clone.finalProject.domain;
+package com.clone.finalProject.unit;
 
+import com.clone.finalProject.domain.ChatMessage;
+import com.clone.finalProject.domain.ChatRoom;
 import com.clone.finalProject.dto.chatMessageDto.ChatMessageDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -10,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 
-class ChatMessageTest {
+class CreateChatMessageTest {
     ChatRoom chatRoom = new ChatRoom();
 
     @Nested
