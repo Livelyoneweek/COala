@@ -66,7 +66,7 @@ public class ChatController {
         String destination = "mainchat";
         log.info("=== channel : {}",destination);
 
-//        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
 
         return chatMessageDto;
     }
@@ -95,7 +95,7 @@ public class ChatController {
         String destination = String.valueOf(chatMessageDto.getPid());
         log.info("=== channel : {}",destination);
 
-//        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
 
         simpMessagingTemplate.convertAndSend("/topic/postchat"+"/"+destination ,chatMessageDto);
     }

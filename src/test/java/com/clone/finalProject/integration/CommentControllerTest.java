@@ -4,7 +4,6 @@ package com.clone.finalProject.integration;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.clone.finalProject.dto.commentDto.CommnetResponseDto;
-import com.clone.finalProject.service.CommnetService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Slf4j
@@ -20,9 +21,6 @@ import java.util.Date;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CommentControllerTest {
-
-    @Autowired
-    private CommnetService commnetService;
 
     @Autowired
     private WebTestClient webTestClient;
@@ -35,9 +33,11 @@ public class CommentControllerTest {
             .withClaim("EXPIRED_DATE", new Date(System.currentTimeMillis() +60*60*24*3))
             .sign(Algorithm.HMAC256("jwt_secret_!@#$%"));
 
+    String commentId;
+
     @Test
     @Order(1)
-    @DisplayName("커맨드생성하기")
+    @DisplayName("커맨트생성하기")
     void createComment(){
         CommnetResponseDto commnetResponseDto = CommnetResponseDto.builder()
                 .comment("안녕하세요")
@@ -46,14 +46,52 @@ public class CommentControllerTest {
                 .answerId(20L)
                 .build();
 
-        webTestClient.post().uri("/islogin/comment/create")
+        byte[] result = webTestClient.post().uri("/islogin/comment/create")
                 .header(HttpHeaders.AUTHORIZATION, "BEARER "+token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(commnetResponseDto)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectBody().jsonPath("$.commentId").exists()
+                .returnResult().getResponseBodyContent();
+
+        log.info("result:{}",result);
+        String Charsets = new String(result, StandardCharsets.UTF_8);
+        log.info("Charsets:{}",Charsets);
+        commentId= Charsets.substring(13,15);
+        log.info("commentId:{}",commentId);
 
     }
 
+    @Transactional
+    @Test
+    @Order(2)
+    @DisplayName("커맨트수정하기")
+    void editComment(){
+        CommnetResponseDto commnetResponseDto = CommnetResponseDto.builder()
+                .comment("안녕하세요2")
+                .build();
+
+        webTestClient.put().uri("/islogin/comment/edit/"+commentId)
+                .header(HttpHeaders.AUTHORIZATION, "BEARER "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(commnetResponseDto)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody().jsonPath("$.comment").toString().equals("안녕하세요2");
+
+    }
+
+    @Transactional
+    @Test
+    @Order(3)
+    @DisplayName("커맨트삭제하기")
+    void deleteComment(){
+
+        webTestClient.delete().uri("/islogin/comment/delete/" + commentId)
+                .header(HttpHeaders.AUTHORIZATION, "BEARER "+token)
+                .exchange()
+                .expectStatus().isOk();
+    }
 
 }
