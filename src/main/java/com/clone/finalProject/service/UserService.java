@@ -7,6 +7,8 @@ import com.clone.finalProject.dto.userDto.UserInfoResponseDto;
 import com.clone.finalProject.exceptionHandler.CustomException;
 import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.UserRepository;
+import com.clone.finalProject.validator.UserValidator;
+import com.clone.finalProject.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -30,22 +32,24 @@ public class UserService {
         String password = requestDto.getPassword();
         String passwordCheck = requestDto.getPasswordCheck();
 
-        //중복된 username이 존재할 경우
-        if (userRepository.existsByUsername(username)) {
-            throw new CustomException(ErrorCode.DUPLICATE_ID);
+        if(UserValidator.validateUserRegister(requestDto)) {
+
+            //중복된 username이 존재할 경우
+            if (userRepository.existsByUsername(username)) {
+                throw new CustomException(ErrorCode.DUPLICATE_ID);
+            }
+
+            //중복된 nickName이 존재할 경우
+            if (userRepository.existsByNickname(nickName)) {
+                throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
+            }
+
+            // 패스워드
+            String enPassword = passwordEncoder.encode(requestDto.getPassword());
+            User user = new User(requestDto, enPassword);
+            userRepository.save(user); // DB 저장
+            log.info("회원가입 완료");
         }
-
-        //중복된 nickName이 존재할 경우
-        if (userRepository.existsByNickname(nickName)) {
-            throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
-        }
-
-        // 패스워드
-        String enPassword = passwordEncoder.encode(requestDto.getPassword());
-        User user = new User(requestDto, enPassword);
-        userRepository.save(user); // DB 저장
-        log.info("회원가입 완료");
-
     }
 
     // username 중복체크
