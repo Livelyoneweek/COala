@@ -3,11 +3,13 @@ package com.clone.finalProject.dto.commentDto;
 import com.clone.finalProject.domain.Comment;
 import com.clone.finalProject.domain.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

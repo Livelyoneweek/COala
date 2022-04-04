@@ -11,7 +11,7 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage,Long> {
     List<ChatMessage> findTOP20ByChatRoom_PidOrderByCreatedAtDesc(Long pid);
     List<ChatMessage> findTOP20ByChatRoom_UidOrderByCreatedAtDesc(Long uid);
     ChatMessage findByMessageContains(String message);
-    void deleteByMessageContains(String message);
+    void deleteAllByMessageContainsAndUid(String message, Long uid);
 
 
 }
