@@ -5,12 +5,14 @@ import com.clone.finalProject.domain.Answer;
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.commentDto.CommnetResponseDto;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

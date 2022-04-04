@@ -2,17 +2,19 @@ package com.clone.finalProject.controller;
 
 
 import com.clone.finalProject.domain.Fword;
+import com.clone.finalProject.dto.chatMessageDto.ChatMessageDto;
 import com.clone.finalProject.repository.FwordRepository;
 import com.clone.finalProject.service.CacheService;
+import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -22,7 +24,11 @@ public class TxtReadController {
 
     private final CacheService cacheService;
     private final FwordRepository fwordRepository;
-    
+    private final ChatService chatService;
+
+
+    /////////////////////////////////////외부 txt 파일을 읽고 디비에 넣고, 테스트용으로 쓰는 컨트롤러////////////////////////
+
     // txt파일을 읽고 한줄씩 내려가면서 출력
     @GetMapping("/test/read/txt")
     public String readTxt() throws IOException {
@@ -44,11 +50,11 @@ public class TxtReadController {
     }
 
     //내장 캐시로 욕설 디비담는 테스트 진행 중
-    @GetMapping("/test/pls")
-    public HashMap<Integer,String> testpls() {
-        HashMap<Integer,String> fowrds = cacheService.getCacheData("key");
-        return fowrds;
-    }
+//    @GetMapping("/test/get/fword")
+//    public HashMap<Integer,String> testpls() {
+//        HashMap<Integer,String> fowrds = cacheService.getCacheData("key");
+//        return fowrds;
+//    }
 
     // 욕설 디비 담기 및 테스트
     @Transactional
@@ -72,6 +78,32 @@ public class TxtReadController {
 //            log.info(entrySet.getKey() + " : " + entrySet.getValue());
 //        }
 
+    }
+
+    //해쉬맵, 리스트 성능 테스트
+    @GetMapping ("/test/speed")
+    public void speedTest(){
+        //비속어 테스트
+        ChatMessageDto chatMessageDto = ChatMessageDto.builder()
+                .message("test 잡놈 test 잡놈")
+                .build();
+
+        chatService.chatFilter(chatMessageDto);
+
+        log.info("message:{}",chatMessageDto.getMessage());
+    }
+
+    //해쉬맵, 리스트 성능 테스트
+    @GetMapping ("/test/speed2")
+    public void speedTest2(){
+        //비속어 테스트
+        ChatMessageDto chatMessageDto = ChatMessageDto.builder()
+                .message("test 잡놈 test 잡놈")
+                .build();
+
+        chatService.chatFilter(chatMessageDto);
+
+        log.info("message:{}",chatMessageDto.getMessage());
     }
 
 }

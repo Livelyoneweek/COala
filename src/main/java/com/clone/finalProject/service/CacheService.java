@@ -18,6 +18,7 @@ public class CacheService {
 
     private final FwordRepository fwordRepository;
 
+    // 해쉬맵으로 비속어 담기
     @Cacheable(cacheNames = "fwordStore", key ="#key")
     public HashMap<Integer,String> getCacheData(final String key) {
         log.info("캐시에 데이터 없을 경우 출력");
@@ -29,5 +30,14 @@ public class CacheService {
 
         return fwords;
     }
+
+    //리스트로 비속어 담기
+//    @Cacheable(cacheNames = "fwordStore", key ="#key")
+//    public List<Fword> getCacheData(final String key) {
+//        log.info("캐시에 데이터 없을 경우 출력");
+//        List<Fword> fwordList = fwordRepository.findAll();
+//
+//        return fwordList;
+//    }
 
 }

@@ -129,6 +129,7 @@ public class ChatService {
 
         //비속어 해쉬맵 가져옴
         HashMap<Integer,String> fowrds = cacheService.getCacheData("key");
+//        List<Fword> fwordList = cacheService.getCacheData("key");
 
         //유저 메시지 공백 제거
         String message = chatMessageDto.getMessage().trim();
@@ -142,6 +143,15 @@ public class ChatService {
         while(st.hasMoreTokens()){
             StringBuilder sb = new StringBuilder(st.nextToken());
             StringBuilder star = new StringBuilder();
+
+//            for (int i =0; i<fwordList.size(); i++) {
+//                if(fwordList.get(i).getFWord().equals(String.valueOf(sb))) {
+//                    for(int j=0; j<sb.length(); j++) {
+//                    star.append("*");
+//                }
+//                sb.replace(0,sb.length(), String.valueOf(star));
+//                }
+//            }
 
             if(fowrds.containsValue(String.valueOf(sb))){
 

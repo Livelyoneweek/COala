@@ -1,4 +1,4 @@
-package com.clone.finalProject.integration;
+package com.clone.finalProject.controller;
 
 
 import com.auth0.jwt.JWT;
