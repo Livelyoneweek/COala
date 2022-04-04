@@ -9,6 +9,9 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Getter
+@Table(indexes = {
+        @Index(name = "searchCategory", columnList = "category"),
+        @Index(name = "searchTitle", columnList = "postTitle")})
 public class Post extends Timestamped{
 
     @Id

@@ -4,6 +4,7 @@ import com.clone.finalProject.domain.Answer;
 import com.clone.finalProject.domain.Comment;
 import com.clone.finalProject.domain.User;
 import com.clone.finalProject.dto.commentDto.CommnetResponseDto;
+import com.clone.finalProject.dto.commentDto.CreateCommnetResponseDto;
 import com.clone.finalProject.exceptionHandler.CustomException;
 import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.AnswerRepository;
@@ -24,16 +25,16 @@ public class CommnetService {
 
 
     //commnet 생성
-    public Long createComment(CommnetResponseDto commnetResponseDto, User user) {
+    public CreateCommnetResponseDto createComment(CommnetResponseDto commnetResponseDto, User user) {
         Answer answer = answerRepository.findByAnswerId(commnetResponseDto.getAnswerId()).orElseThrow(
                 ()-> new CustomException(ErrorCode.NOT_FOUND_COMMENT)
         );
-
         Comment comment = new Comment(commnetResponseDto,answer);
         commentRepository.save(comment);
         log.info("commnet 생성 완료");
 
-        return comment.getCommentId();
+        CreateCommnetResponseDto createCommnetResponseDto = new CreateCommnetResponseDto(comment);
+        return createCommnetResponseDto;
 
     }
 

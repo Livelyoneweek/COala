@@ -12,6 +12,7 @@ public class IsloginResponseDto {
     private Long uid;
     private String career;
     private String userImage;
+    private String blogUrl;
 
     //로그인 유지
     public IsloginResponseDto(String username, String nickname, Long uid, String career) {
@@ -23,11 +24,12 @@ public class IsloginResponseDto {
     }
 
     //회원정보
-    public IsloginResponseDto(String username, String nickname, Long uid, String career, String userImage) {
+    public IsloginResponseDto(String username, String nickname, Long uid, String career, String userImage, String blogUrl) {
         this.username = username;
         this.nickname = nickname;
         this.uid = uid;
         this.career = career;
         this.userImage = userImage;
+        this.blogUrl = blogUrl;
     }
 }

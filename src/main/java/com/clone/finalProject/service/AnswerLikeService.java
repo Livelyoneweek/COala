@@ -114,7 +114,7 @@ public class AnswerLikeService {
             pointRepository.save(pointEntity);
 
             //생성되었을떄 포스트 유저 컬럼으로 Alarm 객체 저장
-            Alarm alarm = new Alarm("AnswerChoose",pid,answerId ,post.getUser());
+            Alarm alarm = new Alarm("AnswerChoose",pid,answerId ,user);
             alarmRepository.save(alarm);
 
             // 답변 채택된걸 답변 주인한테 알림
