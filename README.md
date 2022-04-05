@@ -54,25 +54,22 @@ https://www.notion.so/b07e51cc05fc474f92c3566b22c3062d?v=c2b170bc7a294ee9bd1a1a4
 
 ### Front-end
 
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=float&logo=javascript&logoColor=white">
-<img src="https://img.shields.io/badge/Redux-764ABC?style=float&logo=Redux&logoColor=white"> 
-<img src="https://img.shields.io/badge/css-1572B6?style=float&logo=css3&logoColor=white"> 
-<img src="https://img.shields.io/badge/react-61DAFB?style=float&logo=react&logoColor=white">
-<img src="https://img.shields.io/badge/aws-232F3E?style=float&logo=Amazon AWS&logoColor=white">
-<img src="https://img.shields.io/badge/Axios-181717?style=float&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=float&logo=javascript&logoColor=white"><img src="https://img.shields.io/badge/Redux-764ABC?style=float&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=float&logo=css3&logoColor=white"> 
+<img src="https://img.shields.io/badge/react-61DAFB?style=float&logo=react&logoColor=white"><img src="https://img.shields.io/badge/aws-232F3E?style=float&logo=Amazon AWS&logoColor=white"><img src="https://img.shields.io/badge/Axios-181717?style=float&logo=github&logoColor=white">
 
 ### Back-end
-<img src="https://img.shields.io/badge/Springboot-47?style=for-the-badge&logo=Springboot&logoColor=white"/>
-<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
-<img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"/>
-<img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white">
-<img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white">
-<img src="https://img.shields.io/badge/Redis-FC5230?style=for-the-badge&logo=Redis&logoColor=white">
-<img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white">
-<img src="https://img.shields.io/badge/TravisCI-FC5230?style=for-the-badge&logo=TravisCI&logoColor=white">
-<img src="https://img.shields.io/badge/CodeDepoly-1F497D?style=for-the-badge&logo=CodeDepoly&logoColor=white">
-<img src="https://img.shields.io/badge/S3-FC5230?style=for-the-badge&logo=S3&logoColor=white">
-<img src="https://img.shields.io/badge/Nginx-7DB249?style=for-the-badge&logo=Nginx&logoColor=white">
+<img src="https://img.shields.io/badge/Springboot-47?style=for-the-badge&logo=Springboot&logoColor=white"><img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"><img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"><img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white"><img src="https://img.shields.io/badge/Redis-FC5230?style=for-the-badge&logo=Redis&logoColor=white"><br>
+<img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white"><img src="https://img.shields.io/badge/TravisCI-FC5230?style=for-the-badge&logo=TravisCI&logoColor=white"><img src="https://img.shields.io/badge/CodeDepoly-1F497D?style=for-the-badge&logo=CodeDepoly&logoColor=white"><img src="https://img.shields.io/badge/S3-FC5230?style=for-the-badge&logo=S3&logoColor=white"><img src="https://img.shields.io/badge/Nginx-7DB249?style=for-the-badge&logo=Nginx&logoColor=white">
+
+
+
+
+
+
+
+
+
+
 
 ### Tool
 
