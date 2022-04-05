@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
 
+    NOT_IMAGES(HttpStatus.BAD_REQUEST,"400", "업로드하려는 파일이 이미지 파일이 아닙니다."),
+
     NOT_FOUND_USER(HttpStatus.NOT_FOUND,"404", "사용자가 존재하지 않습니다."),
     NOT_FOUND_ANSWER(HttpStatus.NOT_FOUND,"404", "답변이 존재하지 않습니다."),
     NOT_FOUND_ANSWERLIKE(HttpStatus.NOT_FOUND,"404", "답변이 존재하지 않습니다."),
