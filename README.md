@@ -1,4 +1,4 @@
-# Co-ala 코딩! 알려주라
+# Co-ala 코딩! 알려주라build:passed
 
 ![](../../아키텍처이미지/og_img.png)
 <br>
