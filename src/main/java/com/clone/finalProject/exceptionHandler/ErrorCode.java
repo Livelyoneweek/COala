@@ -16,6 +16,7 @@ public enum ErrorCode {
     NOT_FOUND_POST(HttpStatus.NOT_FOUND,"404", "답변이 존재하지 않습니다."),
     NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND,"404", "댓글이 존재하지 않습니다."),
     NOT_FOUND_TAG(HttpStatus.NOT_FOUND,"404", "태그가 존재하지 않습니다."),
+    NOT_FOUND_CHATROOM(HttpStatus.NOT_FOUND,"404", "chatRoom이 존재하지 않습니다."),
 
     DUPLICATE_ID(HttpStatus.CONFLICT,"409","중복된 아이디입니다."),
     DUPLICATE_NICKNAME(HttpStatus.CONFLICT,"409","중복된 닉네임입니다.");

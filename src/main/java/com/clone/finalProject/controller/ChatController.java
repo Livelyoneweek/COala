@@ -6,6 +6,8 @@ import com.clone.finalProject.domain.ChatMessage;
 import com.clone.finalProject.domain.ChatRoom;
 import com.clone.finalProject.dto.chatMessageDto.ChatMessageDto;
 
+import com.clone.finalProject.exceptionHandler.CustomException;
+import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.ChatMessageRepository;
 import com.clone.finalProject.repository.ChatRoomRepository;
 import com.clone.finalProject.repository.RedisChatRepository;
@@ -57,7 +59,7 @@ public class ChatController {
             chatRoomRepository.save(chatRoom);
         } else {
             chatRoom = chatRoomRepository.findByArea("main").orElseThrow(
-                    ()-> new NullPointerException("chatRoom이 존재하지 않습니다.")
+                    ()-> new CustomException(ErrorCode.NOT_FOUND_CHATROOM)
             );
         }
         //채팅 메시지 셋업 메소드
@@ -86,7 +88,7 @@ public class ChatController {
             chatRoomRepository.save(chatRoom);
         } else {
             chatRoom = chatRoomRepository.findByPid(chatMessageDto.getPid()).orElseThrow(
-                    ()-> new NullPointerException("chatRoom이 존재하지 않습니다.")
+                    ()-> new CustomException(ErrorCode.NOT_FOUND_CHATROOM)
             );
         }
         //채팅 메시지 셋업 메소드
