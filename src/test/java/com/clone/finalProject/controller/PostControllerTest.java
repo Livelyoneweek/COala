@@ -61,11 +61,11 @@ class PostControllerTest {
                 .expectBody()
                 .returnResult().getResponseBodyContent();
 
-        log.info("result:{}", result);
+//        log.info("result:{}", result);
         String Charsets = new String(result, StandardCharsets.UTF_8);
-        log.info("Charsets:{}", Charsets);
+//        log.info("Charsets:{}", Charsets);
         pid = Charsets.toString();
-        log.info("pid:{}", pid);
+//        log.info("pid:{}", pid);
 
     }
 

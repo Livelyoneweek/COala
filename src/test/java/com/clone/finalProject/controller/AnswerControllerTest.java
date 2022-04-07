@@ -14,8 +14,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -57,11 +55,11 @@ public class AnswerControllerTest {
                 .expectBody().jsonPath("$.answerId").exists()
                 .returnResult().getResponseBody();
 
-        log.info("result:{}",result);
+//        log.info("result:{}",result);
         String Charsets = new String(result, StandardCharsets.UTF_8);
-        log.info("Charsets:{}",Charsets);
+//        log.info("Charsets:{}",Charsets);
         answerId= Charsets.substring(12,14);
-        log.info("answerId:{}",answerId);
+//        log.info("answerId:{}",answerId);
 
     }
 

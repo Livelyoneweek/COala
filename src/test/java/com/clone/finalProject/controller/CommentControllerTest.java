@@ -55,11 +55,11 @@ public class CommentControllerTest {
                 .expectBody().jsonPath("$.commentId").exists()
                 .returnResult().getResponseBodyContent();
 
-        log.info("result:{}",result);
+//        log.info("result:{}",result);
         String Charsets = new String(result, StandardCharsets.UTF_8);
-        log.info("Charsets:{}",Charsets);
+//        log.info("Charsets:{}",Charsets);
         commentId= Charsets.substring(13,15);
-        log.info("commentId:{}",commentId);
+//        log.info("commentId:{}",commentId);
 
     }
 
