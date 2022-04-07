@@ -42,7 +42,7 @@
 
 ### Front-end
 
-<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=%ec%a0%95%ec%9e%ac%ec%97%b0&color=61dafb&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://user-images.githubusercontent.com/94433709/162178992-bdeadde0-0986-45f7-8f85-8ec513557948.svg>"/></a></p>
 <p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=%ec%b5%9c%ec%98%81%ec%a7%84&color=61dafb&style=for-the-badge&>"/></a></p>
 
 ### Back-end
