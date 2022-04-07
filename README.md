@@ -78,7 +78,7 @@
 
 <details>
  <summary>ERD</summary>
-![image](https://user-images.githubusercontent.com/74662752/162178487-ecf8a9dd-716b-4c59-8a63-52e58f9dc672.png)
+![image](https://user-images.githubusercontent.com/74662752/162178826-0312fb19-8657-4c3f-b270-670afe035729.png)
  </details>
 
 <details>
