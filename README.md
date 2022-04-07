@@ -62,7 +62,6 @@
 <img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white"><img src="https://img.shields.io/badge/TravisCI-FC5230?style=for-the-badge&logo=TravisCI&logoColor=white"><img src="https://img.shields.io/badge/CodeDepoly-1F497D?style=for-the-badge&logo=CodeDepoly&logoColor=white"><img src="https://img.shields.io/badge/S3-FC5230?style=for-the-badge&logo=S3&logoColor=white"><img src="https://img.shields.io/badge/Nginx-7DB249?style=for-the-badge&logo=Nginx&logoColor=white">
 
 
-
 ### Tool
 
 <img src="https://img.shields.io/badge/github-181717?style=float&logo=github&logoColor=white">
