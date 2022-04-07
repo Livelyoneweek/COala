@@ -25,4 +25,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByOrderByWeekPointDesc();
     List<User> findAllByOrderByMonthPointDesc();
 
+
 }

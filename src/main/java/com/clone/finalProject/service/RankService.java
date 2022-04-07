@@ -6,11 +6,13 @@ import com.clone.finalProject.dto.rankDto.MonthRankResponseDto;
 import com.clone.finalProject.dto.rankDto.WeekRankResponseDto;
 import com.clone.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class RankService {
@@ -62,6 +64,7 @@ public class RankService {
 
         for (int i = 0; i<allRank.size(); i++) {
             if (allRank.get(i).getUid().equals(uid)) {
+
                 rank = (long) (1 + i);
                 break;
             }

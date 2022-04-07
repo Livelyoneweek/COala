@@ -93,17 +93,5 @@ public class TxtReadController {
         log.info("message:{}",chatMessageDto.getMessage());
     }
 
-    //해쉬맵, 리스트 성능 테스트
-    @GetMapping ("/test/speed2")
-    public void speedTest2(){
-        //비속어 테스트
-        ChatMessageDto chatMessageDto = ChatMessageDto.builder()
-                .message("test 잡놈 test 잡놈")
-                .build();
-
-        chatService.chatFilter(chatMessageDto);
-
-        log.info("message:{}",chatMessageDto.getMessage());
-    }
 
 }

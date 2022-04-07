@@ -33,8 +33,7 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
 
         if (StompCommand.CONNECT == headerAccessor.getCommand()) {
                 // 유저가 Websocket으로 connect()를 한 뒤 호출됨
-                log.info("유저 connect 완료");
-                log.info("===========================================");
+                log.info("유저 connect 중");
                 log.info("full message: {}", message);
 
         }else if(StompCommand.SUBSCRIBE == headerAccessor.getCommand()){
@@ -45,20 +44,21 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
             String sessionId = (String) message.getHeaders()
                     .get("simpSessionId");
 
-            redisChatRepository.setUserEnterInfo(sessionId, destination);
-
             log.info("=== SUBSCRIBE sessionId : " + sessionId);
             log.info(("=== SUBSCRIBE destination : " + destination));
+
+
+            redisChatRepository.setUserEnterInfo(sessionId, destination);
+
 
             /* 채팅방의 인원수를 +1한다. */
             redisChatRepository.plusUserCount(destination);
 
 
         }else if(StompCommand.DISCONNECT == headerAccessor.getCommand()){
-            log.info("유저 disconnetct");
 //일단 주석처리////////////////////////////////////////////////////////////////////////////////////////////////////
-            String sessionId = (String) message.getHeaders()
-                    .get("simpSessionId");
+            String sessionId = (String) message.getHeaders().get("simpSessionId");
+            log.info("=== DISCONNECT sessionId : " + sessionId);
 
             String destination = redisChatRepository.getUserEnterRoomId(sessionId);
 

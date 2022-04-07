@@ -5,6 +5,7 @@ import com.clone.finalProject.domain.ChatRoom;
 import com.clone.finalProject.dto.chatMessageDto.ChatMessageDto;
 import com.clone.finalProject.dto.chatMessageDto.ChatMessagedResponseDto;
 import com.clone.finalProject.repository.ChatMessageRepository;
+import com.clone.finalProject.repository.FwordRepository;
 import com.clone.finalProject.repository.UserRepository;
 import com.clone.finalProject.security.jwt.JwtDecoder;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class ChatService {
     private final JwtDecoder jwtDecoder;
     private final UserRepository userRepository;
     private final CacheService cacheService;
+    private final FwordRepository fwordRepository;
 
     public String getRoomId(String destination) {
         int lastIndex = destination.lastIndexOf('/');
