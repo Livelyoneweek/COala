@@ -73,12 +73,12 @@
 ## 🏷 API Table 🏷
 <details>
  <summary>아키텍처</summary>
-    ![image](https://user-images.githubusercontent.com/74662752/162178411-c2c5dacf-bc68-4efa-a651-a534318035ce.png)
+![image](https://user-images.githubusercontent.com/74662752/162178411-c2c5dacf-bc68-4efa-a651-a534318035ce.png)
  </details>
 
 <details>
  <summary>ERD</summary>
-     ![image](https://user-images.githubusercontent.com/74662752/162178487-ecf8a9dd-716b-4c59-8a63-52e58f9dc672.png)
+![image](https://user-images.githubusercontent.com/74662752/162178487-ecf8a9dd-716b-4c59-8a63-52e58f9dc672.png)
  </details>
 
 <details>
