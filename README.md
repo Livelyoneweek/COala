@@ -64,6 +64,8 @@ https://www.notion.so/b07e51cc05fc474f92c3566b22c3062d?v=c2b170bc7a294ee9bd1a1a4
 
 
 
+### ERD
+![image](https://user-images.githubusercontent.com/74662752/162170056-07273283-ea21-4912-a556-70dc50b58568.png)
 
 
 
