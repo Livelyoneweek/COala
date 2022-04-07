@@ -41,14 +41,13 @@
 ### 기간: 2022.02.25 ~ 2022.04.08
 
 ### Front-end
-
-<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://user-images.githubusercontent.com/94433709/162178992-bdeadde0-0986-45f7-8f85-8ec513557948.svg>"/></a></p>
-<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=%ec%b5%9c%ec%98%81%ec%a7%84&color=61dafb&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://user-images.githubusercontent.com/93499244/162171992-47a626ce-3856-4fae-9d05-045d2f6f9ebb.svg"/></a></p>
+<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://user-images.githubusercontent.com/93499244/162171379-246ed4d8-2bfb-4ef8-8498-caa79622d792.svg"/></a></p>
 
 ### Back-end
-<p><a href="https://github.com/Livelyoneweek" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=%ec%b5%9c%eb%b3%91%ec%9e%ac&color=81ea6f&style=for-the-badge&>"/></a></p>
-<p><a href="https://github.com/kyungwoon" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=%eb%82%98%ea%b2%bd%ec%9a%b4&color=81ea6f&style=for-the-badge&>"/></a></p>
-<p><a href="https://github.com/P-jeong-hee" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=%eb%b0%95%ec%a0%95%ed%9d%ac&color=81ea6f&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/Livelyoneweek" target="_blank"><img width="150"  src="https://user-images.githubusercontent.com/93499244/162172511-809a848d-db93-4020-81fc-7fffbfc8acb5.svg"/></a></p>
+<p><a href="https://github.com/kyungwoon" target="_blank"><img width="150"  src="https://user-images.githubusercontent.com/93499244/162172506-1239cfb0-da08-4532-b2b2-5769a8982d9e.svg"/></a></p>
+<p><a href="https://github.com/P-jeong-hee" target="_blank"><img width="150"  src="https://user-images.githubusercontent.com/93499244/162172494-fa9b6bdd-f337-4e15-9d11-0cb824ae4932.svg"/></a></p>
 <br>
 
 ## 🔨 사용한 기술 스택 🔨
