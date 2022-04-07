@@ -86,7 +86,7 @@
  <summary>API</summary>
  
 ![image](https://user-images.githubusercontent.com/74662752/162179271-42d85c9c-9f96-4934-903f-7b426285e278.png)
-![image](https://user-images.githubusercontent.com/74662752/162179322-d736c194-ffe1-4bb5-8d21-e22a42c0e352.png)
+![image](https://user-images.githubusercontent.com/74662752/162179982-d536891c-9fb0-4d80-9f8d-c8cd6e7bda55.png)
 ![image](https://user-images.githubusercontent.com/74662752/162179381-ef983a06-ae98-4d4a-8fe1-6cb1690b8393.png)
 ![image](https://user-images.githubusercontent.com/74662752/162179419-6cd6fa46-6d11-45b6-88a3-84bde95ac496.png)
 ![image](https://user-images.githubusercontent.com/74662752/162179451-00b17110-72af-4fbf-b0ed-5fdad77fa8a6.png)
