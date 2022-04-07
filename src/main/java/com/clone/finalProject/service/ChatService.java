@@ -123,49 +123,36 @@ public class ChatService {
         }
 
     }
-
     ///////////////////////////////////////////// 비속어 필터링 메소드////////////////////////////////////////////////////
+
     public void chatFilter(ChatMessageDto chatMessageDto) {
-
-        //비속어 해쉬맵 가져옴
-        HashMap<Integer,String> fowrds = cacheService.getCacheData("key");
-//        List<Fword> fwordList = cacheService.getCacheData("key");
-
-        //유저 메시지 공백 제거
+//        cacheService.setFwords();
         String message = chatMessageDto.getMessage().trim();
 
-        // 새로운 메시지 생성
         StringBuilder newMessage = new StringBuilder();
 
-        StringTokenizer st = new StringTokenizer(message," ");
+        StringTokenizer st = new StringTokenizer(message, " ");
+        while (st.hasMoreTokens()) {
 
-        //반복문 돌면서 욕 필터 후 *로 치환하여 새로운 메시지 작성
-        while(st.hasMoreTokens()){
             StringBuilder sb = new StringBuilder(st.nextToken());
             StringBuilder star = new StringBuilder();
 
-//            for (int i =0; i<fwordList.size(); i++) {
-//                if(fwordList.get(i).getFWord().equals(String.valueOf(sb))) {
-//                    for(int j=0; j<sb.length(); j++) {
-//                    star.append("*");
-//                }
-//                sb.replace(0,sb.length(), String.valueOf(star));
-//                }
-//            }
-
-            if(fowrds.containsValue(String.valueOf(sb))){
-
-                for(int i=0; i<sb.length(); i++) {
+            String fowrds = cacheService.getFwords(String.valueOf(sb));
+            if (fowrds != null) {
+                for (int i = 0; i < sb.length(); i++) {
                     star.append("*");
                 }
                 sb.replace(0,sb.length(), String.valueOf(star));
             }
-            newMessage.append(sb).append(" ");
+
+                newMessage.append(sb).append(" ");
+
+
         }
         newMessage.deleteCharAt(newMessage.lastIndexOf(" "));
 
         chatMessageDto.setMessage(String.valueOf(newMessage));
-    }
 
+    }
 
 }

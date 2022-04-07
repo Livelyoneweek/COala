@@ -6,8 +6,10 @@ import com.clone.finalProject.repository.FwordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,17 +20,19 @@ public class CacheService {
 
     private final FwordRepository fwordRepository;
 
-    // 해쉬맵으로 비속어 담기
-    @Cacheable(cacheNames = "fwordStore", key ="#key")
-    public HashMap<Integer,String> getCacheData(final String key) {
-        log.info("캐시에 데이터 없을 경우 출력");
-        List<Fword> fwordList = fwordRepository.findAll();
-        HashMap<Integer,String> fwords = new HashMap<>();
-        for (int i = 0; i<fwordList.size(); i++) {
-            fwords.put(i+1,fwordList.get(i).getFWord());
-        }
+    private static final String FWORDS = "FWORDS";
 
-        return fwords;
+    @Resource(name = "redisTemplate")
+    private HashOperations<String, String, String> hashOpsEnterInfo;
+
+    public void setFwords() {
+        List<Fword> fwordList = fwordRepository.findAll();
+        for (int i = 0; i < fwordList.size(); i++) {
+            hashOpsEnterInfo.put(FWORDS, fwordList.get(i).getFWord(), fwordList.get(i).getFWord());
+        }
+    }
+    public String getFwords(String key) {
+        return hashOpsEnterInfo.get(FWORDS, key);
     }
 
     //리스트로 비속어 담기
