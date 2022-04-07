@@ -1,4 +1,4 @@
-# Co-ala 코딩! 알려주라build:passed
+# Co-ala 코딩! 알려주라https://app.travis-ci.com/Livelyoneweek/COala.svg?branch=master&status=created
 
 ![](../../아키텍처이미지/og_img.png)
 <br>
