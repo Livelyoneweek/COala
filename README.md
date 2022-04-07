@@ -73,12 +73,12 @@
 ## 🏷 API Table 🏷
 <details>
  <summary>아키텍처</summary>
-    아키텍처 이미지
+    ![image](https://user-images.githubusercontent.com/74662752/162178411-c2c5dacf-bc68-4efa-a651-a534318035ce.png)
  </details>
 
 <details>
  <summary>ERD</summary>
-     ERD 이미지
+     ![image](https://user-images.githubusercontent.com/74662752/162178487-ecf8a9dd-716b-4c59-8a63-52e58f9dc672.png)
  </details>
 
 <details>
@@ -91,9 +91,12 @@
 <details>
  <summary> (1) 채팅 비속어 필터링</summary>
  1. 문제 발생 : 처음 비속어 필터링을 구현할 때  매 채팅 시마다 DB에 저장한 비속어들을 리스트로 받아서 반복문을 통해 비속어 감지하여 속도 저하<br>
+ ![image](https://user-images.githubusercontent.com/74662752/162178278-0c2edf31-9363-45cb-bb2e-d9911a20872d.png)
+
 2. 원인 : 비속어 DB는 자주 변하는 것이 아니고, DB를 계속해서 조회<br>
 3. 해결 : 인메모리 디비를 활용할 수 있다고 생각하여 비속어 디비에서 레디스로 내려받아 저장을 하였고,
 데이터 구조를 리스트가 아닌 해쉬맵으로 받아 containsValue 메소드를 통해 비속어를 감지하여 반복작업 감
+![image](https://user-images.githubusercontent.com/74662752/162178318-114e2e54-99d5-47a6-a4ea-2d23640dd28c.png)
 
 
  </details>
