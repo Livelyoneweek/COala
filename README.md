@@ -1,4 +1,4 @@
-# Co-ala 코딩! 알려주라
+# Co-ala 코딩! 알려주라![image](https://user-images.githubusercontent.com/74662752/162183953-0299f309-fe4f-4419-a943-4397035bd226.png)
 
 ![](../../아키텍처이미지/og_img.png)
 <br>
@@ -123,3 +123,19 @@
  <img width="674" alt="스크린샷 2022-04-07 오후 7 18 01" src="https://user-images.githubusercontent.com/94433709/162177524-b763e658-2e3f-4410-a16d-0bf0f74e00b8.png">
  
  </details>
+ <details>
+ <summary> (3) EC2 램 초과로 인한 서버 다운</summary>
+1. 문제 발생 : CI/CD -> 무중단 배포를 시도하면서 깃 허브 푸쉬 후 서버 다운 현상이 생김<br>
+
+2. 원인 : 무중단 배포를 하면서 스프링부트 서버가 2개가 돌아가는 과정에서 서버 램 부하로 인한 다운 현상이 발생을 확인<br>
+
+3. 해결 : 리눅스 스와핑을 통한 가상메모리 생성 및 사용<br>
+   - 리눅스는 하드디스크를 가상 메모리로 전환시켜 사용할 수 있음을 확인하여 이를 토대로 가상메모리 생성하여 사용하기로 함<br>
+   - AWS 권장사양에 따라 RAM이 2GB이하 일 때 권장 스왑 공간은 RAM 용량의 2배인 2GM로 선정
+   - 스왑 파일 생성 및 권한을 주어 실행하여 기존 RAM 초과 시 스와핑을 통해 추가 RAM 사용
+ ![image](https://user-images.githubusercontent.com/74662752/162543298-8376eb9e-db9b-4365-af0b-d667e080f5e2.png)
+
+ 
+ </details>
+ 
+ 
