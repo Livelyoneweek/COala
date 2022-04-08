@@ -18,7 +18,7 @@ public class Point {
     private Long senderUid;
 
     //받는 사람
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
 

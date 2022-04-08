@@ -24,7 +24,7 @@ public class Comment extends Timestamped{
     @Column(nullable = false)
     private Long pid;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
 

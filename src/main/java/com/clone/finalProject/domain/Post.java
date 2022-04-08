@@ -33,7 +33,7 @@ public class Post extends Timestamped{
     @Column
     private String category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
 

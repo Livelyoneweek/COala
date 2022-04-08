@@ -27,7 +27,7 @@ public class Answer extends Timestamped{
     @Column
     private Long uid;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_ID")
     private Post post;
 

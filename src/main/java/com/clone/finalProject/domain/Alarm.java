@@ -23,7 +23,7 @@ public class Alarm extends Timestamped{
     @Column
     private Long answerId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
 

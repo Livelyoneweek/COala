@@ -20,10 +20,9 @@ public class AnswerLike {
     @Column(nullable = false)
     private Long pid;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
-
 
     public AnswerLike (Long uid, Long pid , Answer answer) {
         this.uid =uid;
