@@ -18,6 +18,7 @@
 당신이 직면한 문제! 당신만의 문제가 아닙니다. 공유하고 함께 해결해요! 코딩! 알려주라~<br/>
 
 #### 👉🏻Web Site : https://www.co-ala.com
+(d2drmli0uyajuu.cloudfront.net , 도메인 연결 전 주소입니다. 도메인 접속이 불가하시면 이쪽 주소로 접근바랍니다)
 
 <br>
 
