@@ -103,7 +103,7 @@
 ![image](https://user-images.githubusercontent.com/74662752/162178962-a41b2c46-2afe-4db1-bd5a-7bf0147ccdd9.png)
 2. 원인 : 비속어 DB는 자주 변하는 것이 아니고, DB를 계속해서 조회<br>
 3. 해결 : 인메모리 디비를 활용할 수 있다고 생각하여 비속어 디비에서 레디스로 내려받아 저장을 하였고,
-데이터 구조를 리스트가 아닌 해쉬맵으로 받아 containsValue 메소드를 통해 비속어를 감지하여 반복작업 감
+데이터 구조를 리스트가 아닌 해쉬맵으로 받아 containsValue 메소드를 통해 비속어를 감지하여 반복작업 감소
  
 ![image](https://user-images.githubusercontent.com/74662752/162178318-114e2e54-99d5-47a6-a4ea-2d23640dd28c.png)
 
@@ -116,11 +116,11 @@
  <img width="414" alt="스크린샷 2022-04-07 오후 7 19 02" src="https://user-images.githubusercontent.com/94433709/162177693-bd76da2b-ed2d-4a10-8df2-a3c35bb3f2f8.png">
 
 2. 원인 : 연결이 끊어지는 경우 구독 정보를 리턴해주지 않아 유저가 채팅방 퇴장 시 정상적으로 카운팅이 되지 않음<br>
-- 해당 채팅을 구독하면 Message Header(메시지 헤더)의 destination(데스틴에이션)정보를 키값으로 유저 카운팅을 했지만 
-연결이 끊기면 Message Header(메시지 헤더)에 destination (데스틴에이션)정보가 없어 채팅 참여 인원수 카운팅을 할 수 없는 원인을 찾음 <br>
+- 해당 채팅을 구독하면 Message Header의 destination정보를 키값으로 유저 카운팅을 했지만 
+연결이 끊기면 Message Header에 destination정보가 없어 채팅 참여 인원수 카운팅을 할 수 없는 원인을 찾음 <br>
 3. 해결 : 유저가 구독한 채팅방 정보와 유저 SessionId를 매핑하여 저장<br>
-   - 유저가 채팅방을 구독한 경우와 연결을 끊었을 경우 Message Header(메시지 헤더)에서 어떤 정보를 return해주는지 로그를 남겼고 모두 SessionId(세션아이디)를 return 해주는 것을 확인했습니다.
-   유저가 구독한 채팅방 정보와 SesstionId(세션아이디)를 매핑하여 저장하였고 퇴장 시 해당 SessionId(세션아이디)로 매핑해두었던 채팅방 정보를 조회하여 해당 키값에서 유저 카운팅을 했습니다.
+   - 유저가 채팅방을 구독한 경우와 연결을 끊었을 경우 Message Header(메시지 헤더)에서 어떤 정보를 return해주는지 로그를 남겼고 모두 SessionId를 return 해주는 것을 확인했습니다.
+   유저가 구독한 채팅방 정보와 SessionId를 매핑하여 저장하였고 퇴장 시 해당 SessionId로 매핑해두었던 채팅방 정보를 조회하여 해당 키값에서 유저 카운팅을 했습니다.
  <img width="674" alt="스크린샷 2022-04-07 오후 7 18 01" src="https://user-images.githubusercontent.com/94433709/162177524-b763e658-2e3f-4410-a16d-0bf0f74e00b8.png">
  
  </details>
