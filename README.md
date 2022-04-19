@@ -1,4 +1,5 @@
-# Co-ala 코딩! 알려주라![image](https://user-images.githubusercontent.com/74662752/162183953-0299f309-fe4f-4419-a943-4397035bd226.png)
+
+# Co-ala 코딩! 알려주라! [![Build Status](https://app.travis-ci.com/Livelyoneweek/COala.svg?branch=master)](https://app.travis-ci.com/Livelyoneweek/COala)
 
 ![](../../아키텍처이미지/og_img.png)
 <br>
