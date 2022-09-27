@@ -5,12 +5,10 @@ package com.clone.finalProject.controller;
 import com.clone.finalProject.domain.ChatMessage;
 import com.clone.finalProject.domain.ChatRoom;
 import com.clone.finalProject.dto.chatMessageDto.ChatMessageDto;
-
 import com.clone.finalProject.exceptionHandler.CustomException;
 import com.clone.finalProject.exceptionHandler.ErrorCode;
 import com.clone.finalProject.repository.ChatMessageRepository;
 import com.clone.finalProject.repository.ChatRoomRepository;
-import com.clone.finalProject.repository.RedisChatRepository;
 import com.clone.finalProject.repository.UserRepository;
 import com.clone.finalProject.security.jwt.JwtDecoder;
 import com.clone.finalProject.service.ChatService;
@@ -37,7 +35,6 @@ public class ChatController {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final UserRepository userRepository;
-    private final RedisChatRepository redisChatRepository;
     private final ChatService chatService;
 
 
@@ -68,7 +65,8 @@ public class ChatController {
         String destination = "mainchat";
         log.info("=== channel : {}",destination);
 
-        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+//        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+        chatMessageDto.setUserCount(0);
 
         return chatMessageDto;
     }
@@ -97,7 +95,8 @@ public class ChatController {
         String destination = String.valueOf(chatMessageDto.getPid());
         log.info("=== channel : {}",destination);
 
-        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+//        chatMessageDto.setUserCount(redisChatRepository.getUserCount(destination));
+        chatMessageDto.setUserCount(0);
 
         simpMessagingTemplate.convertAndSend("/topic/postchat"+"/"+destination ,chatMessageDto);
     }

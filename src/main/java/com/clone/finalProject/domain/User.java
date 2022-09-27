@@ -81,7 +81,7 @@ public class User {
     }
 
     public void monthPointReset(){
-        this.weekPoint = 0L;
+        this.monthPoint = 0L;
     }
 
 }

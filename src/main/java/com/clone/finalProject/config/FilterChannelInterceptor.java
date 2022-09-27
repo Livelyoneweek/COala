@@ -2,7 +2,6 @@ package com.clone.finalProject.config;
 
 
 import com.clone.finalProject.repository.ChatRoomRepository;
-import com.clone.finalProject.repository.RedisChatRepository;
 import com.clone.finalProject.security.jwt.JwtDecoder;
 import com.clone.finalProject.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,6 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
 
     private final JwtDecoder jwtDecoder;
     private final ChatService chatService;
-    private final RedisChatRepository redisChatRepository;
     private final ChatRoomRepository chatRoomRepository;
 
     @Override
@@ -48,11 +46,11 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
             log.info(("=== SUBSCRIBE destination : " + destination));
 
 
-            redisChatRepository.setUserEnterInfo(sessionId, destination);
+//            redisChatRepository.setUserEnterInfo(sessionId, destination);
 
 
             /* 채팅방의 인원수를 +1한다. */
-            redisChatRepository.plusUserCount(destination);
+//            redisChatRepository.plusUserCount(destination);
 
 
         }else if(StompCommand.DISCONNECT == headerAccessor.getCommand()){
@@ -60,14 +58,14 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
             String sessionId = (String) message.getHeaders().get("simpSessionId");
             log.info("=== DISCONNECT sessionId : " + sessionId);
 
-            String destination = redisChatRepository.getUserEnterRoomId(sessionId);
+//            String destination = redisChatRepository.getUserEnterRoomId(sessionId);
 
             /* 채팅방의 인원수를 -1한다. */
-            redisChatRepository.minusUserCount(destination);
-            log.info("=== DISCONNECT sessionId : " + sessionId);
-            log.info(("=== DISCONNECT destination : " + destination));
+//            redisChatRepository.minusUserCount(destination);
+//            log.info("=== DISCONNECT sessionId : " + sessionId);
+//            log.info(("=== DISCONNECT destination : " + destination));
             /* 퇴장한 클라이언트의 roomId 맵핑 정보를 삭제한다. */
-            redisChatRepository.removeUserEnterInfo(sessionId);
+//            redisChatRepository.removeUserEnterInfo(sessionId);
 
 
         }
